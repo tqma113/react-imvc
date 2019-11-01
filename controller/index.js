@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // base controller class
 import 'whatwg-fetch'
 import React from 'react'
@@ -690,3 +691,6 @@ const proxyStoreActions = ctrl => {
 
   ctrl.store.actions = actions
 }
+=======
+module.exports = require('../dist/controller')
+>>>>>>> 3e2c70c1154613142845e565f72b50150804bf75

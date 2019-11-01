@@ -13,3 +13,8 @@ npm-debug.log
 .vscode
 _site
 mock/test.json
+
+dist
+*-lock.json
+coverage
+.npmrc
