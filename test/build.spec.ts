@@ -229,12 +229,4 @@ describe('build', () => {
       })
     })
   })
-
-  describe('setupDevEnv', () => {
-    it.todo('should work')
-  })
-
-  describe('index', () => {
-    it.todo('file after building should run as same as start')
-  })
 })
