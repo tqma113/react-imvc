@@ -65,7 +65,7 @@ export default class extends Controller {
 
 controller.location 是 react-imvc 里自动根据 url 和 router path pattern 生成的类 window.location 对象。
 
-其文档为：https://github.com/Lucifier129/history/blob/master/docs/Location.md
+其文档为：<https://github.com/Lucifier129/history/blob/master/docs/Location.md>
 
 除了上述文档介绍的 { pathname ,search, hash, action, state } 以外，还有下面几个拓展属性
 
@@ -280,7 +280,7 @@ controller.get 方法是基于 controller.fetch 封装的方法，更简便地�
 
 url 参数的处理，跟 controller.fetch 方法一致。
 
-params 参数将在内部被 querystring.stringify ，拼接在 url 后面。
+params 参数将在内部被 querystringify.stringify ，拼接在 url 后面。
 
 options 参数将作为 fetch 的 options 传递。
 
@@ -510,10 +510,10 @@ controller.componentWillUnmount 方法触发时，react component 即将从页�
 
 需要注意的是
 
-    - 该方法在 controller 的生命周期内，可能不止运行一次。
-    - pageWillLeave 比 componentWillUnmount 更早执行
-    - 当 next page 的 view/component 要渲染时，才会触发 prev page 的 componentWillUnmount
-    - 可以在 pageWillLeave 里 showLoading，直到它被 next page 替换。
+- 该方法在 controller 的生命周期内，可能不止运行一次。
+- pageWillLeave 比 componentWillUnmount 更早执行
+- 当 next page 的 view/component 要渲染时，才会触发 prev page 的 componentWillUnmount
+- 可以在 pageWillLeave 里 showLoading，直到它被 next page 替换。
 
 ### Controller.pageWillLeave()
 
@@ -523,8 +523,8 @@ controller.pageWillLeave 方法在页面即将跳转到其他 page 前触发，�
 
 该方法的设计目的是
 
-    - 提示用户有表单未填写
-    - 将用户信息缓存在 localStorage 或者 server 端
+- 提示用户有表单未填写
+- 将用户信息缓存在 localStorage 或者 server 端
 
 ### Controller.pageDidBack()
 
@@ -695,7 +695,7 @@ NavLink 组件，跟 Link 类似，可以用来实现页面的单页路由跳转
 
 ### Script
 
-Script 组件，用来防范 querystring 的 XSS 风险，放置 window.\_\_INITIAL_STATE 里执行恶意代码。
+Script 组件，用来防范 querystringify 的 XSS 风险，放置 window.\_\_INITIAL_STATE 里执行恶意代码。
 
 ```javascript
 import React from 'react'
@@ -819,9 +819,9 @@ Input 组件的 transformer 属性接受两个参数 `transformer(newValue, oldV
 
 当 Input 组件传入了 check 属性时，它将被视为复合对象 { value, isValid, isWarn } 三个属性，它有以下行为：
 
-    - 当用户 blur 脱离表单焦点时，使用 check 函数检查 value 值，如果 check 函数返回 true，则 isValid = true，isWarn = false。
-    - 当用户 focus 聚焦表单时，取消 isWarn = false 的状态。
-    - 在将 input.value 更新到 store 时，会自动补全 `${name}.value` 更新 state。
+- 当用户 blur 脱离表单焦点时，使用 check 函数检查 value 值，如果 check 函数返回 true，则 isValid = true，isWarn = false。
+- 当用户 focus 聚焦表单时，取消 isWarn = false 的状态。
+- 在将 input.value 更新到 store 时，会自动补全 `${name}.value` 更新 state。
 
 Input 组件默认渲染为 input 标签，可以使用 `as` 属性将它渲染成 `textarea` 标签或其他可以触发 `onChange` 方法的组件。
 
@@ -968,7 +968,7 @@ react-imvc 可以作为 npm scripts 里的命令来使用，总共有三个
 {
     // 最简用法
     "start": "react-imvc start",
-    // 使用 querystring 将 start?{search} 的参数传递给 node 启动命令里
+    // 使用 querystringify 将 start?{search} 的参数传递给 node 启动命令里
     "start:inspect": "react-imvc start?inspect",
     // 使用 chrome dev tool 来 inspect 你的应用，并且在执行你的代码之前就自动断点
     "start:inspect-brk": "react-imvc start?inspect-brk",
@@ -976,7 +976,7 @@ react-imvc 可以作为 npm scripts 里的命令来使用，总共有三个
     "start-with-config": "react-imvc start --config ./imvc.config.js",
     // build 命令用法跟 start 类似，也可以用 --config 指定配置文件
     "build": "react-imvc build --config ./imvc.config.js",
-    // test 命令使用 mocha 来运行以 -test.js 结尾的单元测试文件
+    // test 命令使用 jest 来运行以 -test.js 结尾的单元测试文件
     "test": "react-imvc test"
 }
 ```
@@ -1015,15 +1015,15 @@ ReactIMVC.build({
 
 start 方法接受一个对象参数 options
 
-    - 如果 options.config 是一个字符串，将用 `require(options.config)` 的方式引入 config 模块
-    - 如果 options.config 是一个对象，将直接使用它作为 react-imvc 的配置
+- 如果 options.config 是一个字符串，将用 `require(options.config)` 的方式引入 config 模块
+- 如果 options.config 是一个对象，将直接使用它作为 react-imvc 的配置
 
 ### ReactIMVC.build(options)
 
 build 方法接受一个对象参数 options
 
-    - 如果 options.config 是一个字符串，将用 `require(options.config)` 的方式引入 config 模块
-    - 如果 options.config 是一个对象，将直接使用它作为 react-imvc 的配置
+- 如果 options.config 是一个字符串，将用 `require(options.config)` 的方式引入 config 模块
+- 如果 options.config 是一个对象，将直接使用它作为 react-imvc 的配置
 
 ## IMVC Configuration
 
@@ -1035,11 +1035,11 @@ IMVC 支持开发者自定义配置，实现灵活的功能。
 
 有两个途径可以设置 html 文档的 Title Keywords Description 三个属性。
 
-    - 在 imvc.config.js 文件里配置 title keywords description 的值，对所有页面生效。
-    - 在 controller.store.getState() 里，存在特殊字段 `html`，其中
-        * state.html.title 将作为 html 的 title 出现
-        * state.html.keywords 将作为 html 的 keywords 出现
-        * state.html.description 将作为 html 的 description 出现
+- 在 imvc.config.js 文件里配置 title keywords description 的值，对所有页面生效。
+- 在 controller.store.getState() 里，存在特殊字段 `html`，其中
+  - state.html.title 将作为 html 的 title 出现
+  - state.html.keywords 将作为 html 的 keywords 出现
+  - state.html.description 将作为 html 的 description 出现
 
 ## Server Development
 
@@ -1240,13 +1240,13 @@ const TestWithFallback = withFallback(<span>发生错误，请重试</span>)(Tes
 
 ## FAQ
 
-### 为什么页面跳转后，preload 的样式没有加载？
+### 为什么页面跳转后，preload 的样式没有加载
 
 所有 controller.preload 共享一个缓存对象，如果两个 controller 的 preload 对象拥有相同的 key 名，后加载的 controller 会受到缓存影响，出现未请求样式或者渲染错误的样式的情况。
 
 解决方式：项目中所有 preload 的 key 都是唯一的。
 
-### 为什么 vendor.js 体积越来越大？
+### 为什么 vendor.js 体积越来越大
 
 webpack 的智能拆包功能，会扫描模块间的依赖，如果 A 页面依赖了 B 页面的某个模块的某个方法，B 页面的该模块可能进入 vendor.js 里，增加了 vendor.js 的体积，减少了 A 和 B 页面的 chunkfile 的体积。
 
@@ -1285,7 +1285,7 @@ module.exports = {
 }
 ```
 
-### 如何让组件的错误不被捕获?
+### 如何让组件的错误不被捕获
 
 这是一个逃生出口，只在必要的情况下使用。
 

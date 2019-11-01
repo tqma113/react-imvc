@@ -1,4 +1,12 @@
-# react-imvc v2.0
+# react-imvc v3.0
+
+[![Build Status](https://travis-ci.org/Lucifier129/react-imvc.svg?branch=master)](https://travis-ci.org/Lucifier129/react-imvc)
+[![dependencies Status](https://david-dm.org/Lucifier129/react-imvc/status.svg)](https://david-dm.org/Lucifier129/react-imvc)
+[![PRs-welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Lucifier129/react-imvc/pull/new/master)
+
+[![NPM](https://nodei.co/npm/react-imvc.png?downloads=true)](https://nodei.co/npm/react-imvc/)
+
+## [3.0 升级指南](./doc/MIGRATION.md)
 
 [![Build Status](https://travis-ci.org/Lucifier129/react-imvc.svg?branch=master)](https://travis-ci.org/Lucifier129/react-imvc) 
 [![dependencies Status](https://david-dm.org/Lucifier129/react-imvc/status.svg)](https://david-dm.org/Lucifier129/react-imvc) 
@@ -17,7 +25,6 @@ react-imvc 是 isomorphic mvc 的 react 实现，它是一个 Web 框架。通�
 用法示例：
 
 - isomorphic-cnode [DEMO地址](https://lucifier129.github.io/isomorphic-cnode/publish/static/) 和 [源代码地址](https://github.com/Lucifier129/isomorphic-cnode)
-
 
 [点击访问详细文档地址：Documents](./doc/index.md)
 
