@@ -125,8 +125,9 @@ react-imvc 默认把一些基本信息填充在 context 对象里，比如
 controller.View 属性，应该是一个 React Component 组件。该组件的 props 结构如下
 
 - props.state 是 controller.store.getState() 里的 global state 状态树
-- props.handlers 是 controller 实例里，以 handleXXX 形式定义的事件处理器的集合对象
-- props.actions 是 controller.store.actions 里的 actions 集合对象
+- props.handlers 是 controller 实例里，以 handleXXX 形式定义的事件处理器的集合对象（Removed in v3.0. Detail in [migration](./MIGRATION.md)）
+- props.actions 是 controller.store.actions 里的 actions 集合对象（Removed in v3.0. Detail in [migration](./MIGRATION.md)）
+- (Add in v3.0)props.ctrl 是 controller 实例，包括所有的 handlers，location，context 等，也可以通过 ctrl.store.actions 拿到actions
 
 React 的用法可以查阅其[官方文档](https://facebook.github.io/react/)
 
@@ -211,7 +212,7 @@ KeepAlive 会缓存 view，controller 及其 store。
 
 注：浏览器把前进/后退都视为 POP 事件，因此 A 页面 history.push 到 B 页面，B 页面 history.back 回到 A 时为 POP，A 页面再 history.forward 到 B 页面，也是 POP。KeepAliveOnPush 无法处理该场景，只能支持一次性来回的场景。
 
-### controller.handlers -> object
+### controller.handlers -> object（Removed in v3.0. Detail in [migration](./MIGRATION.md)）
 
 controller.handlers 是在初始化时，从 controller 的实例里收集的以 handle 开头，以箭头函数形式定义的方法的集合对象。用来传递给 controller.View 组件。
 
@@ -413,7 +414,7 @@ class Controller extends BaseController {
 }
 ```
 
-### controller.combineHandlers(handlers)
+### controller.combineHandlers(handlers)（Removed in v3.0. Detail in [migration](./MIGRATION.md)）
 
 controller.combineHandlers 方法被用来收集 controller 的 handleXXX 开头的实例方法，放入 controller.handlers 属性中。
 
@@ -565,7 +566,7 @@ controller.stateDidReuse 是一个特殊的生命周期。当服务端完成过�
 它们分别是
 
 - meta
-- handlers
+- handlers（Removed in v3.0. Detail in [migration](./MIGRATION.md)）
 - fetchPreload
 - init
 - destroy
@@ -576,7 +577,7 @@ controller.stateDidReuse 是一个特殊的生命周期。当服务端完成过�
 
 ## Event handler
 
-react-imvc 建议除了把 state 从 component 里抽离出来，组成 global state 以外，也应该把 event handler 从 component 里抽离出来，写在 controller 里面，组成 global handlers 传入 View 组件内。
+react-imvc 建议除了把 state 从 component 里抽离出来，组成 global state 以外，也应该把 event handler 从 component 里抽离出来，写在 controller 里面，将 controller 传入 View 组件内。
 
 event handler 必须是 arrow function 箭头函数的语法，这样可以做到内部的 this 值永远指向 controller 实例，不需要 bind this，在 view 组件里直接使用即可。
 
@@ -617,10 +618,10 @@ export default class extends Controller {
 }
 
 /**
- * 在 view 组件里，可以从 props 里拿到 global state 和 global event handlers
+ * 在 view 组件里，可以从 props 里拿到 global state 和 controller 实例
  */
-function View({ state, handlers }) {
-  let { handleIncre, handleDecre, handleCustomNum } = handlers
+function View({ state, ctrl }) {
+  let { handleIncre, handleDecre, handleCustomNum } = ctrl
   return (
     <div>
       <h1>Count: {state.count}</h1>
@@ -855,7 +856,7 @@ EventWrapper 组件，提供传递事件 handler 的快捷通道。
 
 在 react 组件里获取到当前 controller 的实例。
 
-使用该 hooks-api，可以减少传递 handlers 的负担。
+使用该 hooks-api，可以减少传递 controller 的负担。
 
 ```javascript
 import React from 'react'
@@ -1108,7 +1109,7 @@ connect 是一个高阶函数，第一次调用时接受 selector 函数作为�
 
 withData 函数接受一个 React 组件作为参数，返回新的 React 组件。withData 会将 selector 函数返回的数据，作为 props 传入新的 React 组件。
 
-selector({ state, handlers, actions }) 函数将得到一个 data 参数，其中包含三个字段 state, handlers, acitons，分别对应 controller 里的 global state, global handlers 和 actions 对象。
+selector({ state, ctrl }) 函数将得到一个 data 参数，其中包含三个字段 state, ctrl，分别对应 controller 里的 global state, controller 实例。
 
 ```javascript
 import React from 'react'
@@ -1139,7 +1140,7 @@ function Loading(props) {
 
 ## Config Babel
 
-配置 babel 的方式，是设置 imv.config.js 的 babel 字段。它是一个函数，它接受一个参数 isServer。
+配置 babel 的方式，是设置 imvc.config.js 的 babel 字段。它是一个函数，它接受一个参数 isServer。
 
 请注意，如果添加的 plugins/presets 配置，不支持服务端或客户端运行，可根据 isServer 参数来动态配置。
 
