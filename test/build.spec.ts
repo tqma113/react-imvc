@@ -92,11 +92,58 @@ describe('build', () => {
           expect(config.optimization).toBeDefined()
           if (config.optimization) {
             expect(config.optimization.minimizer).toBeDefined()
+            expect(config.optimization.splitChunks).toStrictEqual({
+              chunks: 'all',
+              name: 'vendor'
+            })
           }
         })
       })
 
-      it.todo('development')
+      describe('development', () => {
+        it('isServer is true', () => {
+          const options = Object.assign(defaultConfig, { NODE_ENV: 'development' })
+          const config = createWebpackConfig(options, true)
+  
+          expect(config.mode).toBe('development')
+          expect(config.watch).toBeTruthy()
+          expect(config.output).toBeDefined()
+          if (config.output) {
+            expect(config.output.filename).toBe('server.bundle.js')
+            expect(config.output.libraryTarget).toBe('commonjs2')
+            expect(config.output.path).toBe('D:\\Projects\\react-imvc\\publish')
+          }
+          expect(config.optimization).toBeDefined()
+          if (config.optimization) {
+            expect(config.optimization.minimize).toBeFalsy()
+            expect(config.optimization.splitChunks).toStrictEqual({
+              chunks: 'all',
+              name: 'vendor'
+            })
+          }
+        })
+
+        it('isServer is false', () => {
+          const options = Object.assign(defaultConfig, { NODE_ENV: 'development' })
+          const config = createWebpackConfig(options)
+  
+          expect(config.mode).toBe('development')
+          expect(config.watch).toBeTruthy()
+          expect(config.output).toBeDefined()
+          if (config.output) {
+            expect(config.output.filename).toBe('js/[name].js')
+            expect(config.output.chunkFilename).toBe('js/[name].js')
+            expect(config.output.path).toBe('D:\\Projects\\react-imvc\\publish\\static')
+          }
+          expect(config.optimization).toBeDefined()
+          if (config.optimization) {
+            expect(config.optimization.splitChunks).toStrictEqual({
+              chunks: 'all',
+              name: 'vendor'
+            })
+          }
+        })
+      })
 
       it.todo('test')
     })
