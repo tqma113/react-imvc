@@ -6,9 +6,7 @@ import createCache, { Cache } from '../src/middleware/createCache'
 jest.useFakeTimers()
 
 describe('middleware', () => {
-  describe('cacheView', () => {
-    // TODO
-  })
+  it.todo('cacheView')
 
   describe('createCache', () => {
     let cache: Cache
