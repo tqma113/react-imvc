@@ -76,7 +76,7 @@ export default function createExpressApp(config: Config): express.Express {
 
 	// handle cookieParser
 	if (config.cookieParser) {
-		let { secret = true, ...options } = config.cookieParser
+		let { secret = 'imvc', ...options } = config.cookieParser
 		app.use(cookieParser(secret, options))
 	}
 
