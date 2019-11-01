@@ -29,18 +29,13 @@ const config: Partial<Config> = {
 }
 
 describe('component test', () => {
-  // let app: express.Express
   let server: http.Server
   let browser: puppeteer.Browser
 
   beforeAll(() => {
     return start({ config }).then((result) => {
-      // app = result.app
       server = result.server
-      return puppeteer.launch({
-        // headless: false,
-        // slowMo: 50
-      })
+      return puppeteer.launch()
     }).then((brws) => {
       browser = brws
     })
