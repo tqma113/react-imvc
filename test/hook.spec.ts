@@ -32,21 +32,23 @@ describe('hook', () => {
     let server: http.Server
     let browser: puppeteer.Browser
 
-    beforeAll(() => {
-      return start({ config }).then((result) => {
+    beforeAll(async (done) => {
+      await start({ config }).then((result) => {
         // app = result.app
         server = result.server
         return puppeteer.launch()
       }).then((brws) => {
         browser = brws
       })
+      done()
     })
 
-    afterAll(() => {
+    afterAll(async (done) => {
       server.close()
-      return browser.close()
+      await browser.close()
+      done()
     })
-    it('it work well', async () => {
+    it('it work well', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/hook`
       await page.goto(url)
@@ -55,7 +57,7 @@ describe('hook', () => {
       let content = await page.$eval('#hook', (e) => e.innerHTML)
 
       expect(content).toBe('Hello World')
-
+      done()
     })
   })
   
