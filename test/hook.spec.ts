@@ -28,13 +28,11 @@ const config: Partial<Config> = {
 
 describe('hook', () => {
   describe('useCtrl', () => {
-    // let app: express.Express
     let server: http.Server
     let browser: puppeteer.Browser
 
     beforeAll(async (done) => {
       await start({ config }).then((result) => {
-        // app = result.app
         server = result.server
         return puppeteer.launch()
       }).then((brws) => {
@@ -57,6 +55,7 @@ describe('hook', () => {
       let content = await page.$eval('#hook', (e) => e.innerHTML)
 
       expect(content).toBe('Hello World')
+      await page.close()
       done()
     })
   })
