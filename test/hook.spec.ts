@@ -44,29 +44,15 @@ describe('hook', () => {
     await browser.close()
   })
 
-  describe('useCtrl', () => {
-    it('it work well', async () => {
-      let page = await browser.newPage()
-      let url = `http://localhost:${config.port}/hook`
-      await page.goto(url)
-      await page.waitFor('#hook')
+  it('it work well', async () => {
+    let page = await browser.newPage()
+    let url = `http://localhost:${config.port}/hook`
+    await page.goto(url)
+    await page.waitFor('#hook')
 
-      let content = await page.$eval('#hook', (e) => e.innerHTML)
+    let content = await page.$eval('#hook', (e) => e.innerHTML)
 
-      expect(content).toBe('Hello World')
-      await page.close()
-    })
-  })
-  
-  describe('useModel', () => {
-    it.todo('it work well')
-  })
-  
-  describe('useModelActions', () => {
-    it.todo('it work well')
-  })
-  
-  describe('useModelState', () => {
-    it.todo('it work well')
+    expect(content).toBe('Hello World')
+    await page.close()
   })
 })
