@@ -45,7 +45,7 @@ describe('React-IMVC', () => {
 		let server: Server
 		let browser: puppeteer.Browser
 
-		beforeAll(async (done) => {
+		beforeAll(async () => {
 			await start({ config }).then((result) => {
 				app = result.app
 				server = result.server
@@ -53,17 +53,15 @@ describe('React-IMVC', () => {
 			}).then((brws) => {
 				browser = brws
 			})
-			done()
 		})
 
-		afterAll(async (done) => {
+		afterAll(async () => {
 			server.close()
 			await browser.close()
-			done()
 		})
 
 		describe('static view', () => {
-			it(`should render view in server side`, async (done) => {
+			it(`should render view in server side`, async () => {
 				let page = await browser.newPage()
 				let url = `http://localhost:${config.port}/static_view`
 				await page.goto(url)
@@ -78,10 +76,9 @@ describe('React-IMVC', () => {
 				expect(clientContent.includes('static view content')).toBe(true)
 	
 				await page.close()
-				done()
 			}) 
 	
-			it('should not render view in server side when controller.SSR is false', async (done) => {
+			it('should not render view in server side when controller.SSR is false', async () => {
 				let page = await browser.newPage()
 				let url = `http://localhost:${config.port}/static_view_csr`
 				await page.goto(url)
@@ -97,7 +94,6 @@ describe('React-IMVC', () => {
 					clientContent.includes('static view content by client side rendering')
 				).toBe(true)
 				await page.close()
-				done()
 			})
 		})
 	
@@ -107,16 +103,15 @@ describe('React-IMVC', () => {
 				expect(server.isTouched).toBe(true)
 			})
 	
-			it('should support custom server router', async (done) => {
+			it('should support custom server router', async () => {
 				let url = `http://localhost:${config.port}/my_router`
 				let response = await fetch(url)
 				let json = await response.json()
 				expect(typeof json).toBe('object')
 				expect(json.ok).toBe(true)
-				done()
 			})
 	
-			it('should support render custom layout', async (done) => {
+			it('should support render custom layout', async () => {
 				let page = await browser.newPage()
 				let url = `http://localhost:${config.port}/static_view`
 				await page.goto(url)
@@ -129,20 +124,18 @@ describe('React-IMVC', () => {
 				expect(serverContent.includes('window.__CUSTOM_LAYOUT__')).toBe(true)
 				expect(__CUSTOM_LAYOUT__).toBe(true)
 				await page.close()
-				done()
 			})
 	
 			let responseStatus = config.SSR ? 404 : 200
-			it(`should respond ${responseStatus} status code when url is not match`, async (done) => {
+			it(`should respond ${responseStatus} status code when url is not match`, async () => {
 				let url = `http://localhost:${config.port}/a_path_which_is_not match`
 				let response = await fetch(url)
 				expect(response.status).toBe(responseStatus)
-				done()
 			})
 		})
 	
 		describe('controller', () => {
-			it('should have location and context properties in controller instance both server side and client side', async (done) => {
+			it('should have location and context properties in controller instance both server side and client side', async () => {
 				let url = `http://localhost:${config.port}/basic_state?a=1&b=2`
 				let page: any
 				let clientController: any
@@ -201,7 +194,6 @@ describe('React-IMVC', () => {
 				expect(location.params).toEqual({})
 	
 				await page.close()
-				done()
 			})
 		})
 	})
@@ -217,7 +209,7 @@ describe('React-IMVC', () => {
 		let server: Server
 		let browser: puppeteer.Browser
 
-		beforeAll(async (done) => {
+		beforeAll(async () => {
 			await start({ config }).then((result) => {
 				app = result.app
 				server = result.server
@@ -225,17 +217,15 @@ describe('React-IMVC', () => {
 			}).then((brws) => {
 				browser = brws
 			})
-			done()
 		})
 
-		afterAll(async (done) => {
+		afterAll(async () => {
 			server.close()
 			await browser.close()
-			done()
 		})
 
 		describe('static view', () => {
-			it(`should not render view in server side`, async (done) => {
+			it(`should not render view in server side`, async () => {
 				let page = await browser.newPage()
 				let url = `http://localhost:${config.port}/static_view`
 				await page.goto(url)
@@ -250,10 +240,9 @@ describe('React-IMVC', () => {
 				expect(clientContent.includes('static view content')).toBe(true)
 	
 				await page.close()
-				done()
 			}) 
 	
-			it('should not render view in server side when controller.SSR is false', async (done) => {
+			it('should not render view in server side when controller.SSR is false', async () => {
 				let page = await browser.newPage()
 				let url = `http://localhost:${config.port}/static_view_csr`
 				await page.goto(url)
@@ -269,7 +258,6 @@ describe('React-IMVC', () => {
 					clientContent.includes('static view content by client side rendering')
 				).toBe(true)
 				await page.close()
-				done()
 			})
 		})
 	
@@ -279,16 +267,15 @@ describe('React-IMVC', () => {
 				expect(server.isTouched).toBe(true)
 			})
 	
-			it('should support custom server router', async (done) => {
+			it('should support custom server router', async () => {
 				let url = `http://localhost:${config.port}/my_router`
 				let response = await fetch(url)
 				let json = await response.json()
 				expect(typeof json).toBe('object')
 				expect(json.ok).toBe(true)
-				done()
 			})
 	
-			it('should support render custom layout', async (done) => {
+			it('should support render custom layout', async () => {
 				let page = await browser.newPage()
 				let url = `http://localhost:${config.port}/static_view`
 				await page.goto(url)
@@ -301,20 +288,18 @@ describe('React-IMVC', () => {
 				expect(serverContent.includes('window.__CUSTOM_LAYOUT__')).toBe(true)
 				expect(__CUSTOM_LAYOUT__).toBe(true)
 				await page.close()
-				done()
 			})
 	
 			let responseStatus = config.SSR ? 404 : 200
-			it(`should respond ${responseStatus} status code when url is not match`, async (done) => {
+			it(`should respond ${responseStatus} status code when url is not match`, async () => {
 				let url = `http://localhost:${config.port}/a_path_which_is_not match`
 				let response = await fetch(url)
 				expect(response.status).toBe(responseStatus)
-				done()
 			})
 		})
 	
 		describe('controller', () => {
-			it('should have location and context properties in controller instance both server side and client side', async (done) => {
+			it('should have location and context properties in controller instance both server side and client side', async () => {
 				let url = `http://localhost:${config.port}/basic_state?a=1&b=2`
 				let page: any
 				let clientController: any
@@ -373,7 +358,6 @@ describe('React-IMVC', () => {
 				expect(location.params).toEqual({})
 	
 				await page.close()
-				done()
 			})
 		})
 	})
