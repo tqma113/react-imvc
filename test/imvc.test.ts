@@ -57,20 +57,23 @@ function mainTest(config: Partial<Config>) {
 		let server: Server
 		let browser: puppeteer.Browser
 
-		beforeAll(() => {
-			return start({ config }).then((result) => {
+		beforeAll(async (done) => {
+			await start({ config }).then((result) => {
 				server = result.server
 				return puppeteer.launch()
 			}).then((brws) => {
 				browser = brws
 			})
+			done()
 		})
 	
-		afterAll(() => {
+		afterAll(async (done) => {
 			server.close()
-			return browser.close()
+			await browser.close()
+			done()
 		})
-		it(`should ${renderCondition} view in server side`, async () => {
+
+		it(`should ${renderCondition} view in server side`, async (done) => {
 			let page = await browser.newPage()
 			let url = `http://localhost:${config.port}/static_view`
 			await page.goto(url)
@@ -85,9 +88,10 @@ function mainTest(config: Partial<Config>) {
 			expect(clientContent.includes('static view content')).toBe(true)
 
 			await page.close()
+			done()
 		}) 
 
-		it('should not render view in server side when controller.SSR is false', async () => {
+		it('should not render view in server side when controller.SSR is false', async (done) => {
 			let page = await browser.newPage()
 			let url = `http://localhost:${config.port}/static_view_csr`
 			await page.goto(url)
@@ -103,6 +107,7 @@ function mainTest(config: Partial<Config>) {
 				clientContent.includes('static view content by client side rendering')
 			).toBe(true)
 			await page.close()
+			done()
 		})
 	})
 
@@ -112,34 +117,37 @@ function mainTest(config: Partial<Config>) {
 		let server: Server
 		let browser: puppeteer.Browser
 
-		beforeAll(() => {
-			return start({ config }).then((result) => {
+		beforeAll(async (done) => {
+			await start({ config }).then((result) => {
 				app = result.app
 				server = result.server
 				return puppeteer.launch()
 			}).then((brws) => {
 				browser = brws
 			})
+			done()
 		})
 
-		afterAll(() => {
+		afterAll(async (done) => {
 			server.close()
-			return browser.close()
+			await browser.close()
+			done()
 		})
 		it('should pass server and app instance to every route handler', () => {
 			expect(app.isTouched).toBe(true)
 			expect(server.isTouched).toBe(true)
 		})
 
-		it('should support custom server router', async () => {
+		it('should support custom server router', async (done) => {
 			let url = `http://localhost:${config.port}/my_router`
 			let response = await fetch(url)
 			let json = await response.json()
 			expect(typeof json).toBe('object')
 			expect(json.ok).toBe(true)
+			done()
 		})
 
-		it('should support render custom layout', async () => {
+		it('should support render custom layout', async (done) => {
 			let page = await browser.newPage()
 			let url = `http://localhost:${config.port}/static_view`
 			await page.goto(url)
@@ -152,37 +160,39 @@ function mainTest(config: Partial<Config>) {
 			expect(serverContent.includes('window.__CUSTOM_LAYOUT__')).toBe(true)
 			expect(__CUSTOM_LAYOUT__).toBe(true)
 			await page.close()
+			done()
 		})
 
 		let responseStatus = config.SSR ? 404 : 200
-		it(`should respond ${responseStatus} status code when url is not match`, async () => {
+		it(`should respond ${responseStatus} status code when url is not match`, async (done) => {
 			let url = `http://localhost:${config.port}/a_path_which_is_not match`
 			let response = await fetch(url)
 			expect(response.status).toBe(responseStatus)
+			done()
 		})
 	})
 
 	describe('controller', () => {
-		
-		// let app: App
 		let server: Server
 		let browser: puppeteer.Browser
 
-		beforeAll(() => {
-			return start({ config }).then((result) => {
-				// app = result.app
+		beforeAll(async (done) => {
+			await start({ config }).then((result) => {
 				server = result.server
 				return puppeteer.launch()
 			}).then((brws) => {
 				browser = brws
 			})
+			done()
 		})
 	
-		afterAll(() => {
+		afterAll(async (done) => {
 			server.close()
-			return browser.close()
+			await browser.close()
+			done()
 		})
-		it('should have location and context properties in controller instance both server side and client side', async () => {
+
+		it('should have location and context properties in controller instance both server side and client side', async (done) => {
 			let url = `http://localhost:${config.port}/basic_state?a=1&b=2`
 			let page: any
 			let clientController: any
@@ -241,6 +251,7 @@ function mainTest(config: Partial<Config>) {
 			expect(location.params).toEqual({})
 
 			await page.close()
+			done()
 		})
 	})
 }
