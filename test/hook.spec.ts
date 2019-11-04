@@ -7,7 +7,7 @@ import start from "../src/start"
 jest.setTimeout(30000)
 
 process.env.NODE_ENV = "development"
-let PORT = 3333
+let PORT = 33333
 const ROOT = path.join(__dirname, "project")
 const config: Partial<Config> = {
   root: ROOT, // 项目根目录
@@ -27,25 +27,26 @@ const config: Partial<Config> = {
 
 
 describe('hook', () => {
+  let server: http.Server
+  let browser: puppeteer.Browser
+
+  beforeAll(async (done) => {
+    await start({ config }).then((result) => {
+      server = result.server
+      return puppeteer.launch()
+    }).then((brws) => {
+      browser = brws
+    })
+    done()
+  })
+
+  afterAll(async (done) => {
+    server.close()
+    await browser.close()
+    done()
+  })
+
   describe('useCtrl', () => {
-    let server: http.Server
-    let browser: puppeteer.Browser
-
-    beforeAll(async (done) => {
-      await start({ config }).then((result) => {
-        server = result.server
-        return puppeteer.launch()
-      }).then((brws) => {
-        browser = brws
-      })
-      done()
-    })
-
-    afterAll(async (done) => {
-      server.close()
-      await browser.close()
-      done()
-    })
     it('it work well', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/hook`
@@ -61,14 +62,14 @@ describe('hook', () => {
   })
   
   describe('useModel', () => {
-    it.todo('should work with type infer')
+    it.todo('it work well')
   })
   
   describe('useModelActions', () => {
-    it.todo('should work with type infer')
+    it.todo('it work well')
   })
   
   describe('useModelState', () => {
-    it.todo('should work with type infer')
+    it.todo('it work well')
   })
 })

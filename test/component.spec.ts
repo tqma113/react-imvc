@@ -8,7 +8,7 @@ jest.setTimeout(30000)
 
 process.env.NODE_ENV = 'development'
 
-let PORT: number = 33339
+let PORT: number = 33331
 
 const ROOT: string = path.join(__dirname, 'project')
 
