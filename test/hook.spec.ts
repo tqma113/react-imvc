@@ -46,18 +46,54 @@ describe('hook', () => {
     await browser.close()
   })
 
-  it('it work well', async () => {
+  it('should could access `state` with useModelState', async () => {
     let page = await browser.newPage()
     let url = `http://localhost:${config.port}/hook`
     await page.goto(url)
     await page.waitFor('#hook')
 
     let content = await page.$eval('#foo', (e) => e.innerHTML)
-    expect(content).toBe('')
+    expect(content).toBe('0')
 
-    await page.click('#update')
+    await page.close()
+  })
+
+  it('should could access `ctrl.handler*` with `useCtrl`', async () => {
+    let page = await browser.newPage()
+    let url = `http://localhost:${config.port}/hook`
+    await page.goto(url)
+    await page.waitFor('#hook')
+
+    let content = await page.$eval('#foo', (e) => e.innerHTML)
+    expect(content).toBe('0')
+
+    await page.click('#update1')
     content = await page.$eval('#foo', (e) => e.innerHTML)
-    expect(content).toBe('foo')
+    expect(content).toBe('1')
+    
+    await page.click('#update1')
+    content = await page.$eval('#foo', (e) => e.innerHTML)
+    expect(content).toBe('2')
+
+    await page.close()
+  })
+
+  it('should could access `actions` with `useModelActions`', async () => {
+    let page = await browser.newPage()
+    let url = `http://localhost:${config.port}/hook`
+    await page.goto(url)
+    await page.waitFor('#hook')
+
+    let content = await page.$eval('#foo', (e) => e.innerHTML)
+    expect(content).toBe('0')
+
+    await page.click('#update2')
+    content = await page.$eval('#foo', (e) => e.innerHTML)
+    expect(content).toBe('1')
+    
+    await page.click('#update2')
+    content = await page.$eval('#foo', (e) => e.innerHTML)
+    expect(content).toBe('2')
 
     await page.close()
   })
