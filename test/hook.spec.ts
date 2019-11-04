@@ -30,24 +30,22 @@ describe('hook', () => {
   let server: http.Server
   let browser: puppeteer.Browser
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     await start({ config }).then((result) => {
       server = result.server
       return puppeteer.launch()
     }).then((brws) => {
       browser = brws
     })
-    done()
   })
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     server.close()
     await browser.close()
-    done()
   })
 
   describe('useCtrl', () => {
-    it('it work well', async (done) => {
+    it('it work well', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/hook`
       await page.goto(url)
@@ -57,7 +55,6 @@ describe('hook', () => {
 
       expect(content).toBe('Hello World')
       await page.close()
-      done()
     })
   })
   
