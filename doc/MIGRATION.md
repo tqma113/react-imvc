@@ -2,7 +2,9 @@
 
 ## What' new
 
-* Support for Typescript. Intact intelligent code completion.
++ Support for Typescript. Intact intelligent code completion.
+
++ Props of *View* changed from `{ state, actions, handlers }` to `{ state, ctrl }`.
 
 ## How to upgrade
 
@@ -171,6 +173,24 @@
 
     ```typescript
     export default function View({ state, ctrl }: ViewProps) {
+        // do somethings
+    }
+    ```
+
+    In v3.x, Props of *View* changed from `{ state, actions, handlers }` to `{ state, ctrl }`. The `Ctrl` is the superset of `handlers`, so you can migrate backwards compatibility like this:
+
+    ```javascript
+    export default function View({ state, actions, handlers }) {
+        // do somethings
+    }
+    ```
+
+    rewrite as
+
+    ```javascript
+    export default function View({ state, ctrl }: ViewProps) {
+        const actions = ctrl.store.actions
+        const handlers = ctrl
         // do somethings
     }
     ```
