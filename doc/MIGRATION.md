@@ -6,6 +6,8 @@
 
 * Props of *View* changed from `{ state, actions, handlers }` to `{ state, ctrl }`.
 
+* Hooks should be used with clear type of `state, actions, ctrl`.
+
 ## How to upgrade
 
 1. Update `react-imvc` to 3.x
@@ -223,6 +225,66 @@
         // do somethings
     }
     ```
+
+7. Fix type error of hooks.(If you has used hooks in project)
+
+    (1) `useCtrl`
+
+    ```javascript
+    const ctrl = useCtrl()
+    ```
+
+    rewrited as
+
+    ```javascript
+    import Ctrl from './Controller'
+    const ctrl = useCtrl<Ctrl>()
+    ```
+
+    (2) `useModel`
+
+    ```javascript
+    const ctrl = useModel()
+    ```
+
+    rewrited as
+
+    ```javascript
+    import * as Model from './Model'
+    type Actions = Omit<typeof Model, 'initialState'>
+
+    const ctrl = useModel<Model.State, Actions>()
+    ```
+
+    (3) `useModelActions`
+
+    ```javascript
+    const ctrl = useModelActions()
+    ```
+
+    rewrited as
+
+    ```javascript
+    import * as Model from './Model'
+    type Actions = Omit<typeof Model, 'initialState'>
+
+    const ctrl = useModelActions<Ctrl>()
+    ```
+
+    (4) `useModelState`
+
+    ```javascript
+    const ctrl = useModelState()
+    ```
+
+    rewrited as
+
+    ```javascript
+    import * as Model from './Model'
+    const ctrl = useModelState<Model.State>()
+    ```
+
+    Note: Hooks must be used in `View`, React Components.
 
 Note: If you has the `BaseController`, please look through how did we do in [isomorphic-cnode](https://github.com/Lucifier129/isomorphic-cnode)
 
