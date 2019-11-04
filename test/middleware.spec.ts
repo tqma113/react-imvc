@@ -1,6 +1,5 @@
 import createCache, { Cache } from '../src/middleware/createCache'
-
-// TODO import shareRoot from '../src/middleware/shareRoot'
+import shareRoot from '../src/middleware/shareRoot'
 // TODO import cacheView from '../src/middleware/cacheView'
 
 jest.useFakeTimers()
@@ -406,6 +405,62 @@ describe('middleware', () => {
   })
 
   describe('shareRoot', () => {
-    it.todo('should work')
+    describe('`root` is in `req.url` splited by `/`', () => {
+      it('should remove root from url add set basename', () => {
+        const root = `/root`
+        const require = {
+          url: '/root/foo/bar/1',
+          basename: ''
+        }
+        const handler = shareRoot(root)
+        handler(require as any, {} as any, () => {})
+  
+        expect(require.url).toBe('/foo/bar/1')
+        expect(require.basename).toBe('/root')
+      })
+
+      it('should format `root`, reset `url` and set `basename`', () => {
+        const root = `/root/`
+        const require = {
+          url: '/root/foo/bar/1',
+          basename: ''
+        }
+        const handler = shareRoot(root)
+        handler(require as any, {} as any, () => {})
+  
+        expect(require.url).toBe('/foo/bar/1')
+        expect(require.basename).toBe('/root')
+      })
+    })
+
+    describe('`root` is in `req.url` but not splited by `/`', () => {
+      it('should break url and format it and set basename', () => {
+        const root = `/root`
+        const require = {
+          url: '/rootfoo/bar/1',
+          basename: ''
+        }
+        const handler = shareRoot(root)
+        handler(require as any, {} as any, () => {})
+  
+        expect(require.url).toBe('/foo/bar/1')
+        expect(require.basename).toBe('/root')
+      })
+    })
+
+    describe('`root` is not in `req.url`', () => {
+      it('should not remove root from url and not set basename', () => {
+        const root = `/root`
+        const require = {
+          url: '/foo/bar/1',
+          basename: ''
+        }
+        const handler = shareRoot(root)
+        handler(require as any, {} as any, () => {})
+  
+        expect(require.url).toBe('/foo/bar/1')
+        expect(require.basename).toBe('')
+      })
+    })
   })
 })
