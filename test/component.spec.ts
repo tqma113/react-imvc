@@ -28,43 +28,48 @@ const config: Partial<Config> = {
   SSR: false
 }
 
-describe('component test', () => {
+describe('component', () => {
   let server: http.Server
   let browser: puppeteer.Browser
 
-  beforeAll(() => {
-    return start({ config }).then((result) => {
+  beforeAll(async (done) => {
+    await start({ config }).then((result) => {
       server = result.server
       return puppeteer.launch()
     }).then((brws) => {
       browser = brws
     })
+    done()
   })
 
-  afterAll(() => {
+  afterAll(async (done) => {
     server.close()
-    return browser.close()
+    await browser.close()
+    done()
   })
   
-  it('EventWrapper', async () => {
-    let page = await browser.newPage()
-    let url = `http://localhost:${config.port}/event`
-    await page.goto(url)
-    await page.waitFor('#event')
-
-    let count = await page.$eval('#count', (e) => e.innerHTML)
-    expect(count).toBe('0')
-
-    await page.click('#inner')
-
-    count = await page.$eval('#count', (e) => e.innerHTML)
-    expect(count).toBe('1')
-
-    await page.close()
+  describe('EventWrapper', () => {
+    it('should handle event with handler in `ctrl`', async (done) => {
+      let page = await browser.newPage()
+      let url = `http://localhost:${config.port}/event`
+      await page.goto(url)
+      await page.waitFor('#event')
+  
+      let count = await page.$eval('#count', (e) => e.innerHTML)
+      expect(count).toBe('0')
+  
+      await page.click('#inner')
+  
+      count = await page.$eval('#count', (e) => e.innerHTML)
+      expect(count).toBe('1')
+  
+      await page.close()
+      done()
+    })
   })
   
   describe('Input', () => {
-    it('global state should change when the input has been changed', async () => {
+    it('global state should change when the input has been changed', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/input`
       await page.goto(url)
@@ -77,9 +82,10 @@ describe('component test', () => {
       expect(content).toBe('test')
 
       await page.close()
+      done()
     })
 
-    it('global state should change when the input with deep level has been changed', async () => {
+    it('global state should change when the input with deep level has been changed', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/input`
       await page.goto(url)
@@ -92,9 +98,10 @@ describe('component test', () => {
       expect(content).toBe('friendAtest')
 
       await page.close()
+      done()
     })
 
-    it('global state and it `isWarn` and `isValid` should change when the input with check attribute has been changed', async () => {
+    it('global state and it `isWarn` and `isValid` should change when the input with check attribute has been changed', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/input`
       await page.goto(url)
@@ -127,34 +134,38 @@ describe('component test', () => {
       expect(content).toBe('1312456456 false true')
 
       await page.close()
+      done()
     })
   })
   
-  it('Link', async () => {
-    let page = await browser.newPage()
-    let url = `http://localhost:${config.port}/link_from`
-    await page.goto(url)
-    await page.waitFor('#link_from')
-    let fromContent = await page.evaluate(
-      () => document.documentElement.outerHTML
-    )
-
-    expect(fromContent.includes('link from page')).toBeTruthy()
-
-    page.click('#link_to_link')
-    await page.waitFor('#link_to')
-
-    let toContent = await page.evaluate(
-      () => document.documentElement.outerHTML
-    )
-
-    expect(toContent.includes('link to page')).toBeTruthy()
-
-    await page.close()
+  describe('Link', () => {
+    it('should change route when click', async (done) => {
+      let page = await browser.newPage()
+      let url = `http://localhost:${config.port}/link_from`
+      await page.goto(url)
+      await page.waitFor('#link_from')
+      let fromContent = await page.evaluate(
+        () => document.documentElement.outerHTML
+      )
+  
+      expect(fromContent.includes('link from page')).toBeTruthy()
+  
+      page.click('#link_to_link')
+      await page.waitFor('#link_to')
+  
+      let toContent = await page.evaluate(
+        () => document.documentElement.outerHTML
+      )
+  
+      expect(toContent.includes('link to page')).toBeTruthy()
+  
+      await page.close()
+      done()
+    })
   })
   
   describe('NavLink', () => {
-    it('should to other page correctly', async () => {
+    it('should to other page correctly', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -174,9 +185,10 @@ describe('component test', () => {
   
       expect(toContent.includes('link to page')).toBeTruthy()
       await page.close()
+      done()
     })
 
-    it('should use active class when the to match the current url', async () => {
+    it('should use active class when the to match the current url', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -187,9 +199,10 @@ describe('component test', () => {
       expect(className).toBe('active')
 
       await page.close()
+      done()
     })
     
-    it('should use active style when the to match the current url', async () => {
+    it('should use active style when the to match the current url', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -200,9 +213,10 @@ describe('component test', () => {
       expect(style).toBe("font-size: 14px;")
 
       await page.close()
+      done()
     })
 
-    it('should use active style and class when the isActive function return true', async () => {
+    it('should use active style and class when the isActive function return true', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -215,49 +229,67 @@ describe('component test', () => {
       expect(className).toBe('active')
 
       await page.close()
-
+      done()
     })
   })
   
+  describe('OuterClickWrapper', () => {
+    it('should handler click event outside Component', async (done) => {
+      let page = await browser.newPage()
+      let url = `http://localhost:${config.port}/outer_click`
+      await page.goto(url)
+      await page.waitFor('#outer_click')
   
-  it('OuterClickWrapper', async () => {
-    let page = await browser.newPage()
-    let url = `http://localhost:${config.port}/outer_click`
-    await page.goto(url)
-    await page.waitFor('#outer_click')
+      let count = await page.$eval('#count', (e) => e.innerHTML)
+      expect(count).toBe('0')
+  
+      await page.click('#beside')
+  
+      count = await page.$eval('#count', (e) => e.innerHTML)
+      expect(count).toBe('1')
+  
+      await page.click('#out')
+  
+      count = await page.$eval('#count', (e) => e.innerHTML)
+      expect(count).toBe('2')
+  
+      await page.close()
+      done()
+    })
 
-    let count = await page.$eval('#count', (e) => e.innerHTML)
-    expect(count).toBe('0')
-
-    await page.click('#inner')
-
-    count = await page.$eval('#count', (e) => e.innerHTML)
-    expect(count).toBe('0')
-
-    await page.click('#beside')
-
-    count = await page.$eval('#count', (e) => e.innerHTML)
-    expect(count).toBe('1')
-
-    await page.click('#out')
-
-    count = await page.$eval('#count', (e) => e.innerHTML)
-    expect(count).toBe('2')
-
-    await page.close()
+    it('should not handler click event inside Component', async (done) => {
+      let page = await browser.newPage()
+      let url = `http://localhost:${config.port}/outer_click`
+      await page.goto(url)
+      await page.waitFor('#outer_click')
+  
+      let count = await page.$eval('#count', (e) => e.innerHTML)
+      expect(count).toBe('0')
+  
+      await page.click('#inner')
+  
+      count = await page.$eval('#count', (e) => e.innerHTML)
+      expect(count).toBe('0')
+  
+      await page.close()
+      done()
+    })
   })
   
-  it('Style', async () => {
-    let page = await browser.newPage()
-    let url = `http://localhost:${config.port}/style`
-    await page.goto(url)
-    await page.waitFor('#style')
+  describe('Style', () => {
+    it('should enable style preloaded with name', async (done) => {
+      let page = await browser.newPage()
+      let url = `http://localhost:${config.port}/style`
+      await page.goto(url)
+      await page.waitFor('#style')
 
-    let height = await page.$eval('.style', (e) => e.clientHeight)
+      let height = await page.$eval('.style', (e) => e.clientHeight)
 
-    expect(height).toBe(50)
+      expect(height).toBe(50)
 
-    await page.close()
+      await page.close()
+      done()
+    })
   })
 
   
