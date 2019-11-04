@@ -2,9 +2,9 @@
 
 ## What' new
 
-+ Support for Typescript. Intact intelligent code completion.
+* Support for Typescript. Intact intelligent code completion.
 
-+ Props of *View* changed from `{ state, actions, handlers }` to `{ state, ctrl }`.
+* Props of *View* changed from `{ state, actions, handlers }` to `{ state, ctrl }`.
 
 ## How to upgrade
 
