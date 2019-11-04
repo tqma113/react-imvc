@@ -5,8 +5,6 @@ import shareRoot from '../src/middleware/shareRoot'
 jest.useFakeTimers()
 
 describe('middleware', () => {
-  it.todo('cacheView')
-
   describe('createCache', () => {
     let cache: Cache
     beforeEach(() => {
@@ -15,6 +13,7 @@ describe('middleware', () => {
     afterEach(() => {
       cache.clear()
     })
+    
     it('can get the right value from cache after putting it in', () => {
       let list = [
         {
