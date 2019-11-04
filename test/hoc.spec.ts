@@ -30,21 +30,23 @@ describe('hoc test', () => {
     let server: http.Server
     let browser: puppeteer.Browser
 
-    beforeAll(() => {
-      return start({ config }).then((result) => {
+    beforeAll(async (done) => {
+      await start({ config }).then((result) => {
         server = result.server
         return puppeteer.launch()
       }).then((brws) => {
         browser = brws
       })
+      done()
     })
 
-    afterAll(() => {
+    afterAll(async (done) => {
       server.close()
-      return browser.close()
+      await browser.close()
+      done()
     })
 
-    it('should get the right data passed with connect selector', async () => {
+    it('should get the right data passed with connect selector', async (done) => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/connect`
       await page.goto(url)
@@ -52,6 +54,8 @@ describe('hoc test', () => {
       let content = await page.$eval('#location', (e) => e.innerHTML)
 
       expect(content).toBe('test')
+      await page.close()
+      done()
     })
   })
 })
