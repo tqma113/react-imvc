@@ -32,24 +32,22 @@ describe('component', () => {
   let server: http.Server
   let browser: puppeteer.Browser
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     await start({ config }).then((result) => {
       server = result.server
       return puppeteer.launch()
     }).then((brws) => {
       browser = brws
     })
-    done()
   })
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     server.close()
     await browser.close()
-    done()
   })
   
   describe('EventWrapper', () => {
-    it('should handle event with handler in `ctrl`', async (done) => {
+    it('should handle event with handler in `ctrl`', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/event`
       await page.goto(url)
@@ -64,12 +62,11 @@ describe('component', () => {
       expect(count).toBe('1')
   
       await page.close()
-      done()
     })
   })
   
   describe('Input', () => {
-    it('global state should change when the input has been changed', async (done) => {
+    it('global state should change when the input has been changed', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/input`
       await page.goto(url)
@@ -82,10 +79,9 @@ describe('component', () => {
       expect(content).toBe('test')
 
       await page.close()
-      done()
     })
 
-    it('global state should change when the input with deep level has been changed', async (done) => {
+    it('global state should change when the input with deep level has been changed', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/input`
       await page.goto(url)
@@ -98,10 +94,9 @@ describe('component', () => {
       expect(content).toBe('friendAtest')
 
       await page.close()
-      done()
     })
 
-    it('global state and it `isWarn` and `isValid` should change when the input with check attribute has been changed', async (done) => {
+    it('global state and it `isWarn` and `isValid` should change when the input with check attribute has been changed', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/input`
       await page.goto(url)
@@ -134,12 +129,11 @@ describe('component', () => {
       expect(content).toBe('1312456456 false true')
 
       await page.close()
-      done()
     })
   })
   
   describe('Link', () => {
-    it('should change route when click', async (done) => {
+    it('should change route when click', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -160,12 +154,11 @@ describe('component', () => {
       expect(toContent.includes('link to page')).toBeTruthy()
   
       await page.close()
-      done()
     })
   })
   
   describe('NavLink', () => {
-    it('should to other page correctly', async (done) => {
+    it('should to other page correctly', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -185,10 +178,9 @@ describe('component', () => {
   
       expect(toContent.includes('link to page')).toBeTruthy()
       await page.close()
-      done()
     })
 
-    it('should use active class when the to match the current url', async (done) => {
+    it('should use active class when the to match the current url', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -199,10 +191,9 @@ describe('component', () => {
       expect(className).toBe('active')
 
       await page.close()
-      done()
     })
     
-    it('should use active style when the to match the current url', async (done) => {
+    it('should use active style when the to match the current url', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -213,10 +204,9 @@ describe('component', () => {
       expect(style).toBe("font-size: 14px;")
 
       await page.close()
-      done()
     })
 
-    it('should use active style and class when the isActive function return true', async (done) => {
+    it('should use active style and class when the isActive function return true', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/link_from`
       await page.goto(url)
@@ -229,12 +219,11 @@ describe('component', () => {
       expect(className).toBe('active')
 
       await page.close()
-      done()
     })
   })
   
   describe('OuterClickWrapper', () => {
-    it('should handler click event outside Component', async (done) => {
+    it('should handler click event outside Component', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/outer_click`
       await page.goto(url)
@@ -254,10 +243,9 @@ describe('component', () => {
       expect(count).toBe('2')
   
       await page.close()
-      done()
     })
 
-    it('should not handler click event inside Component', async (done) => {
+    it('should not handler click event inside Component', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/outer_click`
       await page.goto(url)
@@ -272,12 +260,11 @@ describe('component', () => {
       expect(count).toBe('0')
   
       await page.close()
-      done()
     })
   })
   
   describe('Style', () => {
-    it('should enable style preloaded with name', async (done) => {
+    it('should enable style preloaded with name', async () => {
       let page = await browser.newPage()
       let url = `http://localhost:${config.port}/style`
       await page.goto(url)
@@ -288,7 +275,6 @@ describe('component', () => {
       expect(height).toBe(50)
 
       await page.close()
-      done()
     })
   })
 
