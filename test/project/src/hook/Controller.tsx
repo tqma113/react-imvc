@@ -29,7 +29,7 @@ class RootView extends React.Component<{}> {
 }
 
 function View() {
-  let ctrl = useCtrl<{}, State, {}>()
+  let ctrl = useCtrl<Hook>()
   let actions = useModelActions<State, {}>()
   console.log(actions)
 	return <div id="hook">{ctrl.store.getState().foo}</div>
