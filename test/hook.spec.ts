@@ -33,7 +33,9 @@ describe('hook', () => {
   beforeAll(async () => {
     await start({ config }).then((result) => {
       server = result.server
-      return puppeteer.launch()
+      return puppeteer.launch({
+        headless: true
+      })
     }).then((brws) => {
       browser = brws
     })
@@ -50,9 +52,13 @@ describe('hook', () => {
     await page.goto(url)
     await page.waitFor('#hook')
 
-    let content = await page.$eval('#hook', (e) => e.innerHTML)
+    let content = await page.$eval('#foo', (e) => e.innerHTML)
+    expect(content).toBe('')
 
-    expect(content).toBe('Hello World')
+    await page.click('#update')
+    content = await page.$eval('#foo', (e) => e.innerHTML)
+    expect(content).toBe('foo')
+
     await page.close()
   })
 })

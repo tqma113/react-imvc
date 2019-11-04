@@ -9,7 +9,7 @@ type Actions = Omit<typeof Model, 'initialState'>
 class Hook extends Controller<Model.State, Actions> {
   View = RootView
   Model = Model
-  
+
   constructor(location: Location, context: Context) {
     super(location, context)
   }
@@ -29,5 +29,13 @@ function View() {
   let actions = useModelActions<Model.State, Actions>()
   let state = useModelState<Model.State>()
   console.log(model, actions, state)
-	return <div id="hook">{ctrl.store.getState().foo}</div>
+  const handleClick = () => {
+    actions.UPDATE_FOO('foo')
+  }
+	return (
+    <div id="hook">
+      <p id="foo">{ctrl.store.getState().foo}</p>
+      <button id="update" onClick={handleClick}>Update</button>
+    </div>
+  )
 }
