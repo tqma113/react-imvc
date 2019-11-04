@@ -23,13 +23,13 @@ describe('build', () => {
         expect(config.entry).toBeDefined()
         expect(typeof config.entry).toBe('object')
         if (isEntry(config.entry)) {
-          expect(standardize(config.entry.index as string)).toMatch('/react-imvc/src')
+          expect(standardize(config.entry.index as string)).toMatch('/src')
         }
         expect(config.output).toBeDefined()
         if (config.output) {
           expect(config.output.filename).toBe('server.bundle.js')
           expect(config.output.libraryTarget).toBe('commonjs2')
-          expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish')
+          expect(standardize(config.output.path as string)).toMatch('/publish')
         }
         expect(config.devtool).toBe('source-map')
         expect(config.plugins).toBeDefined()
@@ -51,13 +51,13 @@ describe('build', () => {
         expect(config.entry).toBeDefined()
         expect(typeof config.entry).toBe('object')
         if (isEntry(config.entry)) {
-          expect(standardize(config.entry.index as string)).toMatch('/react-imvc/src/entry/client')
+          expect(standardize(config.entry.index as string)).toMatch('/src/entry/client')
         }
         expect(config.output).toBeDefined()
         if (config.output) {
           expect(config.output.filename).toBe('js/[name].js')
           expect(config.output.chunkFilename).toBe('js/[name].js')
-          expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish/static')
+          expect(standardize(config.output.path as string)).toMatch('/publish/static')
         }
         expect(config.devtool).toBe('')
         expect(config.plugins).toBeDefined()
@@ -85,7 +85,7 @@ describe('build', () => {
           if (config.output) {
             expect(config.output.filename).toBe('server.bundle.js')
             expect(config.output.libraryTarget).toBe('commonjs2')
-            expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish')
+            expect(standardize(config.output.path as string)).toMatch('/publish')
           }
           expect(config.optimization).toBeDefined()
           if (config.optimization) {
@@ -103,7 +103,7 @@ describe('build', () => {
           if (config.output) {
             expect(config.output.filename).toBe('js/[name]-[contenthash:6].js')
             expect(config.output.chunkFilename).toBe('js/[name]-[contenthash:6].js')
-            expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish/static')
+            expect(standardize(config.output.path as string)).toMatch('/publish/static')
           }
           expect(config.optimization).toBeDefined()
           if (config.optimization) {
@@ -127,7 +127,7 @@ describe('build', () => {
           if (config.output) {
             expect(config.output.filename).toBe('server.bundle.js')
             expect(config.output.libraryTarget).toBe('commonjs2')
-            expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish')
+            expect(standardize(config.output.path as string)).toMatch('/publish')
           }
           expect(config.optimization).toBeDefined()
           if (config.optimization) {
@@ -149,7 +149,7 @@ describe('build', () => {
           if (config.output) {
             expect(config.output.filename).toBe('js/[name].js')
             expect(config.output.chunkFilename).toBe('js/[name].js')
-            expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish/static')
+            expect(standardize(config.output.path as string)).toMatch('/publish/static')
           }
           expect(config.optimization).toBeDefined()
           if (config.optimization) {
@@ -172,7 +172,7 @@ describe('build', () => {
           if (config.output) {
             expect(config.output.filename).toBe('server.bundle.js')
             expect(config.output.libraryTarget).toBe('commonjs2')
-            expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish')
+            expect(standardize(config.output.path as string)).toMatch('/publish')
           }
           expect(config.optimization).toBeDefined()
           if (config.optimization) {
@@ -194,7 +194,7 @@ describe('build', () => {
           if (config.output) {
             expect(config.output.filename).toBe('js/[name].js')
             expect(config.output.chunkFilename).toBe('js/[name].js')
-            expect(standardize(config.output.path as string)).toMatch('/react-imvc/publish/static')
+            expect(standardize(config.output.path as string)).toMatch('/publish/static')
           }
           expect(config.optimization).toBeDefined()
           if (config.optimization) {
