@@ -15,7 +15,7 @@ interface App extends express.Express {
 	isTouched?: boolean
 }
 
-process.env.NODE_ENV = 'development'
+process.env.NODE_ENV = 'test'
 let PORT = 33334
 const ROOT = path.join(__dirname, 'project')
 const defaultConfig: Partial<Config> = {
@@ -30,7 +30,8 @@ const defaultConfig: Partial<Config> = {
 	routes: 'routes', // 服务端路由目录
 	layout: 'Layout.tsx', // 自定义 Layout
 	webpackLogger: false, // 关闭 webpack logger
-	webpackDevMiddleware: true // 在内存里编译
+	webpackDevMiddleware: true, // 在内存里编译
+	NODE_ENV: 'test'
 }
 
 describe('React-IMVC', () => {

@@ -6,7 +6,7 @@ import start from '../src/start'
 
 jest.setTimeout(30000)
 
-process.env.NODE_ENV = 'development'
+process.env.NODE_ENV = 'test'
 
 let PORT: number = 33331
 
@@ -25,7 +25,8 @@ const config: Partial<Config> = {
 	layout: 'Layout.tsx', // 自定义 Layout
 	webpackLogger: false, // 关闭 webpack logger
   webpackDevMiddleware: true, // 在内存里编译
-  SSR: false
+  SSR: false,
+  NODE_ENV: 'test'
 }
 
 describe('component', () => {

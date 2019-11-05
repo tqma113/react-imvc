@@ -6,7 +6,7 @@ import start from "../src/start"
 
 jest.setTimeout(30000)
 
-process.env.NODE_ENV = "development"
+process.env.NODE_ENV = "test"
 let PORT = 33333
 const ROOT = path.join(__dirname, "project")
 const config: Partial<Config> = {
@@ -23,6 +23,7 @@ const config: Partial<Config> = {
   layout: "Layout.tsx", // 自定义 Layoutclear
   webpackLogger: false, // 关闭 webpack logger
   webpackDevMiddleware: true, // 在内存里编译
+  NODE_ENV: 'test'
 }
 
 
