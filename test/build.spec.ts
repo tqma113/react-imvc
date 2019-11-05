@@ -152,11 +152,11 @@ describe('build', () => {
 
       describe('test', () => {
         it('isServer is true', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'development' })
+          const options = Object.assign(defaultConfig, { NODE_ENV: 'test' })
           const config = createWebpackConfig(options, true)
   
           expect(config.mode).toBe('development')
-          expect(config.watch).toBeTruthy()
+          expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty('filename', 'server.bundle.js')
           expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
@@ -171,11 +171,11 @@ describe('build', () => {
         })
 
         it('isServer is false', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'development' })
+          const options = Object.assign(defaultConfig, { NODE_ENV: 'test' })
           const config = createWebpackConfig(options)
   
           expect(config.mode).toBe('development')
-          expect(config.watch).toBeTruthy()
+          expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty('filename', 'js/[name].js')
           expect(config.output).toHaveProperty('chunkFilename', 'js/[name].js')
