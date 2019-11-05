@@ -26,16 +26,14 @@ describe('build', () => {
           expect(standardize(config.entry.index as string)).toMatch('/src')
         }
         expect(config.output).toBeDefined()
+        expect(config.output).toHaveProperty('filename', 'server.bundle.js')
+        expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
         if (config.output) {
-          expect(config.output.filename).toBe('server.bundle.js')
-          expect(config.output.libraryTarget).toBe('commonjs2')
           expect(standardize(config.output.path as string)).toMatch('/publish')
         }
         expect(config.devtool).toBe('source-map')
         expect(config.plugins).toBeDefined()
-        if (config.plugins) {
-          expect(config.plugins.length).toBe(1)          
-        }
+        expect(config.plugins).toHaveLength(1)          
         expect(config.optimization).toStrictEqual({
           splitChunks: {
             chunks: 'all',
@@ -54,16 +52,14 @@ describe('build', () => {
           expect(standardize(config.entry.index as string)).toMatch('/src/entry/client')
         }
         expect(config.output).toBeDefined()
+        expect(config.output).toHaveProperty('filename', 'js/[name].js')
+        expect(config.output).toHaveProperty('chunkFilename', 'js/[name].js')
         if (config.output) {
-          expect(config.output.filename).toBe('js/[name].js')
-          expect(config.output.chunkFilename).toBe('js/[name].js')
           expect(standardize(config.output.path as string)).toMatch('/publish/static')
         }
         expect(config.devtool).toBe('')
         expect(config.plugins).toBeDefined()
-        if (config.plugins) {
-          expect(config.plugins.length).toBe(3)          
-        }
+        expect(config.plugins).toHaveLength(3)          
         expect(config.optimization).toStrictEqual({
           splitChunks: {
             chunks: 'all',
@@ -82,9 +78,9 @@ describe('build', () => {
           expect(config.mode).toBe('production')
           expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
+          expect(config.output).toHaveProperty('filename', 'server.bundle.js')
+          expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
           if (config.output) {
-            expect(config.output.filename).toBe('server.bundle.js')
-            expect(config.output.libraryTarget).toBe('commonjs2')
             expect(standardize(config.output.path as string)).toMatch('/publish')
           }
           expect(config.optimization).toBeDefined()
@@ -100,19 +96,17 @@ describe('build', () => {
           expect(config.mode).toBe('production')
           expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
+          expect(config.output).toHaveProperty('filename', 'js/[name]-[contenthash:6].js')
+          expect(config.output).toHaveProperty('chunkFilename', 'js/[name]-[contenthash:6].js')
           if (config.output) {
-            expect(config.output.filename).toBe('js/[name]-[contenthash:6].js')
-            expect(config.output.chunkFilename).toBe('js/[name]-[contenthash:6].js')
             expect(standardize(config.output.path as string)).toMatch('/publish/static')
           }
           expect(config.optimization).toBeDefined()
-          if (config.optimization) {
-            expect(config.optimization.minimizer).toBeDefined()
-            expect(config.optimization.splitChunks).toStrictEqual({
-              chunks: 'all',
-              name: 'vendor'
-            })
-          }
+          expect(config.optimization).toHaveProperty('minimizer')
+          expect(config.optimization).toHaveProperty('splitChunks', {
+            chunks: 'all',
+            name: 'vendor'
+          })
         })
       })
 
@@ -124,19 +118,16 @@ describe('build', () => {
           expect(config.mode).toBe('development')
           expect(config.watch).toBeTruthy()
           expect(config.output).toBeDefined()
+          expect(config.output).toHaveProperty('filename', 'server.bundle.js')
+          expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
           if (config.output) {
-            expect(config.output.filename).toBe('server.bundle.js')
-            expect(config.output.libraryTarget).toBe('commonjs2')
             expect(standardize(config.output.path as string)).toMatch('/publish')
           }
           expect(config.optimization).toBeDefined()
-          if (config.optimization) {
-            expect(config.optimization.minimize).toBeFalsy()
-            expect(config.optimization.splitChunks).toStrictEqual({
-              chunks: 'all',
-              name: 'vendor'
-            })
-          }
+          expect(config.optimization).toHaveProperty('splitChunks', {
+            chunks: 'all',
+            name: 'vendor'
+          })
         })
 
         it('isServer is false', () => {
@@ -146,18 +137,16 @@ describe('build', () => {
           expect(config.mode).toBe('development')
           expect(config.watch).toBeTruthy()
           expect(config.output).toBeDefined()
+          expect(config.output).toHaveProperty('filename', 'js/[name].js')
+          expect(config.output).toHaveProperty('chunkFilename', 'js/[name].js')
           if (config.output) {
-            expect(config.output.filename).toBe('js/[name].js')
-            expect(config.output.chunkFilename).toBe('js/[name].js')
             expect(standardize(config.output.path as string)).toMatch('/publish/static')
           }
           expect(config.optimization).toBeDefined()
-          if (config.optimization) {
-            expect(config.optimization.splitChunks).toStrictEqual({
-              chunks: 'all',
-              name: 'vendor'
-            })
-          }
+          expect(config.optimization).toHaveProperty('splitChunks', {
+            chunks: 'all',
+            name: 'vendor'
+          })
         })
       })
 
@@ -169,19 +158,16 @@ describe('build', () => {
           expect(config.mode).toBe('development')
           expect(config.watch).toBeTruthy()
           expect(config.output).toBeDefined()
+          expect(config.output).toHaveProperty('filename', 'server.bundle.js')
+          expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
           if (config.output) {
-            expect(config.output.filename).toBe('server.bundle.js')
-            expect(config.output.libraryTarget).toBe('commonjs2')
             expect(standardize(config.output.path as string)).toMatch('/publish')
           }
           expect(config.optimization).toBeDefined()
-          if (config.optimization) {
-            expect(config.optimization.minimize).toBeFalsy()
-            expect(config.optimization.splitChunks).toStrictEqual({
-              chunks: 'all',
-              name: 'vendor'
-            })
-          }
+          expect(config.optimization).toHaveProperty('splitChunks', {
+            chunks: 'all',
+            name: 'vendor'
+          })
         })
 
         it('isServer is false', () => {
@@ -191,18 +177,16 @@ describe('build', () => {
           expect(config.mode).toBe('development')
           expect(config.watch).toBeTruthy()
           expect(config.output).toBeDefined()
+          expect(config.output).toHaveProperty('filename', 'js/[name].js')
+          expect(config.output).toHaveProperty('chunkFilename', 'js/[name].js')
           if (config.output) {
-            expect(config.output.filename).toBe('js/[name].js')
-            expect(config.output.chunkFilename).toBe('js/[name].js')
             expect(standardize(config.output.path as string)).toMatch('/publish/static')
           }
           expect(config.optimization).toBeDefined()
-          if (config.optimization) {
-            expect(config.optimization.splitChunks).toStrictEqual({
-              chunks: 'all',
-              name: 'vendor'
-            })
-          }
+          expect(config.optimization).toHaveProperty('splitChunks', {
+            chunks: 'all',
+            name: 'vendor'
+          })
         })
       })
     })
