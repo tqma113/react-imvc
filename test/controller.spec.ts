@@ -5,6 +5,7 @@ import puppeteer from 'puppeteer'
 import { Config } from '../src'
 import start from '../src/start'
 import { fetchContent } from './util'
+import fetchMock from 'fetch-mock'
 
 jest.setTimeout(20000)
 
@@ -33,6 +34,11 @@ const config: Partial<Config> = {
 	webpackDevMiddleware: true, // 在内存里编译
 	NODE_ENV: 'test'
 }
+const fetchMockDefaultOption = {
+  overwriteRoutes: true,
+  fetch: global.fetch,
+  fallbackToNetwork: true
+}
 
 describe('controller', () => {
   // let app: App
@@ -43,7 +49,10 @@ describe('controller', () => {
     await start({ config }).then((result) => {
       // app = result.app
       server = result.server
-      return puppeteer.launch()
+      return puppeteer.launch({
+        // headless: false,
+        // slowMo: 1000
+      })
     }).then((brws) => {
       browser = brws
     })
@@ -92,6 +101,8 @@ describe('controller', () => {
         
 				const serverContent = await fetchContent(url)
         expect(serverContent.includes('static view content')).toBeTruthy()
+
+        await page.close()
       })
 
       it('should render in client side', async () => {
@@ -102,6 +113,8 @@ describe('controller', () => {
         
 				const clientContent = await page.$eval('#static_view', (e) => e.innerHTML)
         expect(clientContent.includes('static view content')).toBeTruthy()
+
+        await page.close()
       })
     })
 
@@ -114,6 +127,8 @@ describe('controller', () => {
         
 				const serverContent = await fetchContent(url)
         expect(serverContent.includes('static view content by client side rendering')).toBeFalsy()
+
+        await page.close()
       })
 
       it('should render in client side', async () => {
@@ -124,6 +139,8 @@ describe('controller', () => {
         
 				const clientContent = await page.$eval('#static_view_csr', (e) => e.innerHTML)
         expect(clientContent.includes('static view content by client side rendering')).toBeTruthy()
+
+        await page.close()
       })
     })
   })
@@ -149,6 +166,8 @@ describe('controller', () => {
       
       const serverContent = await fetchContent(url)
       expect(serverContent.includes('loading...')).toBeTruthy()
+
+      await page.close()
     })
 
     it('should render View Component when `SSR` is false in client side', async () => {
@@ -160,11 +179,44 @@ describe('controller', () => {
 				const clientContent = await page.$eval('#load', (e) => e.innerHTML)
         expect(clientContent.includes('loading...')).toBeFalsy()
         expect(clientContent.includes('load')).toBeTruthy()
+
+        await page.close()
     })
   })
   
   describe('API', () => {
-    it.todo('valid')
+    it('should use map url to fetch', async () => {
+      fetchMock.mock(`/foo`, { foo: 'foo' }, fetchMockDefaultOption)
+      fetchMock.mock(`/map/foo`, { foo: 'map/foo' }, fetchMockDefaultOption)
+
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/api_map`
+      await page.goto(url)
+      await page.waitFor('#api')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).toContain('map/foo')
+
+      fetchMock.reset()
+      await page.close()
+    })
+
+    
+    it('should use map url to fetch', async () => {
+      fetchMock.mock(`/foo`, { foo: 'foo' }, fetchMockDefaultOption)
+      fetchMock.mock(`/map/foo`, { foo: 'map/foo' }, fetchMockDefaultOption)
+
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/api`
+      await page.goto(url)
+      await page.waitFor('#api')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).not.toContain('map/foo')
+      expect(serverContent).toContain('foo')
+
+      await page.close()
+    })
   })
   
   describe('restapi', () => {

@@ -54,5 +54,13 @@ export default [
 	{
 		path: '/loading',
 		controller: () => import('./loading/Controller')
+	},
+	{
+		path: '/api',
+		controller: () => import('./api/Controller')
+	},
+	{
+		path: '/api_map',
+		controller: () => import('./api-map/Controller')
 	}
 ]

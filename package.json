@@ -10,7 +10,7 @@
   "homepage": "https://github.com/Lucifier129/react-imvc",
   "scripts": {
     "build": "tsc",
-    "prebuild": "rimraf ./dist",
+    "prebuild": "rimraf ./node_modules",
     "postbuild": "ts-node cp.ts",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
