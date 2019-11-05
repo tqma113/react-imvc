@@ -50,5 +50,9 @@ export default [
 	{
 		path: '/hook',
 		controller: () => import('./hook/Controller')
+	},
+	{
+		path: '/loading',
+		controller: () => import('./loading/Controller')
 	}
 ]

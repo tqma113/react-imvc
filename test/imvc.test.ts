@@ -5,6 +5,7 @@ import express from 'express'
 import puppeteer from 'puppeteer'
 import { Config } from '../src'
 import start from '../src/start'
+import { fetchContent } from './util'
 
 jest.setTimeout(20000)
 
@@ -363,9 +364,3 @@ describe('React-IMVC', () => {
 		})
 	})
 })
-
-async function fetchContent(url: string): Promise<string> {
-	let response = await fetch(url)
-	let content = await response.text()
-	return content
-}

@@ -1,4 +1,59 @@
+import http from 'http'
+import path from 'path'
+// import express from 'express'
+import puppeteer from 'puppeteer'
+import { Config } from '../src'
+import start from '../src/start'
+import { fetchContent } from './util'
+
+jest.setTimeout(20000)
+
+interface Server extends http.Server {
+	isTouched?: boolean
+}
+// interface App extends express.Express {
+// 	isTouched?: boolean
+// }
+
+process.env.NODE_ENV = 'test'
+let PORT = 33334
+const ROOT = path.join(__dirname, 'project')
+const config: Partial<Config> = {
+	root: ROOT, // 项目根目录
+	port: PORT, // server 端口号
+	logger: null, // 不出 log
+	devtool: '', // 不出 source-map
+	ReactViews: {
+		beautify: false, // 不美化
+		transformViews: false // 已有转换，无须再做
+	},
+	routes: 'routes', // 服务端路由目录
+	layout: 'Layout.tsx', // 自定义 Layout
+	webpackLogger: false, // 关闭 webpack logger
+	webpackDevMiddleware: true, // 在内存里编译
+	NODE_ENV: 'test'
+}
+
 describe('controller', () => {
+  // let app: App
+  let server: Server
+  let browser: puppeteer.Browser
+
+  beforeAll(async () => {
+    await start({ config }).then((result) => {
+      // app = result.app
+      server = result.server
+      return puppeteer.launch()
+    }).then((brws) => {
+      browser = brws
+    })
+  })
+
+  afterAll(async () => {
+    server.close()
+    await browser.close()
+  })
+
   describe('location', () => {
     it.todo('valid')
   })
@@ -28,9 +83,49 @@ describe('controller', () => {
   })
 
   describe('SSR', () => {
-    it.todo('true')
+    describe('true', () => {
+      it('should render in server side', async () => {
+				const page = await browser.newPage()
+				const url = `http://localhost:${config.port}/static_view`
+				await page.goto(url)
+        await page.waitFor('#static_view')
+        
+				const serverContent = await fetchContent(url)
+        expect(serverContent.includes('static view content')).toBeTruthy()
+      })
 
-    it.todo('false')
+      it('should render in client side', async () => {
+				const page = await browser.newPage()
+				const url = `http://localhost:${config.port}/static_view`
+				await page.goto(url)
+        await page.waitFor('#static_view')
+        
+				const clientContent = await page.$eval('#static_view', (e) => e.innerHTML)
+        expect(clientContent.includes('static view content')).toBeTruthy()
+      })
+    })
+
+    describe('false', () => {
+      it('should not render in server side', async () => {
+				const page = await browser.newPage()
+				const url = `http://localhost:${config.port}/static_view_csr`
+				await page.goto(url)
+        await page.waitFor('#static_view_csr')
+        
+				const serverContent = await fetchContent(url)
+        expect(serverContent.includes('static view content by client side rendering')).toBeFalsy()
+      })
+
+      it('should render in client side', async () => {
+				const page = await browser.newPage()
+				const url = `http://localhost:${config.port}/static_view_csr`
+				await page.goto(url)
+        await page.waitFor('#static_view_csr')
+        
+				const clientContent = await page.$eval('#static_view_csr', (e) => e.innerHTML)
+        expect(clientContent.includes('static view content by client side rendering')).toBeTruthy()
+      })
+    })
   })
 
   describe('preload', () => {
@@ -46,7 +141,26 @@ describe('controller', () => {
   })
   
   describe('Loading', () => {
-    it.todo('valid')
+    it('should render Loading Component when `SSR` is false in server side', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/loading`
+      await page.goto(url)
+      await page.waitFor('#load')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent.includes('loading...')).toBeTruthy()
+    })
+
+    it('should render View Component when `SSR` is false in client side', async () => {
+				const page = await browser.newPage()
+				const url = `http://localhost:${config.port}/loading`
+				await page.goto(url)
+        await page.waitFor('#load')
+        
+				const clientContent = await page.$eval('#load', (e) => e.innerHTML)
+        expect(clientContent.includes('loading...')).toBeFalsy()
+        expect(clientContent.includes('load')).toBeTruthy()
+    })
   })
   
   describe('API', () => {
@@ -248,5 +362,4 @@ describe('controller', () => {
   describe('render', () => {
     it.todo('valid')
   })
-  
 })
