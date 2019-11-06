@@ -6,7 +6,6 @@ import plumber from 'gulp-plumber'
 // @ts-ignore
 import cleanCSS from 'gulp-clean-css'
 import htmlmin from 'gulp-htmlmin'
-import imagemin from 'gulp-imagemin'
 import uglify from 'gulp-uglify'
 import babel from 'gulp-babel'
 import { Config, GulpTaskConfig } from '..'
@@ -122,17 +121,6 @@ export default function createGulpTask(options: Config): gulp.TaskFunction {
       .pipe(gulp.dest(config.html.dest))
   }
 
-  let minifyImage = () => {
-    if (!config.img) {
-      return
-    }
-    return gulp
-      .src(config.img.src)
-      .pipe(plumber())
-      .pipe(imagemin())
-      .pipe(gulp.dest(config.img.dest))
-  }
-
   let minifyES6 = () => {
     if (!config.js) {
       return
@@ -191,8 +179,7 @@ export default function createGulpTask(options: Config): gulp.TaskFunction {
     config.html && minifyHTML,
     config.css && minifyCSS,
     config.es5 && minifyES5,
-    config.js && minifyES6,
-    config.img && minifyImage
+    config.js && minifyES6
   ].filter(Boolean)
 
   let seriesList  = [

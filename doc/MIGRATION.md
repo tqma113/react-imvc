@@ -334,7 +334,6 @@ Note: If you has the `BaseController`, please look through how did we do in [iso
 * @types/gulp 4.0.6
 * @types/gulp-babel 6.1.29
 * @types/gulp-htmlmin 1.3.32
-* @types/gulp-imagemin 4.1.1
 * @types/gulp.plumber 0.0.32
 * @types/gulp-uglify 3.0.6
 * @types/helmet 0.0.43
@@ -363,3 +362,4 @@ Note: If you has the `BaseController`, please look through how did we do in [iso
 * expect 1.20.2
 * mocha 3.0.2
 * querystring 0.2.0
+* gulp-imagemin 5.0.3
