@@ -5,6 +5,11 @@ import start from '../start/index'
 import getConfig from '../config'
 
 if (process.env.NODE_ENV === 'development') {
+  let defaultConfig = getConfig({})
+  require('@babel/register')({
+    ...defaultConfig.babel(true),
+    extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx']
+  })
   let config = getConfig(yargs.argv)
   require('@babel/register')({
     ...config.babel(true),

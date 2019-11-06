@@ -64,8 +64,8 @@ let createElement = React.originalCreateElement || React.createElement
  * 提供 fetch 方法
  */
 export default class Controller<
-  S extends object = {},
-  AS extends Actions<S & BaseState> = {}
+  S extends object = BaseState,
+  AS extends Actions<S & BaseState> = BaseActions
 > implements AppController {
   location: Location
   history: HistoryWithBFOL<BLWithBQ, ILWithBQ>

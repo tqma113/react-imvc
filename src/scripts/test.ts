@@ -18,6 +18,11 @@ import getConfig from '../config'
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
+let defaultConfig = getConfig({})
+require('@babel/register')({
+	...defaultConfig.babel(true),
+	extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx']
+})
 
 let config = getConfig(yargs.argv)
 
