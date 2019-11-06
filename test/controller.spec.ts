@@ -105,7 +105,41 @@ describe('controller', () => {
   })
   
   describe('history', () => {
-    it.todo('valid')
+    it('should be valid in server side', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/history`
+      await page.goto(url)
+      await page.waitFor('#history')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).toContain(
+        "{&quot;pathname&quot;:&quot;/&quot;,&quot;search&quot;:&quot;&quot;," +
+        "&quot;hash&quot;:&quot;&quot;,&quot;action&quot;:2,&quot;key&quot;:" +
+        "&quot;&quot;,&quot;query&quot;:{}}"
+      )
+
+      await page.close()
+    })
+
+    it('should be valid in client side', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/history`
+      await page.goto(url)
+      await page.waitFor('#history')
+      
+      const clientContent = await page.$eval('#history', (e) => e.innerHTML)
+      const history = JSON.parse(clientContent)
+      expect(history).toStrictEqual({
+        action: 2,
+        hash: "",
+        key: "",
+        pathname: "/history",
+        query: {},
+        search: ""
+      })
+
+      await page.close()
+    })
   })
   
   describe('context', () => {

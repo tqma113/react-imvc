@@ -56,6 +56,10 @@ export default [
 		controller: () => import('./location/Controller')
 	},
 	{
+		path: '/history',
+		controller: () => import('./history/Controller')
+	},
+	{
 		path: '/loading',
 		controller: () => import('./loading/Controller')
 	},
