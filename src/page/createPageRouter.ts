@@ -188,11 +188,10 @@ export default function createPageRouter(options: Config) {
       res
     }
 
-    console.log(context)
-
+    console.log('start catch')
     try {
       let { content, controller } = await app.render(req.url, context)
-
+      console.log('after render')
       /**
        * 如果没有返回 content
        * 不渲染内容，controller 可能通过 context.res 对象做了重定向或者渲染
@@ -200,6 +199,8 @@ export default function createPageRouter(options: Config) {
       if (!content) {
         return
       }
+
+      console.log(content)
 
       // content 可能是异步渲染的
       content = await content
@@ -217,13 +218,11 @@ export default function createPageRouter(options: Config) {
       if (controller.destroy) {
         controller.destroy()
       }
-
-      console.log(res.locals.layoutView)
-      console.log(layoutView)
       
       // 支持通过 res.locals.layoutView 动态确定 layoutView
       res.render(res.locals.layoutView || layoutView, data)
     } catch (error) {
+      console.log(error)
       next(error)
     }
   })
