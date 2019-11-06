@@ -3,9 +3,9 @@ let cwd = process.cwd()
 let port = process.env.PORT || 3000
 let NODE_ENV = process.env.NODE_ENV || "development"
 let isDev = NODE_ENV === "development"
-import IMVC from ".."
+import { Config } from ".."
 
-const defaultConfig: IMVC.Config = {
+const defaultConfig: Config = {
 	basename: "",
 	title: "react-imvc",
 	description: "An Isomorphic-MVC Framework",

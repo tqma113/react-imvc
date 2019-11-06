@@ -1,6 +1,6 @@
-import IMVC from '..'
+import { BabelConfig } from '..'
 
-export default function Babel(isServer: boolean): IMVC.BabelConfig {
+export default function Babel(isServer: boolean): BabelConfig {
   return {
     presets: [
       '@babel/preset-env',
