@@ -64,7 +64,44 @@ describe('controller', () => {
   })
 
   describe('location', () => {
-    it.todo('valid')
+    it('should be valid in server side', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/location`
+      await page.goto(url)
+      await page.waitFor('#location')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).toContain(
+        "{\"pattern\":\"/location\",\"params\":{},\"raw\":\"/location\"," + 
+        "\"basename\":\"\",\"pathname\":\"/location\",\"search\":\"\"," + 
+        "\"hash\":\"\",\"action\":2,\"query\":{}}"
+      )
+
+      await page.close()
+    })
+
+    it('should be valid in client side', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/location`
+      await page.goto(url)
+      await page.waitFor('#location')
+      
+      const clientContent = await page.$eval('#location', (e) => e.innerHTML)
+      const location = JSON.parse(clientContent);
+      expect(location).toStrictEqual({
+        action: 2,
+        basename: "",
+        hash: "",
+        params: {},
+        pathname: "/location",
+        pattern: "/location",
+        query: {},
+        raw: "/location",
+        search: ""
+      })
+
+      await page.close()
+    })
   })
   
   describe('history', () => {
@@ -111,7 +148,8 @@ describe('controller', () => {
 				await page.goto(url)
         await page.waitFor('#static_view')
         
-				const clientContent = await page.$eval('#static_view', (e) => e.innerHTML)
+        const clientContent = await page.$eval('#static_view',
+            (e) => e.innerHTML)
         expect(clientContent.includes('static view content')).toBeTruthy()
 
         await page.close()
@@ -126,7 +164,11 @@ describe('controller', () => {
         await page.waitFor('#static_view_csr')
         
 				const serverContent = await fetchContent(url)
-        expect(serverContent.includes('static view content by client side rendering')).toBeFalsy()
+        expect(
+          serverContent.includes(
+            'static view content by client side rendering'
+          )
+        ).toBeFalsy()
 
         await page.close()
       })
@@ -137,8 +179,13 @@ describe('controller', () => {
 				await page.goto(url)
         await page.waitFor('#static_view_csr')
         
-				const clientContent = await page.$eval('#static_view_csr', (e) => e.innerHTML)
-        expect(clientContent.includes('static view content by client side rendering')).toBeTruthy()
+        const clientContent = await page.$eval('#static_view_csr',
+            (e) => e.innerHTML)
+        expect(
+          clientContent.includes(
+            'static view content by client side rendering'
+          )
+        ).toBeTruthy()
 
         await page.close()
       })
@@ -158,7 +205,8 @@ describe('controller', () => {
   })
   
   describe('Loading', () => {
-    it('should render Loading Component when `SSR` is false in server side', async () => {
+    it('should render Loading Component when `SSR` is false in server side',
+        async () => {
       const page = await browser.newPage()
       const url = `http://localhost:${config.port}/loading`
       await page.goto(url)
@@ -170,17 +218,18 @@ describe('controller', () => {
       await page.close()
     })
 
-    it('should render View Component when `SSR` is false in client side', async () => {
-				const page = await browser.newPage()
-				const url = `http://localhost:${config.port}/loading`
-				await page.goto(url)
-        await page.waitFor('#load')
-        
-				const clientContent = await page.$eval('#load', (e) => e.innerHTML)
-        expect(clientContent.includes('loading...')).toBeFalsy()
-        expect(clientContent.includes('load')).toBeTruthy()
+    it('should render View Component when `SSR` is false in client side',
+        async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/loading`
+      await page.goto(url)
+      await page.waitFor('#load')
+      
+      const clientContent = await page.$eval('#load', (e) => e.innerHTML)
+      expect(clientContent.includes('loading...')).toBeFalsy()
+      expect(clientContent.includes('load')).toBeTruthy()
 
-        await page.close()
+      await page.close()
     })
   })
   
@@ -223,7 +272,8 @@ describe('controller', () => {
   describe('restapi', () => {
     it('should append restapi to url', async () => {
       fetchMock.mock(`/foo`, { foo: 'foo' }, fetchMockDefaultOption)
-      fetchMock.mock(`/restapi/foo`, { foo: 'restapi/foo' }, fetchMockDefaultOption)
+      fetchMock.mock(`/restapi/foo`, { foo: 'restapi/foo' },
+          fetchMockDefaultOption)
 
       const page = await browser.newPage()
       const url = `http://localhost:${config.port}/restapi`
