@@ -171,6 +171,7 @@ export default function createPageRouter(options: Config) {
     })
   }
 
+  console.log('start')
   // handle page
   router.all('*', async (req: Req, res, next) => {
     let { basename, serverPublicPath, publicPath } = req
@@ -186,6 +187,8 @@ export default function createPageRouter(options: Config) {
       req,
       res
     }
+
+    console.log(context)
 
     try {
       let { content, controller } = await app.render(req.url, context)
