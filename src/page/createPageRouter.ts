@@ -171,7 +171,6 @@ export default function createPageRouter(options: Config) {
     })
   }
 
-  console.log('start')
   // handle page
   router.all('*', async (req: Req, res, next) => {
     let { basename, serverPublicPath, publicPath } = req
@@ -188,7 +187,6 @@ export default function createPageRouter(options: Config) {
       res
     }
 
-    console.log('start catch')
     try {
       let { content, controller } = await app.render(req.url, context)
       console.log('after render')
@@ -199,8 +197,6 @@ export default function createPageRouter(options: Config) {
       if (!content) {
         return
       }
-
-      console.log(content)
 
       // content 可能是异步渲染的
       content = await content

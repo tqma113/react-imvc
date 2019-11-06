@@ -651,7 +651,7 @@ export default class Controller<
     // proxy store.actions for handling error
     if (this.errorDidCatch) {
       let keys = _.getKeys(this.store.actions)
-      let actions: Currings<S & BaseState, AS & BaseActions> = keys.reduce((obj, key) => {
+      let actions: any = keys.reduce((obj, key) => {
         let action = this.store.actions[key]
         let newAction = (payload: any) => {
           try {
@@ -663,11 +663,11 @@ export default class Controller<
             throw error
           }
         }
-        obj[key] = newAction as Curring<S & BaseState, (AS & typeof import("d:/Projects/react-imvc/src/controller/actions"))[keyof AS]>
+        obj[key] = newAction
         return obj
-      }, {} as Currings<S & BaseState, AS & BaseActions>)
+      }, {} as any)
 
-      this.store.actions = actions
+      this.store.actions = actions as unknown as Currings<S & BaseState, AS & BaseActions>
     }
 
     /**
