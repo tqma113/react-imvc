@@ -29,7 +29,7 @@ describe('bin', () => {
       console.log(`stdout: ${stdout}`)
       console.log(`stdout: ${stderr}`)
     })
-    await setTimeOutAsync(8000)
+    await setTimeOutAsync(15000)
     let page = await browser.newPage()
     let url = `http://localhost:3333/static_view`
     await page.goto(url)
