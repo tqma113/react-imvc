@@ -189,7 +189,6 @@ export default function createPageRouter(options: Config) {
 
     try {
       let { content, controller } = await app.render(req.url, context)
-      console.log('after render')
       /**
        * 如果没有返回 content
        * 不渲染内容，controller 可能通过 context.res 对象做了重定向或者渲染
@@ -218,7 +217,10 @@ export default function createPageRouter(options: Config) {
       // 支持通过 res.locals.layoutView 动态确定 layoutView
       res.render(res.locals.layoutView || layoutView, data)
     } catch (error) {
-      console.log(error)
+      if (config.NODE_ENV !== 'production') {
+        console.log(error)
+      }
+      
       next(error)
     }
   })
