@@ -12,7 +12,7 @@
     "build": "tsc",
     "prebuild": "rimraf ./node_modules",
     "postbuild": "ts-node cp.ts",
-    "test": "jest --runInBand",
+    "test": "jest",
     "test:watch": "jest --watch",
     "test:single": "jest",
     "test:start": "ts-node test/project/start.ts",

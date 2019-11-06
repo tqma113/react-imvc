@@ -22,6 +22,7 @@ const config: Partial<Config> = {
   layout: "Layout.tsx", // 自定义 Layoutclear
   webpackLogger: false, // 关闭 webpack logger
   webpackDevMiddleware: true, // 在内存里编译
+  SSR: false,
   NODE_ENV: 'test'
 }
 
