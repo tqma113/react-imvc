@@ -9,7 +9,6 @@ import {
   Store,
   Data,
   Actions,
-  Curring,
   Currings
 } from 'relite'
 import {
