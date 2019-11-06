@@ -62,5 +62,13 @@ export default [
 	{
 		path: '/api_map',
 		controller: () => import('./api-map/Controller')
+	},
+	{
+		path: '/scroll',
+		controller: () => import('./scroll/Controller')
+	},
+	{
+		path: '/unscroll',
+		controller: () => import('./unscroll/Controller')
 	}
 ]

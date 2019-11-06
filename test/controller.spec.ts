@@ -51,7 +51,7 @@ describe('controller', () => {
       server = result.server
       return puppeteer.launch({
         // headless: false,
-        // slowMo: 1000
+        // slowMo: 250
       })
     }).then((brws) => {
       browser = brws
@@ -215,6 +215,7 @@ describe('controller', () => {
       expect(serverContent).not.toContain('map/foo')
       expect(serverContent).toContain('foo')
 
+      fetchMock.reset()
       await page.close()
     })
   })
@@ -224,7 +225,29 @@ describe('controller', () => {
   })
   
   describe('resetScrollOnMount', () => {
-    it.todo('valid')
+    it('should scroll after setting true', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/scroll`
+      await page.goto(url)
+      await page.waitFor('#scroll')
+
+      const clientContent = await page.$eval('#scroll', (e) => e.innerHTML)
+      expect(clientContent.includes('success')).toBeTruthy()
+      
+      await page.close()
+    })
+
+    it('should not scroll after setting false', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/unscroll`
+      await page.goto(url)
+      await page.waitFor('#unscroll')
+      
+      const clientContent = await page.$eval('#unscroll', (e) => e.innerHTML)
+      expect(clientContent.includes('success')).toBeTruthy()
+      
+      await page.close()
+    })
   })
   
   describe('fetch', () => {
