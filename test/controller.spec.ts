@@ -221,7 +221,21 @@ describe('controller', () => {
   })
   
   describe('restapi', () => {
-    it.todo('valid')
+    it('should append restapi to url', async () => {
+      fetchMock.mock(`/foo`, { foo: 'foo' }, fetchMockDefaultOption)
+      fetchMock.mock(`/restapi/foo`, { foo: 'restapi/foo' }, fetchMockDefaultOption)
+
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/restapi`
+      await page.goto(url)
+      await page.waitFor('#restapi')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).toContain('restapi/foo')
+
+      fetchMock.reset()
+      await page.close()
+    })
   })
   
   describe('resetScrollOnMount', () => {

@@ -64,6 +64,10 @@ export default [
 		controller: () => import('./api-map/Controller')
 	},
 	{
+		path: '/restapi',
+		controller: () => import('./restapi/Controller')
+	},
+	{
 		path: '/scroll',
 		controller: () => import('./scroll/Controller')
 	},
