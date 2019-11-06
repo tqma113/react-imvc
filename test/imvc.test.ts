@@ -363,4 +363,94 @@ describe('React-IMVC', () => {
 			})
 		})
 	})
+
+	it.todo('basename')
+
+	it.todo('title')
+
+	it.todo('description')
+
+	it.todo('content')
+
+	it.todo('initialState')
+
+	it.todo('root')
+
+	it.todo('src')
+
+	it.todo('routes')
+
+	it.todo('publish')
+
+	it.todo('static')
+
+	it.todo('staticPath')
+
+	it.todo('staticEntry')
+
+	it.todo('staticOptions')
+
+	it.todo('publicPath')
+
+	it.todo('restapi')
+
+	it.todo('assetsPath')
+
+	it.todo('output')
+
+	it.todo('productionOutput')
+
+	it.todo('alias')
+
+	it.todo('devtool')
+
+	it.todo('bundleAnalyzer')
+
+	it.todo('webpackDevMiddleware')
+
+	it.todo('webpackPlugins')
+
+	it.todo('webpackLoaders')
+
+	it.todo('webpackLogger')
+
+	it.todo('babel')
+
+	it.todo('gulp')
+
+	it.todo('cookieParser')
+
+	it.todo('helmet')
+
+	it.todo('compression')
+
+	it.todo('ReactViews')
+
+	it.todo('bodyParser')
+
+	it.todo('logger')
+
+	it.todo('favicon')
+
+	it.todo('SSR')
+
+	it.todo('port')
+
+	it.todo('NODE_ENV')
+
+	it.todo('layout')
+
+	it.todo('renderMode')
+
+	it.todo('context')
+
+	it.todo('notifier')
+
+	it.todo('hot')
+
+	it.todo('useServerBundle')
+
+	it.todo('useTypeCheck')
+
+	it.todo('serverBundleName')
 })
