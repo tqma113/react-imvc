@@ -1,7 +1,7 @@
 import path from 'path'
 import { Config } from '../../src'
 
-let PORT = 3333
+let PORT = 33336
 const ROOT = __dirname
 
 const config: Partial<Config> = {
