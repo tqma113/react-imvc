@@ -188,7 +188,6 @@ export interface GulpTaskConfig {
   // 需要压缩到 static 目录的 html
   html: GulpConfigItem
 
-  img: GulpConfigItem
   // 需要压缩到 static 目录的 js
   js: GulpConfigItem
 
@@ -209,7 +208,6 @@ interface GulpConfig {
   // 需要压缩到 static 目录的 html
   html?: string[] | false
 
-  img?: string[] | false
   // 需要压缩到 static 目录的 js
   js?: string[] | false
 

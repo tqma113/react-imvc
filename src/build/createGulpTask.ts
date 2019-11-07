@@ -24,10 +24,6 @@ function createConfig(options: Config): GulpTaskConfig {
       src: [src + '/**/*.@(html|htm)'],
       dest: staticPath
     },
-    img: {
-      src: [src + '/**/*.@(jpg|jepg|png|gif|ico)'],
-      dest: staticPath
-    },
     js: {
       src: [
         src + '/lib/!(es5)/**/*.@(js|ts|jsx|tsx)',

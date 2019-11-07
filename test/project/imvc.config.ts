@@ -15,9 +15,6 @@ const config: Partial<Config> = {
 	output: {
 		path: path.resolve(ROOT, '../publish/static')
 	},
-	gulp: {
-		img: false
-	},
 	webpackDevMiddleware: true
 }
 
