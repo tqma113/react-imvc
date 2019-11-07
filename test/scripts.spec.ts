@@ -24,15 +24,12 @@ describe('scripts', () => {
       let p = exec(cmd, (err, stdout, stderr) => {
         if (err) {
           console.log(err)
-          throw err
+          return
         }
-  
-        console.log(`stdout: ${stdout}`)
-        console.log(`stdout: ${stderr}`)
       })
       await setTimeOutAsync(15000)
       let page = await browser.newPage()
-      let url = `http://localhost:3333/static_view`
+      let url = `http://localhost:33336/static_view`
       await page.goto(url)
       await page.waitFor('#static_view')
   
