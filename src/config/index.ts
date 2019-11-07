@@ -4,9 +4,15 @@
 import path from 'path'
 import defaultConfig from './config.defaults'
 import { Options, Config } from '..'
+import configBabel from './babel'
 
 export { default as defaultConfig } from './config.defaults'
-export { default as babel } from './babel'
+export const babel = configBabel
+
+require('@babel/register')({
+  ...configBabel(true),
+  extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx']
+})
 
 export default function getConfig(options?: Options): Config {
 	let config = Object.assign({}, defaultConfig)
