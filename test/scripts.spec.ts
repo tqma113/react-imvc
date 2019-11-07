@@ -5,7 +5,7 @@ import { setTimeOutAsync } from './util'
 
 jest.setTimeout(30000)
 
-describe('bin', () => {
+describe('scripts', () => {
   let browser: puppeteer.Browser
 
   beforeAll(async () => {
