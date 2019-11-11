@@ -8,6 +8,8 @@
 
 * Hooks should be used with clear type of `state, actions, ctrl`.
 
+* Support to write `imvc.config.ts` with TypeScript. But it's syntax supported is stable, You can't add support syntax by any way.
+
 ## How to upgrade
 
 1. Update `react-imvc` to 3.x
@@ -87,8 +89,6 @@
     // not suggest
     import foo = require('foo)
     ```
-
-    You can't use syntax of `ES2015+` and syntax of `CommonJS`.
 
     You can do it like code down here.
 
@@ -297,8 +297,6 @@ Note: If you has the `BaseController`, please look through how did we do in [iso
 * The default view file extension is 'js'. If you want to use other extension file, please add in config.(eg.view.tsx)
 
 * Props of `View` have changed from `state, handlers, actions` to `state, ctrl`.
-
-* If you start by line command with config file(eg.`imvc.config.js`). You must write config file with `CommonJS` and `ES5` syntax(not support `ES6` or `Typescript` syntax yet).
 
 ## Dependence change
 
