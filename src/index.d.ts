@@ -13,7 +13,7 @@ import serveStatic from "serve-static"
 import cookieParser from "cookie-parser"
 import helmet from "helmet"
 import compression from "compression"
-export { Action as StoreAction, Currings, AnyAction, Actions } from "relite"
+export { Action, Curring, Currings, AnyAction, Actions } from "relite"
 import babelCore from "babel-core"
 
 import {
@@ -82,13 +82,6 @@ export type BaseActions = BA
 export type Preload = Record<string, string>
 
 export type API = Record<string, string>
-
-export type Action<
-  State extends object,
-  Payload = unknown
-> = unknown extends Payload
-  ? <S extends State>(state: S) => S
-  : <S extends State>(state: S, payload: Payload) => S
 
 export interface Context extends BaseContext {
   basename?: string

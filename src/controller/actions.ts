@@ -2,31 +2,32 @@
  * 共享的 action 函数
  */
 import _ from '../util'
-import { Location, BaseState } from '..'
+import { Location, BaseState, Action } from '..'
 
 const { setValueByPath } = _
 
-export let INDENTITY = (state: BaseState) => state
+export const INDENTITY: Action<BaseState> = (state) => state
 
-export let UPDATE_STATE = (state: BaseState, newState: { }) => {
+export const UPDATE_STATE: Action<BaseState, BaseState> = (state, newState) => {
   return {
     ...state,
     ...newState
   }
 }
 
-export let __PAGE_DID_BACK__ = (state: BaseState, location: Location) => {
+export const __PAGE_DID_BACK__: Action<BaseState, Location> = (state, location) => {
   return {
     ...state,
     location
   }
 }
 
-export let UPDATE_STATE_BY_PATH = (state: BaseState, payload: { [x: string]: any }) => {
+interface USBPPayload { [x: string]: any }
+export const UPDATE_STATE_BY_PATH: Action<BaseState, USBPPayload> = (state, payload) => {
   return Object.keys(payload).reduce(
     (state, path) => setValueByPath(state, path, payload[path]),
     state
   )
 }
 
-export let UPDATE_INPUT_VALUE = UPDATE_STATE_BY_PATH
+export const UPDATE_INPUT_VALUE = UPDATE_STATE_BY_PATH

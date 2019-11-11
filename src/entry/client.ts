@@ -40,8 +40,20 @@ function webpackLoader(
 let shouldHydrate = !!window.__INITIAL_STATE__
 
 function render(
+  view: React.ReactElement | string | undefined | null
+): void
+function render(
   view: React.ReactElement | string | undefined | null,
-  controller?: Controller<any, any>,
+  controller: Controller<any, any>
+): void
+function render(
+  view: React.ReactElement | string | undefined | null,
+  controller: Controller<any, any> | null,
+  container?: Element | null
+): void
+function render(
+  view: React.ReactElement | string | undefined | null,
+  controller?: Controller<any, any> | null,
   container?: Element | null
 ): void {
   if (!view) return
@@ -71,7 +83,7 @@ function render(
     }
 
     if (controller.getViewFallback) {
-      render(controller.getViewFallback(), undefined, container)
+      render(controller.getViewFallback(), null, container)
     } else {
       throw error
     }

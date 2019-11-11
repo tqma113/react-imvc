@@ -90,41 +90,41 @@ function getPath(path: string | string[]): string[] {
 }
 
 export interface ObjectOrArray {
-  [key: string]: any
-  [key: number]: any
+  [key: string]: unknown
 }
 
 function setValue(
-  obj: ObjectOrArray,
+  obj: any,
   [key, ...rest]: string[],
-  value: any
-): ObjectOrArray {
+  value: unknown
+): any {
   obj = Array.isArray(obj)
     ? obj.concat()
-    : Object.assign({} as { [key: string]: any }, obj)
+    : Object.assign({}, obj)
 
-  obj[key] = rest.length > 0 ? setValue(obj[key], rest, value) : value
+  // @ts-ignore
+  obj[key] = rest.length > 0 ? setValue(obj[key] as I, rest, value) : value
 
   return obj
 }
 
 function setValueByPath(
-  obj: ObjectOrArray,
+  obj: any,
   path: string | string[],
   value: any
-): ObjectOrArray {
+): any {
   return setValue(obj, getPath(path), value)
 }
 
 function getValue(
-  ret: ObjectOrArray,
+  ret: any,
   key: string | number
-): any{
+): any {
   return ret[key]
 }
 
 function getValueByPath(
-  obj: ObjectOrArray,
+  obj: any,
   path: string | string[]
 ): any {
   return getPath(path).reduce(getValue, obj)
@@ -135,7 +135,7 @@ export function getKeys<T extends {}>(o: T): Array<keyof T>{
 } 
 
 export function ab2str(buf: Uint8Array): string {
-  return String.fromCharCode.apply(null, new Uint16Array(buf))
+  return String.fromCharCode.apply(null, Array.from(new Uint16Array(buf)))
 }
 
 export function str2ab(str: string): ArrayBuffer {

@@ -90,8 +90,8 @@ export default class Controller<
     detach(): void
   }
   deepCloneInitialState: boolean
-  matcher: Matcher
-  loader: Loader
+  matcher: Matcher = {} as Matcher
+  loader: Loader = {} as Loader
 
   // life circle
   getInitialState(state: S & BaseState): any { return state }
@@ -146,7 +146,7 @@ export default class Controller<
     this.deepCloneInitialState = true
 
     this.store = createStore({} as (AS & BaseActions), {} as S & BaseState)
-    this.history = createHistory() as HistoryWithBFOL<BLWithBQ, ILWithBQ>
+    this.history = createHistory() as unknown as HistoryWithBFOL<BLWithBQ, ILWithBQ>
   }
   
   /**

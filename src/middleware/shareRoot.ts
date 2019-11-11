@@ -22,5 +22,5 @@ export default function shareRoot(rootPath: string): express.RequestHandler {
     }
     next()
   }
-  return handler
+  return handler as express.RequestHandler
 }
