@@ -288,6 +288,50 @@
 
 Note: If you has the `BaseController`, please look through how did we do in [isomorphic-cnode](https://github.com/Lucifier129/isomorphic-cnode)
 
+## Life Circle Usage
+
+```jsx
+import { Location, Context } from 'react-imvc'
+import * as Model from './Model'
+
+type Actions = Omit<typeof Model, 'initialState'>
+
+class Controller {
+    // do something...
+
+    // life circle
+    getInitialState(state: Model.State) { return state  }
+
+    getFinalActions(actions: Actions) { return actions }
+
+    async shouldComponentCreate(): { return false }
+
+    async componentWillCreate() {  }
+
+    async componentDidFirstMount() {  }
+
+    async componentDidMount() {  }
+
+    async pageWillLeave(location: Location) {  }
+
+    async componentWillUnmount() {  }
+
+    pageDidBack(location: Location, context?: Context) {  }
+
+    windowWillUnload(location: Location) {  }
+
+    errorDidCatch(error: Error, str: string) {  }
+
+    getComponentFallback(displayName: string, InputComponent: React.ComponentType) { return <div></div> }
+
+    getViewFallback(view?: string) { return <div></div> }
+
+    stateDidReuse(state: Model.State) {  }
+
+    stateDidChange(data?: Data<Model.State, Actions>) {  }
+}
+```
+
 ## Notions when migrating
 
 * Don't change or override the type of attribute is `BaseState`, it will happen unpredictable error.
