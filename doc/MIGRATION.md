@@ -351,14 +351,14 @@ class Controller {
 * fork-ts-checker-webpack-plugin 0.5.2 -> 1.4.3
 * terser-webpack-plugin 1.1.0 -> 1.3.0
 * chalk 2.4.2 1.1.3 -> 2.4.2
-* create-app 1.0.0 -> 2.0.3
+* create-app 1.0.0 -> 2.0.5
 * debug 2.2.0 -> 4.1.1
 * del 3.0.0 -> 5.0.0
 * express-react-views 0.10.5 -> 0.11.0
 * fork-ts-checker-webpack-plugin 0.5.2 -> 1.4.3
 * gulp-clean-css 4.0.4 -> 4.0.2
 * pnp-webpack-plugin 1.2.0 -> 1.5.0
-* relite 1.0.6 -> 3.0.2
+* relite 1.0.6 -> 3.0.4
 * terser-webpack-plugin 1.1.0 -> 1.3.0
 * yargs 8.0.2 -> 13.3.0
 
