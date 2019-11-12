@@ -8,16 +8,13 @@ import createApp, {
   LoadController,
   ControllerConstructor,
   Route,
-  ViewEngineRender,
-  ViewEngine,
-  Controller as BaseController
+  ViewEngineRender
 } from 'create-app/server'
 import util from '../util'
 import {
   Config,
   AppSettings,
-  Req,
-  BaseState
+  Req
 } from '..'
 import Controller from '../controller'
 
@@ -141,7 +138,7 @@ export default function createPageRouter(options: Config) {
   let serverAppSettings: Partial<AppSettings> = {
     loader: commonjsLoader,
     routes: routes,
-    viewEngine: { render } as ViewEngine<React.ReactElement, BaseController>,
+    viewEngine: { render },
     context: {
       isClient: false,
       isServer: true
@@ -188,7 +185,9 @@ export default function createPageRouter(options: Config) {
     }
 
     try {
-      let { content, controller } = await app.render(req.url, context)
+      let result = await app.render(req.url, context)
+      let content = result.content
+      let controller = result.controller as Controller<{}, {}>
       /**
        * 如果没有返回 content
        * 不渲染内容，controller 可能通过 context.res 对象做了重定向或者渲染
@@ -200,10 +199,8 @@ export default function createPageRouter(options: Config) {
       // content 可能是异步渲染的
       content = await content
 
-      let initialState: BaseState | undefined = controller.store
-        ? (controller.store.getState as Function)()
-        : undefined
-      let htmlConfigs = initialState ? initialState.html : undefined
+      let initialState = controller.store.getState()
+      let htmlConfigs = initialState.html
       let data = {
         ...htmlConfigs,
         content,
