@@ -19,7 +19,7 @@ interface Server extends http.Server {
 process.env.NODE_ENV = 'test'
 let PORT = 33334
 const ROOT = path.join(__dirname, 'project')
-const config: Partial<Config> = {
+const config: Config = {
 	root: ROOT, // 项目根目录
 	port: PORT, // server 端口号
 	logger: null, // 不出 log

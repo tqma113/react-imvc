@@ -232,7 +232,7 @@ export interface Alias {
 }
 
 interface OptionsMore {
-  config?: string | Partial<Config>
+  config?: string | Config
 }
 
 export type Options = OptionsMore & Partial<typeof yargs.argv>
@@ -241,7 +241,9 @@ export interface GetBabelFunc {
   (isServer: boolean): TransformOptions
 }
 
-export interface Config {
+export type Config = Partial<EntireConfig>
+
+export interface EntireConfig {
   /**
    * node.js 应用部署的 basename，默认是空字符串
    * 支持传入字符串 如，'/my/basename'
@@ -271,7 +273,7 @@ export interface Config {
   /**
    * client app settings
    */
-  appSettings?: Partial<AppSettings>
+  appSettings?: AppSettings
   /**
    * react-imvc app 所在的根目录
    * 默认是 cwd

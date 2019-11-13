@@ -7,19 +7,19 @@ import { transformFileSync } from '@babel/core'
 import vm from 'vm'
 
 import defaultConfig from './config.defaults'
-import { Options, Config } from '..'
+import { Options, EntireConfig, Config } from '..'
 import configBabel from './babel'
 
 export { default as defaultConfig } from './config.defaults'
 export const babel = configBabel
 
 
-export default function getConfig(options?: Options): Config {
+export default function getConfig(options?: Options): EntireConfig {
 	let config = Object.assign({}, defaultConfig)
 
 	options = options || {}
 
-	let customConfig: Partial<Config> | null = null
+	let customConfig: Config | null = null
 	switch (typeof options.config) {
 		case 'object':
 			customConfig = options.config

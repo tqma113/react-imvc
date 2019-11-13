@@ -19,7 +19,7 @@ interface App extends express.Express {
 process.env.NODE_ENV = 'test'
 let PORT = 33334
 const ROOT = path.join(__dirname, 'project')
-const defaultConfig: Partial<Config> = {
+const defaultConfig: Config = {
 	root: ROOT, // 项目根目录
 	port: PORT, // server 端口号
 	logger: null, // 不出 log

@@ -10,11 +10,11 @@ import helmet from "helmet"
 import querystring from "query-string"
 
 import shareRoot from "../middleware/shareRoot"
-import { Config, Req } from ".."
+import { EntireConfig, Req } from ".."
 import configBabel from "../config/babel"
 import * as setupDevEnv from "../build/setup-dev-env"
 
-export default function createExpressApp(config: Config): express.Express {
+export default function createExpressApp(config: EntireConfig): express.Express {
 	const app: express.Express = express()
 
 	// handle basename
@@ -198,7 +198,7 @@ function getAssets(stats: Record<string, any>): Record<string, any> {
 	}, {})
 }
 
-function readAssets(config: Config): Record<string, any> {
+function readAssets(config: EntireConfig): Record<string, any> {
 	let result
 	// 生产模式直接用编译好的资源表
 	let assetsPathList = [

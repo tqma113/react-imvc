@@ -8,9 +8,9 @@ import notifier from 'node-notifier'
 
 import createWebpackConfig from './createWebpackConfig'
 import { getExternals, matchExternals } from './util'
-import { Config } from '..'
+import { EntireConfig } from '..'
 
-export function setupClient(config: Config): {
+export function setupClient(config: EntireConfig): {
 	compiler: webpack.Compiler,
 	middleware: webpackDevMiddleware.WebpackDevMiddleware & NextHandleFunction
 } {
@@ -41,7 +41,7 @@ interface SetupServerOptions {
 }
 
 export function setupServer(
-	config: Config,
+	config: EntireConfig,
 	options: SetupServerOptions
 ): void {
 	let serverConfig = createWebpackConfig(config, true)

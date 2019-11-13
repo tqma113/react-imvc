@@ -12,7 +12,7 @@ import createApp, {
 } from 'create-app/server'
 import util from '../util'
 import {
-  Config,
+  EntireConfig,
   AppSettings,
   Req
 } from '..'
@@ -118,7 +118,7 @@ const renderers = {
   renderToString
 }
 
-export default function createPageRouter(options: Config) {
+export default function createPageRouter(options: EntireConfig) {
   let config = Object.assign({}, options)
   let routes: Route[] = []
 
@@ -135,7 +135,7 @@ export default function createPageRouter(options: Config) {
 
   let router = Router()
   let render: ViewEngineRender<React.ReactElement, Controller<any, any>> = renderers[config.renderMode] || renderToNodeStream
-  let serverAppSettings: Partial<AppSettings> = {
+  let serverAppSettings: AppSettings = {
     loader: commonjsLoader,
     routes: routes,
     viewEngine: { render },

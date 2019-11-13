@@ -1,7 +1,7 @@
 import path from 'path'
-import { Config } from '..'
+import { EntireConfig } from '..'
 
-export function getExternals(config: Config): string[] {
+export function getExternals(config: EntireConfig): string[] {
   let dependencies: string[] = []
 
   let list: string[] = [

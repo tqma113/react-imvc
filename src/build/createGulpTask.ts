@@ -8,9 +8,9 @@ import cleanCSS from 'gulp-clean-css'
 import htmlmin from 'gulp-htmlmin'
 import uglify from 'gulp-uglify'
 import babel from 'gulp-babel'
-import { Config, GulpTaskConfig } from '..'
+import { EntireConfig, GulpTaskConfig } from '..'
 
-function createConfig(options: Config): GulpTaskConfig {
+function createConfig(options: EntireConfig): GulpTaskConfig {
   let root = options.root
   let src = path.join(root, options.src)
   let publish = path.join(root, options.publish)
@@ -75,7 +75,7 @@ function createConfig(options: Config): GulpTaskConfig {
   return config
 }
 
-export default function createGulpTask(options: Config): gulp.TaskFunction {
+export default function createGulpTask(options: EntireConfig): gulp.TaskFunction {
   let config: GulpTaskConfig = Object.assign(createConfig(options))
 
   let minifyCSS = () => {

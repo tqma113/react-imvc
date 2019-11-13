@@ -7,14 +7,14 @@ import start from '../start'
 import getConfig from '../config'
 import createGulpTask from './createGulpTask'
 import createWebpackConfig from './createWebpackConfig'
-import { Options, Config, AppSettings } from '..'
+import { Options, EntireConfig, AppSettings } from '..'
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
-export default function build(options: Options): Promise<Config | void> {
+export default function build(options: Options): Promise<EntireConfig | void> {
   let config = getConfig(options)
   let delPublicPgs = () => delPublish(path.join(config.root, config.publish))
   let startGulpPgs = () => startGulp(config)
@@ -44,7 +44,7 @@ function delPublish(folder: string): Promise<string[]> {
   return del(folder)
 }
 
-function startWebpackForClient(config: Config): Promise<Config | boolean> {
+function startWebpackForClient(config: EntireConfig): Promise<EntireConfig | boolean> {
   let webpackConfig = createWebpackConfig(config, false)
   return new Promise((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
@@ -63,7 +63,7 @@ function startWebpackForClient(config: Config): Promise<Config | boolean> {
   })
 }
 
-function startWebpackForServer(config: Config): Promise<Config> {
+function startWebpackForServer(config: EntireConfig): Promise<EntireConfig> {
   let webpackConfig = createWebpackConfig(config, true)
   return new Promise((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
@@ -82,7 +82,7 @@ function startWebpackForServer(config: Config): Promise<Config> {
   })
 }
 
-function startGulp(config: Config): Promise<Config> {
+function startGulp(config: EntireConfig): Promise<EntireConfig> {
   return new Promise((resolve, reject) => {
     gulp.task('default', createGulpTask(config))
 
@@ -97,17 +97,17 @@ function startGulp(config: Config): Promise<Config> {
   })
 }
 
-async function startStaticEntry(config: Config): Promise<Config | void> {
+async function startStaticEntry(config: EntireConfig): Promise<EntireConfig | void> {
   if (!config.staticEntry) {
     return
   }
   console.log(`start generating static entry file`)
 
-  let appSettings: Partial<AppSettings> = {
+  let appSettings: AppSettings = {
     ...config.appSettings,
     type: 'createHashHistory'
   }
-  let staticEntryconfig: Config = {
+  let staticEntryconfig: EntireConfig = {
     ...config,
     root: path.join(config.root, config.publish),
     publicPath: config.publicPath || '',
@@ -132,7 +132,7 @@ async function startStaticEntry(config: Config): Promise<Config | void> {
 
   server.close(() => console.log('finish generating static entry file'))
 
-  return new Promise<Config>((resolve, reject) => {
+  return new Promise<EntireConfig>((resolve, reject) => {
 
     type ErrorCallback = (err: NodeJS.ErrnoException | null) => void
 
