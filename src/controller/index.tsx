@@ -595,8 +595,8 @@ export default class Controller<
     // 如果 Model 存在，且 initialState 和 actions 不存在，从 Model 里解构出来
     if (this.Model && this.initialState === undefined && this.actions === undefined) {
       let { initialState: initState, ...acts } = this.Model
-      initialState = initState
-      actions = acts as unknown as AS
+      initialState = this.initialState = initState
+      actions = this.actions = acts
     }
 
     let globalInitialState: BaseState | undefined
