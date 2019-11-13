@@ -14,7 +14,7 @@ import cookieParser from "cookie-parser"
 import helmet from "helmet"
 import compression from "compression"
 export { Action, Curring, Currings, AnyAction, Actions } from "relite"
-import babelCore from "babel-core"
+import { TransformOptions } from "@babel/core"
 
 import {
   useCtrl as _useCtrl,
@@ -218,7 +218,7 @@ interface GulpConfig {
 export interface Views {
   beautify?: boolean // 是否美化 html 响应内容
   transformViews?: boolean // 默认不转换 view，已经有 babel 做处理
-  babel?: babelCore.TransformOptions
+  babel?: TransformOptions
 }
 
 export interface BodyParseOptions {
@@ -237,39 +237,8 @@ interface OptionsMore {
 
 export type Options = OptionsMore & Partial<typeof yargs.argv>
 
-export interface BabelConfig {
-  filename?: string
-  filenameRelative?: string
-  presets?: any[]
-  plugins?: any[]
-  highlightCode?: boolean
-  only?: string | string[]
-  ignore?: string | string[]
-  auxiliaryCommentBefore?: any
-  auxiliaryCommentAfter?: any
-  sourceMaps?: any
-  inputSourceMap?: any
-  sourceMapTarget?: any
-  sourceFileName?: any
-  sourceRoot?: any
-  moduleRoot?: any
-  moduleIds?: any
-  moduleId?: any
-  getModuleId?: any
-  resolveModuleSource?: any
-  keepModuleIdExtesions?: boolean
-  code?: boolean
-  ast?: boolean
-  compact?: any
-  comments?: boolean
-  shouldPrintComment?: any
-  env?: any
-  retainLines?: boolean
-  babelrc?: any
-}
-
 export interface GetBabelFunc {
-  (isServer: boolean): BabelConfig
+  (isServer: boolean): TransformOptions
 }
 
 export interface Config {

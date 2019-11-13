@@ -39,7 +39,6 @@ describe('React-IMVC', () => {
 	describe('Enable SSR', () => {
 		let config = {
 			...defaultConfig,
-			port: PORT++,
 			SSR: true
 		}
 		
@@ -203,7 +202,7 @@ describe('React-IMVC', () => {
 	describe('Disable SSR', () => {
 		let config = {
 			...defaultConfig,
-			port: PORT++,
+			port: PORT + 1,
 			SSR: false
 		}
 			

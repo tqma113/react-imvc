@@ -1,4 +1,4 @@
-import { Location, Context } from '../../../../src/'
+import { Location, Context, BaseState } from '../../../../src/'
 import Controller from '../../../../src/controller'
 import React from 'react'
 
@@ -15,7 +15,7 @@ export default class extends Controller<{}, {}> {
 }
 
 export type ViewProps = {
-    state: object
+    state: BaseState
 }
 
 function View({ state }: ViewProps) {

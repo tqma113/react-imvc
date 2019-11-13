@@ -14,12 +14,6 @@ import 'regenerator-runtime/runtime'
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
-let defaultConfig = getConfig({})
-require('@babel/register')({
-  ...defaultConfig.babel(true),
-  extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx']
-})
-
 export default function build(options: Options): Promise<Config | void> {
   let config = getConfig(options)
   let delPublicPgs = () => delPublish(path.join(config.root, config.publish))
