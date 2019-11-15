@@ -95,6 +95,14 @@ export interface Context extends BaseContext {
   [x: string]: any
 }
 
+export type FetchOptions = RequestInit & {
+  raw?: boolean
+  json?: boolean
+  timeout?: number
+  timeoutErrorFormatter?: ((opstion: any) => string) | string
+  fetch?: (input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>
+}
+
 export interface Meta {
   key?: string | null
   hadMounted: boolean

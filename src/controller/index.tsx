@@ -33,7 +33,8 @@ import {
   Context,
   BaseState,
   Meta,
-  Location
+  Location,
+  FetchOptions
 } from '..'
 import * as shareActions from './actions'
 import attachDevToolsIfPossible from './attachDevToolsIfPossible'
@@ -158,13 +159,7 @@ export default class Controller<
    */
   fetch(
     url: string,
-    options: RequestInit & {
-      raw?: boolean
-      json?: boolean
-      timeout?: number
-      timeoutErrorFormatter?: ((opstion: any) => string) | string
-      fetch?: (input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>
-    } = {}
+    options: FetchOptions = {}
   ) {
     let { context, API } = this
 
@@ -180,7 +175,7 @@ export default class Controller<
       url = this.prependRestapi(url)
     }
 
-    let finalOptions: RequestInit = {
+    let finalOptions: FetchOptions = {
       method: 'GET',
       credentials: 'include',
       ...options,
@@ -234,12 +229,7 @@ export default class Controller<
   get(
     url: string,
     params?: Record<string, string | number | boolean>,
-    options?: RequestInit & {
-      raw?: boolean
-      json?: boolean
-      timeout?: number
-      timeoutErrorFormatter?: ((opstion: any) => string) | string
-    }
+    options?: FetchOptions
   ) {
     let { API } = this
     /**
@@ -265,12 +255,7 @@ export default class Controller<
   post(
     url: string,
     data?: any,
-    options?: RequestInit & {
-      raw?: boolean
-      json?: boolean
-      timeout?: number
-      timeoutErrorFormatter?: ((opstion: any) => string) | string
-    }
+    options?: FetchOptions
   ) {
     options = {
       ...options,
