@@ -45,48 +45,53 @@ function requireConfig(filePath: string): any {
 		finalFilePath = `${clearFilePath}.jsx`
 	} else if (fs.existsSync(`${clearFilePath}.tsx`)) {
 		finalFilePath = `${clearFilePath}.tsx`
-  } else if (fs.existsSync(`${clearFilePath}.json`)) {
-		finalFilePath = `${clearFilePath}.json`
   }
 	
-	if (finalFilePath === null) {
-		throw new Error(`The config file path: ${filePath} is icorrect`)
-	}
-
-	let babelConfig: TransformOptions = {
-		...configBabel(true),
-		filenameRelative: finalFilePath
-	}
-	let result = transformFileSync(finalFilePath, babelConfig)
-
-	let configFromFile = {}
-	if (result && result.code) {
-		const finalPath = path.dirname(finalFilePath)
-		const module = { exports: {} }
-		const virtualRequire = (filePath: string) => {
-			if (!isAbsolutePath(filePath)) {
-				return requireConfig(path.resolve(finalPath, filePath))
-			} else {
-				return require(filePath)
+	if (finalFilePath !== null) {
+		let babelConfig: TransformOptions = {
+			...configBabel(true),
+			filenameRelative: finalFilePath
+		}
+		let result = transformFileSync(finalFilePath, babelConfig)
+	
+		let configFromFile = {}
+		if (result && result.code) {
+			const finalPath = path.dirname(finalFilePath)
+			const module = { exports: {} }
+			const virtualRequire = (filePath: string) => {
+				if (!isAbsolutePath(filePath)) {
+					return requireConfig(path.resolve(finalPath, filePath))
+				} else {
+					return require(filePath)
+				}
 			}
+			const context = vm.createContext({
+				__filename: finalFilePath,
+				__dirname: finalPath,
+				exports: module.exports,
+				require: virtualRequire,
+				module: module
+			})
+			try {
+				configFromFile = runCode(result.code, context)
+			} catch (e) {
+				throw e
+			}
+		} else {
+			throw new Error(`The file: ${filePath} has syntax error`)
 		}
-		const context = vm.createContext({
-			__filename: finalFilePath,
-			__dirname: finalPath,
-			exports: module.exports,
-      require: virtualRequire,
-      module: module
-		})
-		try {
-			configFromFile = runCode(result.code, context)
-		} catch (e) {
-			throw e
-		}
+	
+		return configFromFile
 	} else {
-		throw new Error(`The file: ${filePath} has syntax error`)
+		if (fs.existsSync(`${clearFilePath}.json`)) {
+			finalFilePath = `${clearFilePath}.json`
+			return require(finalFilePath)
+		} else {
+			throw new Error(`The config file path: ${filePath} is icorrect`)
+		}
 	}
 
-	return configFromFile
+	
 }
 
 let runCode = (sourceCode: string, context?: any) => {
