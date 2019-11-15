@@ -146,3 +146,7 @@ export function str2ab(str: string): ArrayBuffer {
   }
   return buf;
 }
+
+export function isAbsolutePath(path: string): boolean {
+  return path[0] !== '.'
+}

@@ -5,10 +5,12 @@ import path from 'path'
 import fs from 'fs'
 import { transformFileSync } from '@babel/core'
 import vm from 'vm'
+import { TransformOptions } from '@babel/core'
 
 import defaultConfig from './config.defaults'
 import { Options, EntireConfig, Config } from '..'
 import configBabel from './babel'
+import { isAbsolutePath } from '../util'
 
 export { default as defaultConfig } from './config.defaults'
 export const babel = configBabel
@@ -44,16 +46,27 @@ function requireConfig(filePath: string): any {
 	if (finalFilePath === null) {
 		throw new Error(`The config file path: ${filePath} is icorrect`)
 	}
+	let babelConfig: TransformOptions = {
+		...configBabel(true),
+		filenameRelative: finalFilePath
+	}
+	let result = transformFileSync(finalFilePath, babelConfig)
 	let configFromFile = {}
-	let result = transformFileSync(finalFilePath, configBabel(true))
-
 	if (result && result.code) {
+		const finalPath = path.dirname(finalFilePath)
 		const module = { exports: {} }
+		const virtualRequire = (filePath: string) => {
+			if (!isAbsolutePath(filePath)) {
+				return require(path.resolve(finalPath, filePath))
+			} else {
+				return require(filePath)
+			}
+		}
 		const context = vm.createContext({
 			__filename: finalFilePath,
-			__dirname: path.dirname(finalFilePath),
+			__dirname: finalPath,
 			exports: module.exports,
-      require: require,
+      require: virtualRequire,
       module: module
 		})
 		try {

@@ -1,5 +1,6 @@
 import path from 'path'
 import { Config } from '../../src'
+import cf from './config'
 
 let PORT = 33336
 const ROOT = __dirname
@@ -15,7 +16,8 @@ const config: Config = {
 	output: {
 		path: path.resolve(ROOT, '../publish/static')
 	},
-	webpackDevMiddleware: true
+	webpackDevMiddleware: true,
+	NODE_ENV: cf.env
 }
 
 export default config
