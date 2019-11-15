@@ -66,6 +66,7 @@ function requireConfig(filePath: string): any {
 				}
 			}
 			const context = vm.createContext({
+				...global,
 				__filename: finalFilePath,
 				__dirname: finalPath,
 				exports: module.exports,
