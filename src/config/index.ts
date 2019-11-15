@@ -45,6 +45,8 @@ function requireConfig(filePath: string): any {
 		finalFilePath = `${clearFilePath}.jsx`
 	} else if (fs.existsSync(`${clearFilePath}.tsx`)) {
 		finalFilePath = `${clearFilePath}.tsx`
+  } else if (fs.existsSync(`${clearFilePath}.json`)) {
+		finalFilePath = `${clearFilePath}.json`
   }
 	
 	if (finalFilePath === null) {
