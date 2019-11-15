@@ -3,14 +3,13 @@
  */
 import path from 'path'
 import fs from 'fs'
-import { transformFileSync } from '@babel/core'
 import vm from 'vm'
-import { TransformOptions } from '@babel/core'
+import { TransformOptions, transformFileSync } from '@babel/core'
 
 import defaultConfig from './config.defaults'
 import { Options, EntireConfig, Config } from '..'
 import configBabel from './babel'
-import { isAbsolutePath } from '../util'
+import { isAbsolutePath, getClearFilePath } from '../util'
 
 export { default as defaultConfig } from './config.defaults'
 export const babel = configBabel
@@ -36,28 +35,35 @@ export default function getConfig(options?: Options): EntireConfig {
 }
 
 function requireConfig(filePath: string): any {
-	let clearFilePath = filePath.split('.').slice(0, -1).join('.')
+	let clearFilePath = getClearFilePath(filePath)
 	let finalFilePath: string | null = null
-	if (fs.existsSync(`${clearFilePath}.js`)) {
+  if (fs.existsSync(`${clearFilePath}.js`)) {
 		finalFilePath = `${clearFilePath}.js`
 	} else if (fs.existsSync(`${clearFilePath}.ts`)) {
 		finalFilePath = `${clearFilePath}.ts`
-	}
+	} else if (fs.existsSync(`${clearFilePath}.jsx`)) {
+		finalFilePath = `${clearFilePath}.jsx`
+	} else if (fs.existsSync(`${clearFilePath}.tsx`)) {
+		finalFilePath = `${clearFilePath}.tsx`
+  }
+	
 	if (finalFilePath === null) {
 		throw new Error(`The config file path: ${filePath} is icorrect`)
 	}
+
 	let babelConfig: TransformOptions = {
 		...configBabel(true),
 		filenameRelative: finalFilePath
 	}
 	let result = transformFileSync(finalFilePath, babelConfig)
+
 	let configFromFile = {}
 	if (result && result.code) {
 		const finalPath = path.dirname(finalFilePath)
 		const module = { exports: {} }
 		const virtualRequire = (filePath: string) => {
 			if (!isAbsolutePath(filePath)) {
-				return require(path.resolve(finalPath, filePath))
+				return requireConfig(path.resolve(finalPath, filePath))
 			} else {
 				return require(filePath)
 			}

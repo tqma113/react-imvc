@@ -150,3 +150,21 @@ export function str2ab(str: string): ArrayBuffer {
 export function isAbsolutePath(path: string): boolean {
   return path[0] !== '.'
 }
+
+export function getClearFilePath(filepath: string): string {
+  const extensions = [
+    '.js',
+    '.jsx',
+    '.ts',
+    '.tsx',
+    '.json'
+  ]
+  function replacer(match: string, p1: string, p2: string, offset: number, str: string) {
+    if (extensions.includes(p2)) {
+      return p1
+    } else {
+      return str
+    }
+  }
+  return filepath.replace(/^(.*)(\.[a-zA-Z]{1,5})$/, replacer)
+}
