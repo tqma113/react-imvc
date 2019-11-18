@@ -1,3 +1,7 @@
-export { default as start } from './dist/start'
-export { default as build } from './dist/build'
+import start from './dist/start'
+import build from './dist/build'
+export default {
+  start,
+  build
+}
 export * from './dist'

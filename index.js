@@ -1,4 +1,9 @@
 "use strict";
 
-exports.start = require('./dist/start')
-exports.build = require('./dist/build')
+const start = require('./dist/start')
+const build = require('./dist/build')
+
+module.exports = {
+  start,
+  build
+}
