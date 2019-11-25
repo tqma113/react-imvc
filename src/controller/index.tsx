@@ -709,6 +709,7 @@ export default class Controller<
     this.bindStoreWithView()
     return this.render()
   }
+  
   bindStoreWithView() {
     let { context, store, history, meta } = this
 
