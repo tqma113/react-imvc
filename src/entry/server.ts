@@ -178,7 +178,7 @@ export default function createExpressApp(config: EntireConfig): express.Express 
 		}
 
 		res.locals.appSettings = {
-			type: "createBrowserHistory",
+			type: "createHistory",
 			basename,
 			context,
 			...config.appSettings
