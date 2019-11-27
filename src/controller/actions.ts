@@ -1,10 +1,8 @@
 /**
  * 共享的 action 函数
  */
-import _ from '../util'
+import { setValueByPath } from '../util'
 import { Location, BaseState, Action } from '..'
-
-const { setValueByPath } = _
 
 export const INDENTITY: Action<BaseState> = (state) => state
 

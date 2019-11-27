@@ -39,7 +39,7 @@ import {
 import * as shareActions from './actions'
 import attachDevToolsIfPossible from './attachDevToolsIfPossible'
 import ViewManager from '../component/ViewManager'
-import _ from '../util'
+import * as _ from '../util'
 
 export type BaseActions = typeof shareActions
 

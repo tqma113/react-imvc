@@ -1,6 +1,16 @@
 import fetchMock from 'fetch-mock'
 import fetch from 'node-fetch'
-import util from '../src/util'
+import {
+  getFlatList,
+  toJSON,
+  toText,
+  timeoutReject,
+  isAbsoluteUrl,
+  mapValues,
+  isThenable,
+  setValueByPath,
+  getValueByPath
+} from '../src/util'
 import { Route } from 'create-app/client'
 
 const defaultOption = {
@@ -21,7 +31,7 @@ describe('util test', () => {
       .mock('http://www.success1.com', { name: 'a' }, defaultOption)
       .sandbox()('http://www.success1.com')
       .then(res => {
-        const json = util.toJSON(res)
+        const json = toJSON(res)
 
         expect(typeof json.then).toBe('function')
         expect(json instanceof Promise).toBeTruthy()
@@ -37,7 +47,7 @@ describe('util test', () => {
       .mock('http://www.error1.com', 400, defaultOption)
       .sandbox()('http://www.error1.com')
       .catch(e => {
-        expect(util.toJSON(e)).toMatch(/error/ig)
+        expect(toJSON(e)).toMatch(/error/ig)
       })
     })
   })
@@ -52,7 +62,7 @@ describe('util test', () => {
       .mock('http://www.success2.com', 'a', defaultOption)
       .sandbox()('http://www.success2.com')
       .then(async res => {
-        const text = util.toText(res)
+        const text = toText(res)
 
         expect(typeof text.then).toBe('function')
         expect(text instanceof Promise).toBeTruthy()
@@ -68,7 +78,7 @@ describe('util test', () => {
       .mock('http://www.error2.com', 400, defaultOption)
       .sandbox()('http://www.error2.com')
       .catch(e => {
-        expect(util.toText(e)).toMatch(/error/ig)
+        expect(toText(e)).toMatch(/error/ig)
       })
     })
   })
@@ -87,7 +97,7 @@ describe('util test', () => {
         setTimeout(reject, 100, 'promise')
       })
 
-      expect(util.timeoutReject(promise, 500, '')).resolves.toMatch('promise')
+      expect(timeoutReject(promise, 500, '')).resolves.toMatch('promise')
     })
 
     it('timeoutReject reject in time with promise info when reject time greater then promise time passed in', () => {
@@ -95,19 +105,19 @@ describe('util test', () => {
         setTimeout(reject, 500, 'promise')
       })
 
-      expect(util.timeoutReject(promise, 100, '')).rejects.toMatch(/error/i)
+      expect(timeoutReject(promise, 100, '')).rejects.toMatch(/error/i)
     })
   })
   
   describe('isAbsoluteUrl', () => {
     it('return true when the url passed in has \'http\'', () => {
-      expect(util.isAbsoluteUrl('http://www.example.com')).toBeTruthy()
+      expect(isAbsoluteUrl('http://www.example.com')).toBeTruthy()
     })
     it('return true when the url passed in has \'//\'', () => {
-      expect(util.isAbsoluteUrl('//www.example.com')).toBeTruthy()
+      expect(isAbsoluteUrl('//www.example.com')).toBeTruthy()
     })
     it('return true when the url passed in does not has \'http\' or \'\//\'', () => {
-      expect(util.isAbsoluteUrl('www.example.com')).toBeFalsy()
+      expect(isAbsoluteUrl('www.example.com')).toBeFalsy()
     })
   })
   
@@ -119,7 +129,7 @@ describe('util test', () => {
         b: 2,
         c: 3
       }
-      const result = util.mapValues(source, fn)
+      const result = mapValues(source, fn)
 
       expect(result.a).toBe(2)
       expect(result.b).toBe(3)
@@ -133,7 +143,7 @@ describe('util test', () => {
         b: 'e',
         c: 'f'
       }
-      const result = util.mapValues(source, fn)
+      const result = mapValues(source, fn)
 
       expect(result.a).toBe('ad')
       expect(result.b).toBe('be')
@@ -145,15 +155,15 @@ describe('util test', () => {
     it('success test', () => {
       let promise = new Promise(() => {})
 
-      expect(util.isThenable(promise)).toBeTruthy()
-      expect(util.isThenable(Promise.all([]))).toBeTruthy()
+      expect(isThenable(promise)).toBeTruthy()
+      expect(isThenable(Promise.all([]))).toBeTruthy()
     })
 
     it('failure test', () => {
-      expect(util.isThenable({})).toBeFalsy()
-      expect(util.isThenable(0)).toBeFalsy()
-      expect(util.isThenable('0')).toBeFalsy()
-      expect(util.isThenable(true)).toBeFalsy()
+      expect(isThenable({})).toBeFalsy()
+      expect(isThenable(0)).toBeFalsy()
+      expect(isThenable('0')).toBeFalsy()
+      expect(isThenable(true)).toBeFalsy()
     })
   })
   
@@ -165,7 +175,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['example']).toBe('object')
@@ -178,7 +188,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['home']).toBe('object')
@@ -192,7 +202,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['jack']).toBe('object')
@@ -207,7 +217,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['home']).toBe('object')
@@ -221,7 +231,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['home']).toBe('object')
@@ -237,7 +247,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['example']).toBe('object')
@@ -250,7 +260,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['home']).toBe('object')
@@ -266,7 +276,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['example']).toBe('object')
@@ -279,7 +289,7 @@ describe('util test', () => {
         let value = {
           a: 2
         }
-        let result = util.setValueByPath(obj, path, value)
+        let result = setValueByPath(obj, path, value)
   
         expect(typeof result).toBe('object')
         expect(typeof result['home']).toBe('object')
@@ -296,7 +306,7 @@ describe('util test', () => {
           example: 'target'
         }
         let path = 'example'
-        let result = util.getValueByPath(obj, path)
+        let result = getValueByPath(obj, path)
 
         expect(result).toBe('target')
       })
@@ -308,7 +318,7 @@ describe('util test', () => {
           }
         }
         let path = 'home/example'
-        let result = util.getValueByPath(obj, path)
+        let result = getValueByPath(obj, path)
 
         expect(result).toBe('target')
       })
@@ -322,7 +332,7 @@ describe('util test', () => {
           }
         }
         let path = 'jack/home/example'
-        let result = util.getValueByPath(obj, path)
+        let result = getValueByPath(obj, path)
 
         expect(result).toBe('target')
       })
@@ -334,7 +344,7 @@ describe('util test', () => {
           example: 'target'
         }
         let path = ['example']
-        let result = util.getValueByPath(obj, path)
+        let result = getValueByPath(obj, path)
 
         expect(result).toBe('target')
       })
@@ -346,7 +356,7 @@ describe('util test', () => {
           }
         }
         let path = ['home', 'example']
-        let result = util.getValueByPath(obj, path)
+        let result = getValueByPath(obj, path)
 
         expect(result).toBe('target')
       })
@@ -360,7 +370,7 @@ describe('util test', () => {
           }
         }
         let path = ['jack', 'home', 'example']
-        let result = util.getValueByPath(obj, path)
+        let result = getValueByPath(obj, path)
 
         expect(result).toBe('target')
       })
@@ -379,7 +389,7 @@ describe('util test', () => {
         path: '',
         controller: (noop as any)
       }]]
-      let result = util.getFlatList(list)
+      let result = getFlatList(list)
 
       expect(result instanceof Array).toBeTruthy()
       expect(result.length).toBe(3)
@@ -393,7 +403,7 @@ describe('util test', () => {
         path: '',
         controller: (noop as any)
       }]
-      let result = util.getFlatList(list)
+      let result = getFlatList(list)
 
       expect(result instanceof Array).toBeTruthy()
       expect(result.length).toBe(2)
@@ -418,7 +428,7 @@ describe('util test', () => {
         path: '',
         controller: (noop as any)
       }]]
-      let result = util.getFlatList(list)
+      let result = getFlatList(list)
 
       expect(result instanceof Array).toBeTruthy()
       expect(result.length).toBe(4)

@@ -12,7 +12,7 @@ import createApp, {
   ViewEngine,
   Controller as BaseController
 } from "create-app/client"
-import util from "../util"
+import { getFlatList } from "../util"
 // @ts-ignore
 import $routes from "@routes"
 import { AppSettings, Preload, Module } from ".."
@@ -92,7 +92,7 @@ function render(
 const viewEngine: ViewEngine<React.ReactElement, BaseController> =
   { render }
 
-const routes = util.getFlatList(
+const routes = getFlatList(
   Array.isArray($routes) ? $routes : Object.values($routes)
 )
 

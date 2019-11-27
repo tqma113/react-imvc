@@ -11,7 +11,7 @@ import createApp, {
   Route,
   ViewEngineRender
 } from 'create-app/server'
-import util, { getClearFilePath } from '../util'
+import { getFlatList, getClearFilePath, str2ab } from '../util'
 import {
   EntireConfig,
   AppSettings,
@@ -19,7 +19,6 @@ import {
 } from '..'
 import Controller from '../controller'
 
-const { getFlatList } = util
 
 
 function getModule(module: any) {
@@ -48,12 +47,12 @@ const createElement = React.createElement
 function renderToNodeStream(view: React.ReactElement | string | undefined | null, controller?: Controller<any, any>): Promise<ArrayBuffer> {
   if (typeof view === 'string') {
     return new Promise<ArrayBuffer>((resolve, reject) => {
-      resolve(util.str2ab(view))
+      resolve(str2ab(view))
     })
   }
   if (view === undefined || view === null) {
     return new Promise<ArrayBuffer>((resolve, reject) => {
-      resolve(util.str2ab(''))
+      resolve(str2ab(''))
     })
   }
 

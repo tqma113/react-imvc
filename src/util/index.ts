@@ -1,24 +1,9 @@
 import { Route } from 'create-app/client'
 
-export default {
-  toJSON,
-  toText,
-  timeoutReject,
-  isAbsoluteUrl,
-  mapValues,
-  isThenable,
-  setValueByPath,
-  getValueByPath,
-  getFlatList,
-  ab2str,
-  str2ab,
-  getKeys
-}
-
 export type RouteList = Route[]
 export type inputList = (Route | RouteList)[]
 
-function getFlatList(list: inputList): RouteList {
+export function getFlatList(list: inputList): RouteList {
   let result: RouteList = []
   for (let i = 0; i < list.length; i++) {
     let item = list[i]
@@ -39,7 +24,7 @@ export interface FetchResponse {
   text: () => Promise<string>
 }
 
-function toJSON(response: FetchResponse): Promise<object> {
+export function toJSON(response: FetchResponse): Promise<object> {
   // 如果 response 状态异常，抛出错误
   if (!response.ok || response.status !== 200) {
     return Promise.reject(new Error(response.statusText))
@@ -47,7 +32,7 @@ function toJSON(response: FetchResponse): Promise<object> {
   return response.json()
 }
 
-function toText(response: FetchResponse): Promise<string> {
+export function toText(response: FetchResponse): Promise<string> {
   // 如果 response 状态异常，抛出错误
   if (!response.ok || response.status !== 200) {
     return Promise.reject(new Error(response.statusText))
@@ -55,21 +40,21 @@ function toText(response: FetchResponse): Promise<string> {
   return response.text()
 }
 
-function timeoutReject(promise: Promise<any>, time = 0, errorMsg: any): Promise<any> {
+export function timeoutReject(promise: Promise<any>, time = 0, errorMsg: any): Promise<any> {
   let timeoutReject = new Promise((_, reject) => {
     setTimeout(() => reject(new Error(errorMsg || `Timeout Error:${time}ms`)), time)
   })
   return Promise.race([promise, timeoutReject])
 }
 
-function isAbsoluteUrl(url: string) {
+export function isAbsoluteUrl(url: string) {
   return url.indexOf('http') === 0 || url.indexOf('//') === 0
 }
 
 export type mapFunction = (value: any, key: string) => any
 export type anyObject = { [key: string]: any }
 
-function mapValues(obj: anyObject, fn: mapFunction): anyObject {
+export function mapValues(obj: anyObject, fn: mapFunction): anyObject {
   return Object.keys(obj).reduce(
     (result, key) => {
       result[key] = fn(obj[key], key)
@@ -79,12 +64,12 @@ function mapValues(obj: anyObject, fn: mapFunction): anyObject {
   )
 }
 
-function isThenable(obj: any) {
+export function isThenable(obj: any) {
   return obj != null && typeof obj.then === 'function'
 }
 
 const PATH_SEPARATOR_REGEXP = /\.|\/|:/
-function getPath(path: string | string[]): string[] {
+export function getPath(path: string | string[]): string[] {
   if (Array.isArray(path)) return path
   return path.split(PATH_SEPARATOR_REGEXP)
 }
@@ -93,7 +78,7 @@ export interface ObjectOrArray {
   [key: string]: unknown
 }
 
-function setValue(
+export function setValue(
   obj: any,
   [key, ...rest]: string[],
   value: unknown
@@ -108,7 +93,7 @@ function setValue(
   return obj
 }
 
-function setValueByPath(
+export function setValueByPath(
   obj: any,
   path: string | string[],
   value: any
@@ -116,14 +101,14 @@ function setValueByPath(
   return setValue(obj, getPath(path), value)
 }
 
-function getValue(
+export function getValue(
   ret: any,
   key: string | number
 ): any {
   return ret[key]
 }
 
-function getValueByPath(
+export function getValueByPath(
   obj: any,
   path: string | string[]
 ): any {

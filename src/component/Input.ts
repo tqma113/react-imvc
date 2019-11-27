@@ -1,8 +1,6 @@
 import React from 'react'
 import GlobalContext from '../context'
-import _ from '../util'
-
-const { getValueByPath } = _
+import { getValueByPath } from '../util'
 
 export interface Transformer {
 	<T>(currentValue?: T, oldValue?: T): T
