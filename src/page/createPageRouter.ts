@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import path from 'path'
+import fs from 'fs'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import createApp, {
@@ -10,7 +11,7 @@ import createApp, {
   Route,
   ViewEngineRender
 } from 'create-app/server'
-import util from '../util'
+import util, { getClearFilePath } from '../util'
 import {
   EntireConfig,
   AppSettings,
@@ -118,6 +119,22 @@ const renderers = {
   renderToString
 }
 
+function getRightPath(filePath: string): string {
+  let finalFilePath: string = filePath
+  let clearFilePath = getClearFilePath(filePath)
+
+  const extensions = ['js', 'jsx', 'ts', 'tsx']
+  extensions.some((ets) => {
+    if (fs.existsSync(`${clearFilePath}.${ets}`)) {
+      finalFilePath = `${clearFilePath}.${ets}`
+      return true
+    }
+    return false
+  })
+
+  return finalFilePath
+}
+
 export default function createPageRouter(options: EntireConfig) {
   let config = Object.assign({}, options)
   let routes: Route[] = []
@@ -145,7 +162,9 @@ export default function createPageRouter(options: EntireConfig) {
     }
   }
   let app = createApp(serverAppSettings)
-  let layoutView = config.layout || path.join(__dirname, 'view')
+  let layoutView = config.layout
+    ? getRightPath(path.resolve(config.root, config.routes, config.layout)) 
+    : path.join(__dirname, 'view')
 
   // 纯浏览器端渲染模式，用前置中间件拦截所有请求
   if (config.SSR === false) {
