@@ -79,7 +79,10 @@ export function setupServer(
 				return require(modulePath)
 			}
 			let filePath = modulePath
-			if (serverConfig.output !== undefined && typeof serverConfig.output.path === 'string') {
+			if (
+				serverConfig.output !== undefined
+					&& typeof serverConfig.output.path === 'string'
+			) {
 				filePath = path.join(serverConfig.output.path, modulePath)
 			}
 			let sourceCode = ''

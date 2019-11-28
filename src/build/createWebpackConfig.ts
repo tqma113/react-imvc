@@ -231,7 +231,8 @@ export default function createWebpackConfig(
 			options: babelOptions
 		}
 	]
-	moduleRulesConfig = moduleRulesConfig.concat(config.webpackLoaders, postLoaders)
+	moduleRulesConfig = moduleRulesConfig
+			.concat(config.webpackLoaders, postLoaders)
 	const moduleConfig: webpack.Module = {
 		// makes missing exports an error instead of warning
 		strictExportPresence: true,

@@ -44,7 +44,9 @@ function delPublish(folder: string): Promise<string[]> {
   return del(folder)
 }
 
-function startWebpackForClient(config: EntireConfig): Promise<EntireConfig | boolean> {
+function startWebpackForClient(
+  config: EntireConfig
+): Promise<EntireConfig | boolean> {
   let webpackConfig = createWebpackConfig(config, false)
   return new Promise((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
@@ -63,7 +65,9 @@ function startWebpackForClient(config: EntireConfig): Promise<EntireConfig | boo
   })
 }
 
-function startWebpackForServer(config: EntireConfig): Promise<EntireConfig> {
+function startWebpackForServer(
+  config: EntireConfig
+): Promise<EntireConfig> {
   let webpackConfig = createWebpackConfig(config, true)
   return new Promise((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
@@ -97,7 +101,9 @@ function startGulp(config: EntireConfig): Promise<EntireConfig> {
   })
 }
 
-async function startStaticEntry(config: EntireConfig): Promise<EntireConfig | void> {
+async function startStaticEntry(
+  config: EntireConfig
+): Promise<EntireConfig | void> {
   if (!config.staticEntry) {
     return
   }

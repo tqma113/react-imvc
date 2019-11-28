@@ -41,7 +41,10 @@ export function getExternals(config: EntireConfig): string[] {
   return dependencies
 }
 
-export function matchExternals(externals: string[], modulePath: string): boolean {
+export function matchExternals(
+  externals: string[],
+  modulePath: string
+): boolean {
   for (let i = 0; i < externals.length; i++) {
     if (modulePath.startsWith(externals[i])) {
       return true

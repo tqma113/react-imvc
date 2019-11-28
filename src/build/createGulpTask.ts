@@ -41,9 +41,11 @@ function createConfig(options: EntireConfig): GulpTaskConfig {
     },
     publishCopy: {
       src: [
-        root + (/^[a-zA-Z]+$/.test(options.publish) ? `/!(node_modules|${options.publish}|buildportal-script)/**/*`
+        root + (/^[a-zA-Z]+$/.test(options.publish)
+          ? `/!(node_modules|${options.publish}|buildportal-script)/**/*`
           : `/!(node_modules|buildportal-script)/**/*`),
-        root + (/^[a-zA-Z]+$/.test(options.publish) ? `/!(node_modules|${options.publish}|buildportal-script)`
+        root + (/^[a-zA-Z]+$/.test(options.publish)
+          ? `/!(node_modules|${options.publish}|buildportal-script)`
           : `/!(node_modules|buildportal-script)`)
       ],
       dest: publish
@@ -75,7 +77,9 @@ function createConfig(options: EntireConfig): GulpTaskConfig {
   return config
 }
 
-export default function createGulpTask(options: EntireConfig): gulp.TaskFunction {
+export default function createGulpTask(
+  options: EntireConfig
+): gulp.TaskFunction {
   let config: GulpTaskConfig = Object.assign(createConfig(options))
 
   let minifyCSS = () => {
@@ -124,7 +128,7 @@ export default function createGulpTask(options: EntireConfig): gulp.TaskFunction
     return gulp
       .src(config.js.src)
       .pipe(plumber())
-      .pipe(babel(options.babel(false) as any)) // , { babelrc: false }
+      .pipe(babel(options.babel(false) as any))
       .pipe(uglify())
       .pipe(gulp.dest(config.js.dest))
   }
@@ -157,7 +161,7 @@ export default function createGulpTask(options: EntireConfig): gulp.TaskFunction
     return gulp
       .src(config.publishBabel.src)
       .pipe(plumber())
-      .pipe(babel(options.babel(true) as any))  // babelrc: false
+      .pipe(babel(options.babel(true) as any))
       .pipe(gulp.dest(config.publishBabel.dest))
   }
 
