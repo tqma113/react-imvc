@@ -11,7 +11,7 @@ import createApp, {
   Route,
   ViewEngineRender
 } from 'create-app/server'
-import { getFlatList, getClearFilePath, str2ab } from '../util'
+import { getFlatList, getClearFilePath, stringToUnit8Array } from '../util'
 import {
   EntireConfig,
   AppSettings,
@@ -48,12 +48,12 @@ function renderToNodeStream(
 ): Promise<ArrayBuffer> {
   if (typeof view === 'string') {
     return new Promise<ArrayBuffer>((resolve, reject) => {
-      resolve(view as unknown as ArrayBuffer)
+      resolve(Buffer.from(stringToUnit8Array(view)))
     })
   }
   if (view === undefined || view === null) {
     return new Promise<ArrayBuffer>((resolve, reject) => {
-      resolve('' as unknown as ArrayBuffer)
+      resolve(Buffer.from(stringToUnit8Array('')))
     })
   }
 

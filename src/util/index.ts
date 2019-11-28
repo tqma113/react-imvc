@@ -130,13 +130,14 @@ export function ab2str(buf: Uint8Array): string {
   return String.fromCharCode.apply(null, Array.from(new Uint16Array(buf)))
 }
 
-export function str2ab(str: string): ArrayBuffer {
-  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
-  var bufView = new Uint16Array(buf);
-  for (let i = 0, strLen = str.length; i<strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
+export function stringToUnit8Array(str: string): Uint8Array {
+  let arr = [];
+  for (let i = 0, j = str.length; i < j; ++i) {
+    arr.push(str.charCodeAt(i));
   }
-  return buf;
+ 
+  let tmpUint8Array = new Uint8Array(arr);
+  return tmpUint8Array
 }
 
 export function isAbsolutePath(path: string): boolean {
