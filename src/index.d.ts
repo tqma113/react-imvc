@@ -83,6 +83,11 @@ export type Preload = Record<string, string>
 
 export type API = Record<string, string>
 
+export type SSR = boolean 
+  | { (location: Location, context: Context): Promise<boolean> } 
+    | undefined
+
+
 export interface Context extends BaseContext {
   basename?: string
   env?: string
@@ -120,6 +125,7 @@ export interface BaseViewClass extends React.ComponentClass<ViewPropsType> {
   viewId?: any
 }
 
+export type Forwarder = React.ForwardRefExoticComponent<{}> & { isErrorBoundary?: boolean }
 
 // Render view
 

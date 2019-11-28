@@ -1,6 +1,9 @@
 import { Store, Data, Actions } from "relite"
 
-export default function attachDevToolsIfPossible<S extends object, AS extends Actions<S>>(
+export default function attachDevToolsIfPossible<
+  S extends object,
+  AS extends Actions<S>
+>(
   store: Store<S, AS>
 ): void {
   if (process.env.NODE_ENV === "production") {

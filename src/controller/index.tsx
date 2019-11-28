@@ -30,9 +30,11 @@ import {
   BaseViewClass,
   Preload,
   API,
+  SSR,
   Context,
   BaseState,
   Meta,
+  Forwarder,
   Location,
   FetchOptions
 } from '..'
@@ -59,6 +61,7 @@ let uid = 0 // seed of controller id
 // @ts-ignore
 let createElement = React.originalCreateElement || React.createElement
 
+
 /**
  * 绑定 Store 到 View
  * 提供 Controller 的生命周期钩子
@@ -76,7 +79,7 @@ export default class Controller<
   initialState?: any
   actions?: any
   store: Store<S & BaseState, AS & BaseActions>
-  SSR?: boolean | { (location: Location, context: Context): Promise<boolean> } | undefined
+  SSR?: SSR
   preload: Preload
   KeepAlive?: boolean
   KeepAliveOnPush?: boolean | undefined
@@ -107,8 +110,13 @@ export default class Controller<
   windowWillUnload?(location: ILWithBQ): void
 
   errorDidCatch?(error: Error, str: string): void
-  getComponentFallback?(displayName: string, InputComponent: React.ComponentType): React.ReactElement | string | undefined | null
-  getViewFallback?(view?: string): React.ReactElement | string | undefined | null
+  getComponentFallback?(
+    displayName: string,
+    InputComponent: React.ComponentType
+  ): React.ReactElement | string | undefined | null
+  getViewFallback?(
+    view?: string
+  ): React.ReactElement | string | undefined | null
   stateDidReuse?(state: S & BaseState): void
   stateDidChange?(data?: Data<S & BaseState, AS & BaseActions>): void
 
@@ -147,7 +155,9 @@ export default class Controller<
     this.deepCloneInitialState = true
 
     this.store = createStore({} as (AS & BaseActions), {} as S & BaseState)
-    this.history = createHistory() as unknown as HistoryWithBFOL<BLWithBQ, ILWithBQ>
+    this.history = (
+      createHistory() as unknown as HistoryWithBFOL<BLWithBQ, ILWithBQ>
+    )
   }
   
   /**
@@ -196,7 +206,9 @@ export default class Controller<
     }
 
     // 支持使用方手动传入自定义fetch方法
-    let fetchLocal = typeof options.fetch === 'function' ? options.fetch : fetch
+    let fetchLocal = typeof options.fetch === 'function'
+      ? options.fetch
+      : fetch
 
     let fetchData: Promise<any> = fetchLocal(url, finalOptions)
 
@@ -393,7 +405,11 @@ export default class Controller<
   }
 
   // 封装 cookie 的同构方法
-  cookie(key: string, value?: string, options?: Cookie.CookieAttributes | express.CookieOptions) {
+  cookie(
+    key: string,
+    value?: string,
+    options?: Cookie.CookieAttributes | express.CookieOptions
+  ) {
     if (!value) {
       return this.getCookie(key)
     }
@@ -410,7 +426,11 @@ export default class Controller<
     }
   }
 
-  setCookie(key: string, value: string, options?: Cookie.CookieAttributes | express.CookieOptions) {
+  setCookie(
+    key: string,
+    value: string,
+    options?: Cookie.CookieAttributes | express.CookieOptions
+  ) {
     let { context } = this
 
     if (options && options.expires) {
@@ -432,7 +452,10 @@ export default class Controller<
     }
   }
 
-  removeCookie(key: string, options?:  Cookie.CookieAttributes | express.CookieOptions) {
+  removeCookie(
+    key: string,
+    options?: Cookie.CookieAttributes | express.CookieOptions
+  ) {
     let { context } = this
 
     if (context.isServer) {
@@ -466,7 +489,9 @@ export default class Controller<
         React.createElement = createElement
       }
       let map = new Map()
-      let createErrorBoundary = (InputComponent: React.ComponentType & { ignoreErrors: boolean }) => {
+      let createErrorBoundary = (
+        InputComponent: React.ComponentType & { ignoreErrors: boolean }
+      ) => {
         if (!InputComponent) return InputComponent
 
         if (InputComponent.ignoreErrors) return InputComponent
@@ -500,17 +525,23 @@ export default class Controller<
           render() {
             if (self.store.getState().hasError) {
               if (self.getComponentFallback) {
-                let result = self.getComponentFallback(displayName as string, InputComponent)
+                let result = self.getComponentFallback(
+                  displayName as string,
+                  InputComponent
+                )
                 if (result !== undefined) return result
               }
               return null
             }
             let { forwardedRef, ...rest } = this.props
-            return createElement(InputComponent, { ...rest, ref: forwardedRef })
+            return createElement(
+              InputComponent,
+              { ...rest, ref: forwardedRef }
+            )
           }
         }
 
-        let Forwarder: React.ForwardRefExoticComponent<{}> & { isErrorBoundary?: boolean } = React.forwardRef((props, ref) => {
+        let Forwarder: Forwarder = React.forwardRef((props, ref) => {
           return createElement(ErrorBoundary, { ...props, forwardedRef: ref })
         })
 
@@ -578,7 +609,11 @@ export default class Controller<
     let initialState: S = this.initialState || {} as S
 
     // 如果 Model 存在，且 initialState 和 actions 不存在，从 Model 里解构出来
-    if (this.Model && this.initialState === undefined && this.actions === undefined) {
+    if (
+      this.Model
+        && this.initialState === undefined
+          && this.actions === undefined
+    ) {
       let { initialState: initState, ...acts } = this.Model
       initialState = this.initialState = initState
       actions = this.actions = acts
@@ -623,7 +658,8 @@ export default class Controller<
     /**
      * 动态获取最终的 actions
      */
-    let finalActions: AS & BaseActions = await this.getFinalActions({ ...shareActions, ...actions })
+    let finalActions: AS & BaseActions 
+      = await this.getFinalActions({ ...shareActions, ...actions })
     
     /**
      * 创建 store
@@ -651,7 +687,8 @@ export default class Controller<
         return obj
       }, {} as any)
 
-      this.store.actions = actions as unknown as Currings<S & BaseState, AS & BaseActions>
+      this.store.actions
+        = actions as unknown as Currings<S & BaseState, AS & BaseActions>
     }
 
     /**
