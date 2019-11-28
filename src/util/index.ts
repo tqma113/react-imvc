@@ -40,9 +40,14 @@ export function toText(response: FetchResponse): Promise<string> {
   return response.text()
 }
 
-export function timeoutReject(promise: Promise<any>, time = 0, errorMsg: any): Promise<any> {
+export function timeoutReject(
+  promise: Promise<any>,
+  time = 0,
+  errorMsg?: string
+): Promise<any> {
   let timeoutReject = new Promise((_, reject) => {
-    setTimeout(() => reject(new Error(errorMsg || `Timeout Error:${time}ms`)), time)
+    let err = new Error(errorMsg || `Timeout Error:${time}ms`)
+    setTimeout(() => reject(err), time)
   })
   return Promise.race([promise, timeoutReject])
 }
@@ -88,7 +93,9 @@ export function setValue(
     : Object.assign({}, obj)
 
   // @ts-ignore
-  obj[key] = rest.length > 0 ? setValue(obj[key] as I, rest, value) : value
+  obj[key] = rest.length > 0
+    ? setValue(obj[key], rest, value)
+    : value
 
   return obj
 }
@@ -144,7 +151,13 @@ export function getClearFilePath(filepath: string): string {
     '.tsx',
     '.json'
   ]
-  function replacer(match: string, p1: string, p2: string, offset: number, str: string) {
+  function replacer(
+    match: string,
+    p1: string,
+    p2: string,
+    offset: number,
+    str: string
+  ) {
     if (extensions.includes(p2)) {
       return p1
     } else {

@@ -158,6 +158,11 @@ export interface ViewPropsType <C extends Controller<any, any>> {
 }
 
 // Server
+export type Result = {
+  server: http.Server,
+  app: express.Express
+}
+
 export interface Req extends express.Request {
   basename?: string
   serverPublicPath?: string

@@ -14,12 +14,12 @@ import debug from 'debug'
 import createExpressApp from '../entry/server'
 import getConfig from '../config'
 import createPageRouter from '../page/createPageRouter'
-import { Options, RequestHandler } from '..'
+import { Options, RequestHandler, Result } from '..'
 
 
 export default function start(
 	options: Options
-): Promise<{ server: http.Server, app: express.Express }> {
+): Promise<Result> {
 	let config = getConfig(options)
 	let app = createExpressApp(config)
 	let port = normalizePort(config.port)
@@ -29,7 +29,10 @@ export default function start(
 	 * when url starts with //, prepend protocol
 	 * when url starts with /, prepend protocol, host and port
 	 */
-  function fetchNative(url: string, options: nodeFetch.RequestInit): Promise<nodeFetch.Response> {
+  function fetchNative(
+		url: string,
+		options: nodeFetch.RequestInit
+	): Promise<nodeFetch.Response> {
 		if (url.startsWith('//')) {
 			url = 'http:' + url
 		}
@@ -83,16 +86,18 @@ export default function start(
 
 	// error handlers
 	// development error handler
-	let devErrorHandler: express.ErrorRequestHandler = function(err: any, req, res, next) {
-		res.status(err.status || 500)
-		res.send(err.stack)
-	}
+	let devErrorHandler: express.ErrorRequestHandler
+		= function(err: any, req, res, next) {
+			res.status(err.status || 500)
+			res.send(err.stack)
+		}
 	
 	// production error handler
-	let prodErrorHandler: express.ErrorRequestHandler = function(err: any, req, res, next) {
-		res.status(err.status || 500)
-		res.json(err.message)
-	}
+	let prodErrorHandler: express.ErrorRequestHandler
+		= function(err: any, req, res, next) {
+			res.status(err.status || 500)
+			res.json(err.message)
+		}
 
 	app.use(addRenderPage as express.RequestHandler)
 	app.use(pageRouter)
@@ -103,14 +108,16 @@ export default function start(
 	}
 	app.use(prodErrorHandler)
 
-	let promise = new Promise<{server: http.Server, app: express.Express}>((resolve, reject) => {
+	let promise = new Promise<Result>((resolve, reject) => {
 		/**
 		 * Event listener for HTTP server "listening" event.
 		 */
 
     const onListening = () => {
       let addr = server.address()
-      let bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
+			let bind = typeof addr === 'string' 
+				? 'pipe ' + addr 
+				: 'port ' + addr.port
       debug('Listening on ' + bind)
       console.log('Listening on ' + bind)
     }
@@ -124,7 +131,9 @@ export default function start(
         throw error
       }
 
-      let bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port
+			let bind = typeof port === 'string'
+				? 'Pipe ' + port
+				: 'Port ' + port
 
       // handle specific listen errors with friendly messages
       switch (error.code) {
