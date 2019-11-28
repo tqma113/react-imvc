@@ -19,8 +19,6 @@ import {
 } from '..'
 import Controller from '../controller'
 
-
-
 function getModule(module: any) {
   return module.default || module
 }
@@ -44,7 +42,10 @@ function commonjsLoader(
  */
 const createElement = React.createElement
 
-function renderToNodeStream(view: React.ReactElement | string | undefined | null, controller?: Controller<any, any>): Promise<ArrayBuffer> {
+function renderToNodeStream(
+  view: React.ReactElement | string | undefined | null,
+  controller?: Controller<any, any>
+): Promise<ArrayBuffer> {
   if (typeof view === 'string') {
     return new Promise<ArrayBuffer>((resolve, reject) => {
       resolve(str2ab(view))
@@ -85,7 +86,10 @@ function renderToNodeStream(view: React.ReactElement | string | undefined | null
   })
 }
 
-function renderToString(view: React.ReactElement | string | undefined | null, controller?: Controller<any, any>): string {
+function renderToString(
+  view: React.ReactElement | string | undefined | null,
+  controller?: Controller<any, any>
+): string {
   if (typeof view === 'string') {
     return view
   }
@@ -150,7 +154,8 @@ export default function createPageRouter(options: EntireConfig) {
   routes = getFlatList(routes)
 
   let router = Router()
-  let render: ViewEngineRender<React.ReactElement, Controller<any, any>> = renderers[config.renderMode] || renderToNodeStream
+  let render: ViewEngineRender<React.ReactElement, Controller<any, any>>
+    = renderers[config.renderMode] || renderToNodeStream
   let serverAppSettings: AppSettings = {
     loader: commonjsLoader,
     routes: routes,
