@@ -101,7 +101,10 @@ function createContext(filepath: string): vm.Context {
 }
 
 function getFileInfo(filePath: string): [string, Extension] {
-	const clearFilePath = getClearFilePath(filePath)
+	const clearFilePath = getClearFilePath(
+		filePath,
+		getKeys(Extension).map(key => Extension[key])
+	)
 	let finalFilePath: string = filePath
 	let extension: Extension = Extension.INVALID
 	getKeys(Extension).some((ets) => {

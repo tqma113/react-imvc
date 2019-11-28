@@ -123,10 +123,10 @@ const renderers = {
 }
 
 function getRightPath(filePath: string): string {
-  let finalFilePath: string = filePath
-  let clearFilePath = getClearFilePath(filePath)
-
   const extensions = ['js', 'jsx', 'ts', 'tsx']
+  let finalFilePath: string = filePath
+  let clearFilePath = getClearFilePath(filePath, extensions)
+
   extensions.some((ets) => {
     if (fs.existsSync(`${clearFilePath}.${ets}`)) {
       finalFilePath = `${clearFilePath}.${ets}`

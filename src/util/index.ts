@@ -143,14 +143,10 @@ export function isAbsolutePath(path: string): boolean {
   return path[0] !== '.'
 }
 
-export function getClearFilePath(filepath: string): string {
-  const extensions = [
-    '.js',
-    '.jsx',
-    '.ts',
-    '.tsx',
-    '.json'
-  ]
+export function getClearFilePath(
+  filepath: string,
+  extensions: string[] = ['js']
+): string {
   function replacer(
     match: string,
     p1: string,
@@ -164,7 +160,7 @@ export function getClearFilePath(filepath: string): string {
       return str
     }
   }
-  return filepath.replace(/^(.*)(\.[a-zA-Z]{1,5})$/, replacer)
+  return filepath.replace(/^(.*)\.([a-zA-Z]{1,5})$/, replacer)
 }
 
 export function compareObject(a: object, b: object): boolean {
