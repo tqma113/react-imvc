@@ -48,12 +48,12 @@ function renderToNodeStream(
 ): Promise<ArrayBuffer> {
   if (typeof view === 'string') {
     return new Promise<ArrayBuffer>((resolve, reject) => {
-      resolve(str2ab(view))
+      resolve(view as unknown as ArrayBuffer)
     })
   }
   if (view === undefined || view === null) {
     return new Promise<ArrayBuffer>((resolve, reject) => {
-      resolve(str2ab(''))
+      resolve('' as unknown as ArrayBuffer)
     })
   }
 
