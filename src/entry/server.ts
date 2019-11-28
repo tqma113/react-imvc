@@ -14,7 +14,9 @@ import { EntireConfig, Req } from ".."
 import configBabel from "../config/babel"
 import * as setupDevEnv from "../build/setup-dev-env"
 
-export default function createExpressApp(config: EntireConfig): express.Express {
+export default function createExpressApp(
+	config: EntireConfig
+): express.Express {
 	const app: express.Express = express()
 
 	// handle basename
@@ -191,11 +193,11 @@ export default function createExpressApp(config: EntireConfig): express.Express 
 }
 
 function getAssets(stats: Record<string, any>): Record<string, any> {
-	return Object.keys(stats).reduce((result: Record<string, any>, assetName) => {
+	return Object.keys(stats).reduce((result, assetName) => {
 		let value = stats[assetName]
 		result[assetName] = Array.isArray(value) ? value[0] : value
 		return result
-	}, {})
+	}, {} as Record<string, any>)
 }
 
 function readAssets(config: EntireConfig): Record<string, any> {

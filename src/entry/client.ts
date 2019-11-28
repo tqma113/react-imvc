@@ -89,8 +89,8 @@ function render(
     }
   }
 }
-const viewEngine: ViewEngine<React.ReactElement, BaseController> =
-  { render }
+const viewEngine: ViewEngine<React.ReactElement, BaseController>
+  = { render }
 
 const routes = getFlatList(
   Array.isArray($routes) ? $routes : Object.values($routes)
