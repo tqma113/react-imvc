@@ -10,7 +10,11 @@ export default function shareRoot(rootPath: string): express.RequestHandler {
   }
 
   const ROOT_RE = new RegExp('^' + rootPath, 'i')
-  const handler: RequestHandler = (req: Req, res: Res, next: express.NextFunction) => {
+  const handler: RequestHandler = (
+    req: Req,
+    res: Res,
+    next: express.NextFunction
+  ) => {
     if (ROOT_RE.test(req.url)) {
       req.url = req.url.replace(ROOT_RE, '')
       req.basename = rootPath
