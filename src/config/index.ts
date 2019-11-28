@@ -36,10 +36,8 @@ export default function getConfig(options: Options = {}): EntireConfig {
 	if (shouldUseCache) {
 		return configCache
 	}
-	let config = constructConfig(options)
 	preOptions = options
-	configCache = config
-	return config
+	return configCache = constructConfig(options)
 }
 
 function constructConfig(options: Options): EntireConfig {
