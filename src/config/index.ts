@@ -107,10 +107,11 @@ function getFileInfo(filePath: string): [string, Extension] {
 	)
 	let finalFilePath: string = filePath
 	let extension: Extension = Extension.INVALID
-	getKeys(Extension).some((ets) => {
+	getKeys(Extension).some((etsKey) => {
+		let ets = Extension[etsKey]
 		if (fs.existsSync(`${clearFilePath}.${ets}`)) {
 			finalFilePath = `${clearFilePath}.${ets}`
-			extension = Extension[ets]
+			extension = ets
 			return true
 		}
 		return false
