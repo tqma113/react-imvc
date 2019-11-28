@@ -9,93 +9,116 @@ import { TransformOptions, transformFileSync } from '@babel/core'
 import defaultConfig from './config.defaults'
 import { Options, EntireConfig, Config } from '..'
 import configBabel from './babel'
-import { isAbsolutePath, getClearFilePath } from '../util'
+import {
+	isAbsolutePath,
+	getClearFilePath,
+	compareObject,
+	getKeys
+} from '../util'
 
 export { default as defaultConfig } from './config.defaults'
-export const babel = configBabel
+export const getBabelConfig = configBabel
 
+enum Extension {
+	JS = 'js',
+	TS = 'ts',
+	JSX = 'jsx',
+	TSX = 'tsx',
+	JSON = 'json',
+	INVALID = 'invalid'
+}
 
-export default function getConfig(options?: Options): EntireConfig {
-	let config = Object.assign({}, defaultConfig)
+let preOptions: Options = {}
+let configCache: EntireConfig = defaultConfig
 
-	options = options || {}
-
-	let customConfig: Config | null = null
-	switch (typeof options.config) {
-		case 'object':
-			customConfig = options.config
-			break
-		case 'string':
-			customConfig = requireConfig(path.resolve(options.config))
-			break
+export default function getConfig(options: Options = {}): EntireConfig {
+	const shouldUseCache = compareObject(preOptions, options)
+	if (shouldUseCache) {
+		return configCache
 	}
-	Object.assign(config, customConfig)
-
+	let config = constructConfig(options)
+	preOptions = options
+	configCache = config
 	return config
 }
 
-function requireConfig(filePath: string): any {
-	let clearFilePath = getClearFilePath(filePath)
-	let finalFilePath: string | null = null
-  if (fs.existsSync(`${clearFilePath}.js`)) {
-		finalFilePath = `${clearFilePath}.js`
-	} else if (fs.existsSync(`${clearFilePath}.ts`)) {
-		finalFilePath = `${clearFilePath}.ts`
-	} else if (fs.existsSync(`${clearFilePath}.jsx`)) {
-		finalFilePath = `${clearFilePath}.jsx`
-	} else if (fs.existsSync(`${clearFilePath}.tsx`)) {
-		finalFilePath = `${clearFilePath}.tsx`
-  }
-	
-	if (finalFilePath !== null) {
-		let babelConfig: TransformOptions = {
-			...configBabel(true),
-			filenameRelative: finalFilePath
-		}
-		let result = transformFileSync(finalFilePath, babelConfig)
-	
-		let configFromFile = {}
-		if (result && result.code) {
-			const finalPath = path.dirname(finalFilePath)
-			const module = { exports: {} }
-			const virtualRequire = (filePath: string) => {
-				if (!isAbsolutePath(filePath)) {
-					return requireConfig(path.resolve(finalPath, filePath))
-				} else {
-					return require(filePath)
-				}
-			}
-			const context = vm.createContext({
-				...global,
-				__filename: finalFilePath,
-				__dirname: finalPath,
-				exports: module.exports,
-				require: virtualRequire,
-				module: module
-			})
-			try {
-				configFromFile = runCode(result.code, context)
-			} catch (e) {
-				throw e
-			}
-		} else {
-			throw new Error(`The file: ${filePath} has syntax error`)
-		}
-	
-		return configFromFile
-	} else {
-		if (fs.existsSync(`${clearFilePath}.json`)) {
-			finalFilePath = `${clearFilePath}.json`
-			return require(finalFilePath)
-		} else {
-			throw new Error(`The config file path: ${filePath} is icorrect`)
-		}
+function constructConfig(options: Options): EntireConfig {
+	let config: Config | null = null
+	switch (typeof options.config) {
+		case 'object':
+				config = options.config
+			break
+		case 'string':
+				config = requireConfig(path.resolve(options.config))
+			break
+		default:
+			throw new Error(`Config in options is incorrect type(string or object).`)
 	}
-
-	
+	return Object.assign({}, defaultConfig, config)
 }
 
-let runCode = (sourceCode: string, context?: any) => {
+function requireConfig(filePath: string): EntireConfig {
+	console.log(filePath)
+	const clearFilePath = getClearFilePath(filePath)
+	const [finalFilePath, ets] = getFileInfo(clearFilePath)
+	if (ets === Extension.INVALID) {
+		throw new Error(`The config path: ${filePath} is incorrect`)
+	}
+	if (ets === Extension.JSON) {
+		return require(finalFilePath)
+	}
+	const babelConfig: TransformOptions = {
+		...configBabel(true),
+		filenameRelative: finalFilePath
+	}
+	const result = transformFileSync(finalFilePath, babelConfig)
+	if (result && result.code) {
+		try {
+			return runCode(result.code, createContext(finalFilePath))
+		} catch (e) {
+			throw e
+		}
+	} else {
+		throw new Error(`The file: ${filePath} has syntax error`)
+	}
+}
+
+function createContext(filepath: string): vm.Context {
+	const dir = path.dirname(filepath)
+	const module = { exports: {} }
+	const virtualRequire = (filePath: string) => {
+		if (!isAbsolutePath(filePath)) {
+			return requireConfig(path.resolve(dir, filePath))
+		} else {
+			return require(filePath)
+		}
+	}
+	return vm.createContext({
+		...global,
+		__filename: filepath,
+		__dirname: dir,
+		exports: module.exports,
+		require: virtualRequire,
+		module: module
+	})
+}
+
+function getFileInfo(filePath: string): [string, Extension] {
+	const clearFilePath = getClearFilePath(filePath)
+	let finalFilePath: string = filePath
+	let extension: Extension = Extension.INVALID
+	getKeys(Extension).some((ets) => {
+		if (fs.existsSync(`${clearFilePath}.${ets}`)) {
+			finalFilePath = `${clearFilePath}.${ets}`
+			extension = Extension[ets]
+			return true
+		}
+		return false
+	})
+	return [finalFilePath, extension]
+}
+
+function runCode(sourceCode: string, context?: vm.Context) {
 	if (context) {
 		return vm.runInContext(sourceCode, context)
 	}

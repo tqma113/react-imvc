@@ -1,5 +1,5 @@
 process.env.NODE_ENV = 'development'
-import start from '../../src/start/babel'
+import start from '../../src/start'
 import { Config } from '../../src/'
 const PORT: number = 3333
 const ROOT = __dirname

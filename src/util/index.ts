@@ -153,3 +153,7 @@ export function getClearFilePath(filepath: string): string {
   }
   return filepath.replace(/^(.*)(\.[a-zA-Z]{1,5})$/, replacer)
 }
+
+export function compareObject(a: object, b: object): boolean {
+  return JSON.stringify(a) === JSON.stringify(b)
+}
