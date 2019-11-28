@@ -58,7 +58,6 @@ function constructConfig(options: Options): EntireConfig {
 }
 
 function requireConfig(filePath: string): EntireConfig {
-	console.log(filePath)
 	const clearFilePath = getClearFilePath(filePath)
 	const [finalFilePath, ets] = getFileInfo(clearFilePath)
 	if (ets === Extension.INVALID) {
