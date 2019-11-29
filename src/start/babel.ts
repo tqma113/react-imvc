@@ -1,5 +1,7 @@
 import configBabel from '../config/babel'
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+
 require('@babel/register')({
   ...configBabel(true),
   extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx']

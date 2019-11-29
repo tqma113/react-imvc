@@ -12,8 +12,6 @@ import { Options, EntireConfig, AppSettings } from '..'
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'production'
-
 export default function build(options: Options): Promise<EntireConfig | void> {
   let config = getConfig(options)
   let delPublicPgs = () => delPublish(path.join(config.root, config.publish))

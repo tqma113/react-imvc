@@ -31,7 +31,10 @@ enum Extension {
 let preOptions: Options = {}
 let configCache: EntireConfig = defaultConfig
 
-export default function getConfig(options: Options = {}): EntireConfig {
+export default function getConfig(
+	options: Options = {},
+	shouldCompile: boolean = process.env.NODE_ENV !== 'production'
+): EntireConfig {
 	const canUseCache = compareObject(preOptions, options)
 	if (canUseCache) {
 		return configCache
