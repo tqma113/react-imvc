@@ -222,8 +222,10 @@ export default function createPageRouter(options: EntireConfig) {
       // content 可能是异步渲染的
       content = await content
 
-      let initialState = controller.store.getState()
-      let htmlConfigs = initialState.html
+      let initialState = controller.store
+        ? controller.store.getState()
+        : undefined
+      let htmlConfigs = initialState ? initialState.html : undefined
       let data = {
         ...htmlConfigs,
         content,

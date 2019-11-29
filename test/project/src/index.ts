@@ -82,5 +82,9 @@ export default [
 	{
 		path: '/unscroll',
 		controller: () => import('./unscroll/Controller')
+	},
+	{
+		path: '/componentWillCreate',
+		controller: () => import('./componentWillCreate/Controller')
 	}
 ]

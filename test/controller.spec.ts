@@ -432,8 +432,26 @@ describe('controller', () => {
     it.todo('valid')
   })
   
-  describe('shouldComponentWillCreate', () => {
+  describe('shouldComponentCreate', () => {
     it.todo('valid')
+  })
+
+  describe('componentWillCreate', () => {
+    it('should run at client not run at server when SSR is false', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/componentWillCreate`
+      await page.goto(url)
+      await page.waitFor('#componentWillCreate')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).not.toContain('componentWillCreate')
+
+      const clientContent = await page.$eval('#componentWillCreate', (e) => e.innerHTML)
+      expect(clientContent.includes('componentWillCreate')).toBeTruthy()
+
+      fetchMock.reset()
+      await page.close()
+    })
   })
   
   describe('componentDidFirstMount', () => {

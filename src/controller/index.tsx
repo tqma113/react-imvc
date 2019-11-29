@@ -154,7 +154,8 @@ export default class Controller<
     this.preload = {}
     this.deepCloneInitialState = true
 
-    this.store = createStore({} as (AS & BaseActions), {} as S & BaseState)
+    // For TypeScript placeholder
+    this.store = undefined as unknown as Store<S & BaseState, AS & BaseActions>
     this.history = (
       createHistory() as unknown as HistoryWithBFOL<BLWithBQ, ILWithBQ>
     )
