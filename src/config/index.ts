@@ -32,8 +32,8 @@ let preOptions: Options = {}
 let configCache: EntireConfig = defaultConfig
 
 export default function getConfig(options: Options = {}): EntireConfig {
-	const shouldUseCache = compareObject(preOptions, options)
-	if (shouldUseCache) {
+	const canUseCache = compareObject(preOptions, options)
+	if (canUseCache) {
 		return configCache
 	}
 	preOptions = options
