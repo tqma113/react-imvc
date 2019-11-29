@@ -11,7 +11,7 @@ export default class Prefetch extends React.Component<Props> {
 	componentDidMount() {
 		this.context.prefetch(this.props.src)
 	}
-	
+
 	render() {
 		return null
 	}

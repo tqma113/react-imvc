@@ -70,9 +70,9 @@ function render(
     if (container) {
       if (shouldHydrate) {
         shouldHydrate = false
-        ReactDOM.hydrate([view], container)
+        ReactDOM.hydrate(view, container)
       } else {
-        ReactDOM.render([view], container)
+        ReactDOM.render(view, container)
       }
     }
   } catch (error) {

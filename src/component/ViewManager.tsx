@@ -49,7 +49,7 @@ export default class ViewManager<
 		}
 	}
 
-	componentWillReceiveProps(nextProps: Props<S, AS>) {
+	UNSAFE_componentWillReceiveProps(nextProps: Props<S, AS>) {
 		let currentPath = this.props.controller.location.raw
 		let nextPath = nextProps.controller.location.raw
 		if (currentPath !== nextPath) {

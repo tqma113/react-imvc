@@ -33,7 +33,7 @@ export default class ErrorBoundary extends React.Component<Props, Partial<BaseSt
   componentDidCatch(error: Error) {
     this.catchError(error)
   }
-  
+
   render() {
     if (this.state.hasError) {
       return this.props.fallback
