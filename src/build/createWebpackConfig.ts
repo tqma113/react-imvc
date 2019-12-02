@@ -247,7 +247,7 @@ export default function createWebpackConfig(
 		modules: [
 			path.resolve('node_modules'),
 			path.join(config.root, 'node_modules'),
-			path.join(__dirname, '../node_modules')
+			path.join(__dirname, '../../node_modules')
 		],
 		extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx'],
 		alias: alias,
