@@ -167,7 +167,9 @@ export default function createPageRouter(options: EntireConfig) {
   }
   let app = createApp(serverAppSettings)
   let layoutView = config.layout
-    ? getRightPath(path.resolve(config.root, config.routes, config.layout)) 
+    ? process.env.NODE_ENV === 'production'
+      ? getRightPath(path.resolve(config.root, config.routes, config.layout))
+      : config.layout
     : path.join(__dirname, 'view')
 
   // 纯浏览器端渲染模式，用前置中间件拦截所有请求
