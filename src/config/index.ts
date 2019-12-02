@@ -40,17 +40,19 @@ export default function getConfig(
 		return configCache
 	}
 	preOptions = options
-	return configCache = constructConfig(options)
+	return configCache = constructConfig(options, shouldCompile)
 }
 
-function constructConfig(options: Options): EntireConfig {
+function constructConfig(options: Options, shouldCompile: boolean): EntireConfig {
 	let config: Config | null = null
 	switch (typeof options.config) {
 		case 'object':
 				config = options.config
 			break
 		case 'string':
-				config = requireConfig(path.resolve(options.config))
+				config = shouldCompile
+					? requireConfig(path.resolve(options.config))
+					: require(path.resolve(options.config))
 			break
 		default:
 			throw new Error(`Config in options is incorrect type(string or object).`)

@@ -1,6 +1,5 @@
 // base controller class
 import 'whatwg-fetch'
-import express from 'express'
 import React from 'react'
 import Cookie from 'js-cookie'
 import querystring from 'query-string'
@@ -409,7 +408,7 @@ export default class Controller<
   cookie(
     key: string,
     value?: string,
-    options?: Cookie.CookieAttributes | express.CookieOptions
+    options?: Cookie.CookieAttributes
   ) {
     if (!value) {
       return this.getCookie(key)
@@ -430,7 +429,7 @@ export default class Controller<
   setCookie(
     key: string,
     value: string,
-    options?: Cookie.CookieAttributes | express.CookieOptions
+    options?: Cookie.CookieAttributes
   ) {
     let { context } = this
 
@@ -447,15 +446,15 @@ export default class Controller<
 
     if (context.isServer) {
       let { res } = context
-      res && res.cookie(key, value, options as express.CookieOptions)
+      res && res.cookie(key, value, options as any)
     } else if (context.isClient) {
-      Cookie.set(key, value, options as Cookie.CookieAttributes)
+      Cookie.set(key, value, options)
     }
   }
 
   removeCookie(
     key: string,
-    options?: Cookie.CookieAttributes | express.CookieOptions
+    options?: Cookie.CookieAttributes
   ) {
     let { context } = this
 
@@ -463,7 +462,7 @@ export default class Controller<
       let { res } = context
       res && res.clearCookie(key, options)
     } else if (context.isClient) {
-      Cookie.remove(key, options as Cookie.CookieAttributes)
+      Cookie.remove(key, options)
     }
   }
 

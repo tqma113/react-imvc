@@ -1,7 +1,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 import yargs from 'yargs'
-import start from '../start/index'
+import start from '../start'
 import getConfig from '../config'
 
 if (process.env.NODE_ENV === 'development') {

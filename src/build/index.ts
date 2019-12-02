@@ -13,7 +13,7 @@ import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
 export default function build(options: Options): Promise<EntireConfig | void> {
-  let config = getConfig(options)
+  let config = getConfig(options, true)
   let delPublicPgs = () => delPublish(path.join(config.root, config.publish))
   let startGulpPgs = () => startGulp(config)
   let startWebpackPgs = () =>
