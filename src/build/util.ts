@@ -6,7 +6,7 @@ export function getExternals(config: EntireConfig): string[] {
 
   let list: string[] = [
     path.resolve('package.json'),
-    path.join(__dirname, '../package.json'),
+    path.join(__dirname, '../../package.json'),
     path.join(config.root, '../package.json')
   ]
 
