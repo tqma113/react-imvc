@@ -167,7 +167,7 @@ export default function createPageRouter(options: EntireConfig) {
   }
   let app = createApp(serverAppSettings)
   let layoutView = config.layout
-    ? process.env.NODE_ENV === 'production'
+    ? process.env.NODE_ENV !== 'production'
       ? getRightPath(path.resolve(config.root, config.routes, config.layout))
       : config.layout
     : path.join(__dirname, 'view')
