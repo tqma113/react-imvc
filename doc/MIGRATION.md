@@ -10,6 +10,8 @@
 
 * Support to write `imvc.config.ts` with TypeScript. But it's syntax supported is stable, You can't add support syntax by any way.
 
+* Set webpackConfig.resolve.modules to default config.
+
 ## How to upgrade
 
 1. Update `react-imvc` to 3.x
