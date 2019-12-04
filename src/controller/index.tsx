@@ -315,6 +315,9 @@ export default class Controller<
           }
           (context.preload as Preload)[name] = content
         })
+        .catch(err => {
+          console.log(`preload resource failed: ${name}`, err)
+        })
     })
     return Promise.all(list)
   }

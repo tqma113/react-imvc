@@ -10,6 +10,8 @@ export default function Style({ name }: Props) {
 	return (
 		<GlobalContext.Consumer>
 			{({ preload }: { preload?: Preload }) => {
+				const content = preload && preload[name]
+				if (!content) return null
 				return (
 					<style
 						type="text/css"
