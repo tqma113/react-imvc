@@ -12,6 +12,8 @@
 
 * Set webpackConfig.resolve.modules to default config.
 
+* Don't stop render when catch error which throwed while preloading css file. It will render the DOM without style and console error message at terminal.
+
 ## How to upgrade
 
 1. Update `react-imvc` to 3.x
