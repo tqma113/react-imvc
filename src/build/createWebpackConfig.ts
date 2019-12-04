@@ -244,6 +244,7 @@ export default function createWebpackConfig(
 		...config.performance
 	}
 	const resolveConfig = {
+		modules: ['node_modules'],
 		extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx'],
 		alias: alias,
 		plugins: [
