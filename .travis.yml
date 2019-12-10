@@ -12,3 +12,6 @@ before_script:
   - npm run build
 script:
   - npm run test
+  - npm install codecov -g
+after_success:
+  - codecov --token="660f3c84-d629-4418-8c23-b7ca4b02cc36"
