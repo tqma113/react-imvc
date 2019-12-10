@@ -111,3 +111,9 @@ function View() {
 查看页面源代码，可以看到服务端渲染的内容。
 
 ## 欢迎提 Issue 和 Pull Request
+
+[issue](https://github.com/tqma113/react-imvc/issue) | [PR](https://github.com/tqma113/react-imvc/pulls)
+
+## License
+
+[MIT](https://github.com/tqma113/react-imvc/blob/master/LICENSE)
