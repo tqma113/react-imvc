@@ -159,5 +159,6 @@
     "ts-node": "^8.4.1",
     "typescript": "^3.7.3",
     "webpack-cli": "^3.3.7"
-  }
+  },
+  "license": "MIT"
 }
