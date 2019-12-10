@@ -1,9 +1,9 @@
 {
   "name": "react-imvc",
-  "version": "3.0.0-beta.30",
+  "version": "3.0.0-beta.31",
   "description": "An Isomorphic MVC Framework",
-  "main": "dist/lib/index.js",
-  "typings": "dist/types/index.d.ts",
+  "main": "index.js",
+  "typings": "index.d.ts",
   "bin": {
     "react-imvc": "./bin/scripts.js"
   },
