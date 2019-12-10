@@ -1,9 +1,10 @@
 import React from 'react'
+import { BaseLocation } from 'create-history'
 import GlobalContext from '../context'
 
-export interface Props {
+export type Props = React.PropsWithChildren<{
 	as?: keyof HTMLElementTagNameMap
-	to?: string
+	to?: string | BaseLocation
 	href?: string
 	replace?: boolean
 	back?: boolean
@@ -11,9 +12,9 @@ export interface Props {
 	go?: number
 	prefetch?: boolean
 	[propName: string]: any
-}
+}>
 
-export default class Link extends React.Component<React.PropsWithChildren<Props>> {
+export default class Link extends React.Component<Props> {
 	static contextType = GlobalContext
 	static defaultProps: Props = {
 		as: 'a'
