@@ -59,8 +59,8 @@ function render(
 
   if (typeof view === 'string') {
     view = React.createElement(
-      'div',
-      {},
+      React.Fragment,
+      null,
       view
     )
   }
