@@ -21,7 +21,7 @@ export default function createWebpackConfig(
 		'@routes': root
 	})
 	let indexEntry = isServer ? root : path.join(__dirname, '../entry/client')
-	let NODE_ENV = config.NODE_ENV
+	let NODE_ENV = process.env.NODE_ENV
 	let isProd = NODE_ENV === 'production'
 	let mode = NODE_ENV === 'test' ? 'development' : NODE_ENV || 'production'
 	let entry = Object.assign({}, config.entry, {

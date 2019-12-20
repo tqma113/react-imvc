@@ -11,8 +11,6 @@ function standardize(url: string): string {
   return url.replace(/\\/ig, '/')
 }
 
-process.env.NODE_ENV = "production"
-
 describe('build', () => {
   describe('createWebpackConfig', () => {
     describe('isServer should avaliable', () => {
@@ -72,7 +70,8 @@ describe('build', () => {
     describe('NODE_ENV', () => {
       describe('production', () => {
         it('isServer is true', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'production' })
+          process.env.NODE_ENV = "production"
+          const options = Object.assign(defaultConfig)
           const config = createWebpackConfig(options, true)
   
           expect(config.mode).toBe('production')
@@ -112,7 +111,8 @@ describe('build', () => {
 
       describe('development', () => {
         it('isServer is true', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'development' })
+          process.env.NODE_ENV = "development"
+          const options = Object.assign(defaultConfig)
           const config = createWebpackConfig(options, true)
   
           expect(config.mode).toBe('development')
@@ -131,7 +131,8 @@ describe('build', () => {
         })
 
         it('isServer is false', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'development' })
+          process.env.NODE_ENV = "development"
+          const options = Object.assign(defaultConfig)
           const config = createWebpackConfig(options)
   
           expect(config.mode).toBe('development')
@@ -152,7 +153,8 @@ describe('build', () => {
 
       describe('test', () => {
         it('isServer is true', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'test' })
+          process.env.NODE_ENV = "test"
+          const options = Object.assign(defaultConfig)
           const config = createWebpackConfig(options, true)
   
           expect(config.mode).toBe('development')
@@ -171,7 +173,8 @@ describe('build', () => {
         })
 
         it('isServer is false', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'test' })
+          process.env.NODE_ENV = "test"
+          const options = Object.assign(defaultConfig)
           const config = createWebpackConfig(options)
   
           expect(config.mode).toBe('development')

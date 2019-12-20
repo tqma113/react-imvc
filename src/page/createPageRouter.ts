@@ -177,7 +177,7 @@ export default function createPageRouter(options: EntireConfig) {
     router.all('*', (req, res) => {
       res.render(layoutView)
     })
-  } else if (config.NODE_ENV === 'development') {
+  } else if (process.env.NODE_ENV === 'development') {
     // 带服务端渲染模式的开发环境，需要动态编译 src/routes
     let setupDevEnv = require('../build/setup-dev-env')
     setupDevEnv.setupServer(config, {
@@ -241,7 +241,7 @@ export default function createPageRouter(options: EntireConfig) {
       // 支持通过 res.locals.layoutView 动态确定 layoutView
       res.render(res.locals.layoutView || layoutView, data)
     } catch (error) {
-      if (config.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV !== 'production') {
         console.log(error)
       }
       
