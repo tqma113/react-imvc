@@ -453,10 +453,6 @@ export interface EntireConfig {
    * 默认跟着 ENV 环境变量走，或者 3000
    */
   port: number | string
-  /**
-   * node.js 的环境变量备份
-   */
-  NODE_ENV: string
 
   /**
    * IMVC 的 layout 组件所在的路径
