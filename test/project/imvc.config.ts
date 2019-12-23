@@ -16,8 +16,7 @@ const config: Config = {
 	output: {
 		path: path.resolve(ROOT, '../publish/static')
 	},
-	webpackDevMiddleware: true,
-	NODE_ENV: cf.env
+	webpackDevMiddleware: true
 }
 
 export default config

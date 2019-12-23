@@ -89,7 +89,8 @@ describe('build', () => {
         })
 
         it('isServer is false', () => {
-          const options = Object.assign(defaultConfig, { NODE_ENV: 'production' })
+          process.env.NODE_ENV = "production"
+          const options = Object.assign(defaultConfig)
           const config = createWebpackConfig(options)
   
           expect(config.mode).toBe('production')

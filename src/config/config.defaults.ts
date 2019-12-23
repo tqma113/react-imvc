@@ -77,7 +77,6 @@ const defaultConfig: EntireConfig = {
 	favicon: "",
 	SSR: true,
 	port: port,
-	NODE_ENV: NODE_ENV,
 	layout: "",
 	renderMode: "renderToNodeStream",
 	context: {},

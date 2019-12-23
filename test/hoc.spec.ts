@@ -21,8 +21,7 @@ const config: Config = {
   routes: "routes", // 服务端路由目录
   layout: "Layout.tsx", // 自定义 Layoutclear
   webpackLogger: false, // 关闭 webpack logger
-  webpackDevMiddleware: true, // 在内存里编译
-  NODE_ENV: 'test'
+  webpackDevMiddleware: true  // 在内存里编译
 }
 
 
