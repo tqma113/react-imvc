@@ -1,9 +1,10 @@
 import Babel from "./babel"
+import { EntireConfig } from ".."
+
 let cwd = process.cwd()
 let port = process.env.PORT || 3000
 let NODE_ENV = process.env.NODE_ENV || "development"
 let isDev = NODE_ENV === "development"
-import { EntireConfig } from ".."
 
 const defaultConfig: EntireConfig = {
 	basename: "",

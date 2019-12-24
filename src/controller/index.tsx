@@ -372,7 +372,7 @@ export default class Controller<
       return this.prependBasename(url)
     }
 
-    let restapi = this.restapi || context.restapi
+    let restapi = this.restapi || context.restapi || ''
     return restapi + url
   }
 

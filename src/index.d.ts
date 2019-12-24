@@ -93,10 +93,10 @@ export interface Context extends BaseContext {
   env?: string
   preload?: Preload
   publicPath?: string
-  location?: HistoryLocation
+  location: HistoryLocation
   restapi?: string
-  req?: express.Request
-  res?: express.Response
+  req: express.Request
+  res: express.Response
   [x: string]: any
 }
 
@@ -470,7 +470,7 @@ export interface EntireConfig {
    * server 端和 client 端都会接收到 config.context 里的配置
    * 默认为空
    */
-  context: Context
+  context: Partial<Context>
 
   /**
    *  是否开启开发阶段的系统提示功能
