@@ -200,7 +200,7 @@ export default class Controller<
      */
     if (context.isServer && finalOptions.credentials === 'include') {
       // @ts-ignore
-      finalOptions.headers['Cookie'] = context.req
+      finalOptions.headers['cookie'] = context.req
         && context.req.headers
         && context.req.headers.cookie || ''
     }
