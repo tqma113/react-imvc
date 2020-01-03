@@ -200,9 +200,7 @@ export default class Controller<
      */
     if (context.isServer && finalOptions.credentials === 'include') {
       // @ts-ignore
-      finalOptions.headers['cookie'] = context.req
-        && context.req.headers
-        && context.req.headers.cookie || ''
+      finalOptions.headers['cookie'] = context?.req?.headers?.cookie || ''
     }
 
     // 支持使用方手动传入自定义fetch方法
@@ -422,8 +420,7 @@ export default class Controller<
   getCookie(key: string) {
     let { context } = this
     if (context.isServer) {
-      let { req } = context
-      return req && req.cookies[key]
+      return context?.req?.cookies?.[key]
     } else if (context.isClient) {
       return Cookie.get(key)
     }

@@ -90,13 +90,13 @@ export type SSR = boolean
 
 export interface Context extends BaseContext {
   basename?: string
-  env?: string
+  env: string
   preload?: Preload
   publicPath?: string
   location: HistoryLocation
   restapi?: string
-  req: express.Request
-  res: express.Response
+  req?: express.Request
+  res?: express.Response
   [x: string]: any
 }
 
