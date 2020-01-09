@@ -1,7 +1,7 @@
 import { TransformOptions, PluginItem } from '@babel/core'
 
-export default function Babel(isServer: boolean): TransformOptions {
-  let presets: PluginItem[] = [
+export default function Babel(): TransformOptions {
+  const presets: PluginItem[] = [
     '@babel/preset-env',
     '@babel/preset-react',
     // typescript
@@ -14,7 +14,8 @@ export default function Babel(isServer: boolean): TransformOptions {
       }
     ],
   ]
-  let plugins: PluginItem[] = [
+
+  const plugins: PluginItem[] = [
     // Stage 0
     '@babel/plugin-proposal-function-bind',
 
@@ -39,9 +40,7 @@ export default function Babel(isServer: boolean): TransformOptions {
     ['@babel/plugin-proposal-class-properties', { loose: false }],
     '@babel/plugin-proposal-json-strings',
   ]
-  if (isServer) {
-    plugins.push('dynamic-import-node')
-  }
+  
   return {
     presets,
     plugins

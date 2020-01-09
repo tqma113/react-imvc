@@ -257,7 +257,7 @@ interface OptionsMore {
 export type Options = OptionsMore & Partial<typeof yargs.argv>
 
 export interface GetBabelFunc {
-  (isServer: boolean): TransformOptions
+  (): TransformOptions
 }
 
 export type Config = Partial<EntireConfig>
