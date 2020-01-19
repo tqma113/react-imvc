@@ -108,7 +108,7 @@ function View() {
 
 ## Wiki
 
-[Wiki](](https://github.com/tqma113/react-imvc/wiki))
+[Wiki](https://github.com/tqma113/react-imvc/wiki)
 
 ## 欢迎提 Issue 和 Pull Request
 
