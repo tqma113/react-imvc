@@ -1,7 +1,7 @@
 import { TransformOptions, PluginItem } from '@babel/core'
 
-export default function Babel(): TransformOptions {
-  const presets: PluginItem[] = [
+export default function Babel(isServer: boolean = true): TransformOptions {
+  let presets: PluginItem[] = [
     '@babel/preset-env',
     '@babel/preset-react',
     // typescript
@@ -14,17 +14,14 @@ export default function Babel(): TransformOptions {
       }
     ],
   ]
-
-  const plugins: PluginItem[] = [
+  let plugins: PluginItem[] = [
     // Stage 0
     '@babel/plugin-proposal-function-bind',
 
     // Stage 1
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-logical-assignment-operators',
-    ['@babel/plugin-proposal-optional-chaining', { loose: false }],
     ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
-    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
     '@babel/plugin-proposal-do-expressions',
 
     // Stage 2
@@ -35,12 +32,15 @@ export default function Babel(): TransformOptions {
     '@babel/plugin-proposal-throw-expressions',
 
     // Stage 3
-    '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-syntax-import-meta',
     ['@babel/plugin-proposal-class-properties', { loose: false }],
+    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
+
+    // Stage 4
+    ['@babel/plugin-proposal-optional-chaining', { loose: false }],
     '@babel/plugin-proposal-json-strings',
   ]
-  
+
   return {
     presets,
     plugins

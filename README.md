@@ -1,11 +1,7 @@
 # react-imvc v3.0
 
 [![License](https://img.shields.io/npm/v/react-imvc.svg)](https://www.npmjs.com/package/react-imvc)
-[![License](https://badgen.net/github/release/tqma113/react-imvc/stable)](https://www.npmjs.com/package/react-imvc)
-[![License](https://badgen.net/github/release/tqma113/react-imvc)](https://www.npmjs.com/package/react-imvc)
-[![License](https://img.shields.io/npm/dm/react-imvc.svg)](https://www.npmjs.com/package/react-imvc)
 [![Build Status](https://travis-ci.org/tqma113/react-imvc.svg?branch=master)](https://travis-ci.org/Lucifier129/react-imvc)
-[![dependencies Status](https://david-dm.org/tqma113/react-imvc.svg)](https://david-dm.org/Lucifier129/react-imvc)
 [![codecov](https://img.shields.io/codecov/c/gh/tqma113/react-imvc)](https://codecov.io/gh/tqma113/react-imvc)
 [![License](https://img.shields.io/npm/l/react-imvc.svg)](https://www.npmjs.com/package/react-imvc)
 [![PRs-welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Lucifier129/react-imvc/pull/new/master)
