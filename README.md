@@ -1,4 +1,4 @@
-# react-imvc v3.0
+# React-IMVC 3.0(Alpha)
 
 [![License](https://img.shields.io/npm/v/react-imvc.svg)](https://www.npmjs.com/package/react-imvc)
 [![Build Status](https://travis-ci.org/tqma113/react-imvc.svg?branch=master)](https://travis-ci.org/Lucifier129/react-imvc)
