@@ -1,6 +1,6 @@
 {
   "name": "react-imvc",
-  "version": "3.0.0-beta.36",
+  "version": "3.0.0-beta.37",
   "description": "An Isomorphic MVC Framework",
   "main": "index.js",
   "typings": "index.d.ts",
