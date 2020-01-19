@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/npm/v/react-imvc.svg)](https://www.npmjs.com/package/react-imvc)
 [![Build Status](https://travis-ci.org/tqma113/react-imvc.svg?branch=master)](https://travis-ci.org/Lucifier129/react-imvc)
 [![codecov](https://img.shields.io/codecov/c/gh/tqma113/react-imvc)](https://codecov.io/gh/tqma113/react-imvc)
-[![License](https://img.shields.io/npm/l/react-imvc.svg)](https://www.npmjs.com/package/react-imvc)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://www.npmjs.com/package/react-imvc)
 [![PRs-welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Lucifier129/react-imvc/pull/new/master)
 
 [![NPM](https://nodei.co/npm/react-imvc.png?downloads=true)](https://nodei.co/npm/react-imvc/)
