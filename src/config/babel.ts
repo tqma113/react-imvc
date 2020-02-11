@@ -1,6 +1,6 @@
 import { TransformOptions, PluginItem } from '@babel/core'
 
-export default function Babel(isServer: boolean = true): TransformOptions {
+export default function Babel(): TransformOptions {
   let presets: PluginItem[] = [
     '@babel/preset-env',
     '@babel/preset-react',
