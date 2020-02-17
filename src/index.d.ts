@@ -9,6 +9,7 @@ import createApp, {
   Controller as BaseController
 } from "create-app/client"
 import webpack from "webpack"
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import serveStatic from "serve-static"
 import cookieParser from "cookie-parser"
 import helmet from "helmet"
@@ -24,6 +25,7 @@ import {
 } from "./hook"
 export { StateFromCtrl, ASFromCtrl } from './hook'
 import Controller, { BaseActions as BA } from "./controller"
+import bodyParser from 'body-parser';
 
 // global
 declare global {
@@ -241,9 +243,10 @@ export interface Views {
 }
 
 export interface BodyParseOptions {
-  [functionName: string]: {
-    [propName: string]: any
-  }
+  raw?: bodyParser.Options,
+  json?: bodyParser.OptionsJson,
+  text?: bodyParser.OptionsText,
+  urlencoded?: bodyParser.OptionsUrlencoded
 }
 
 export interface Alias {
@@ -377,7 +380,7 @@ export interface EntireConfig {
    * 是否开启 webpack 的构建产物进行可视化分析
    * 默认不开启
    */
-  bundleAnalyzer: boolean
+  bundleAnalyzer: BundleAnalyzerPlugin.Options | false
   /**
    * 是否使用 webpack-dev-middleware 代理静态资源
    * 默认在开发模式时开启

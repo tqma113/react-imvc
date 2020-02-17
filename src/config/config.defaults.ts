@@ -7,30 +7,44 @@ let NODE_ENV = process.env.NODE_ENV || "development"
 let isDev = NODE_ENV === "development"
 
 const defaultConfig: EntireConfig = {
-	basename: "",
 	title: "react-imvc",
+	favicon: "",
 	description: "An Isomorphic-MVC Framework",
 	keywords: "react mvc isomorphic server-side-rendering",
-	content: "",
-	initialState: undefined,
-	appSettings: undefined,
 	root: cwd,
 	src: "src",
 	routes: "routes",
+	layout: "",
 	publish: "publish",
 	static: "static",
 	staticPath: "/static",
 	staticEntry: "", // 'index.html'
 	staticOptions: {},
-	publicPath: "",
-	restapi: "",
 	assetsPath: "../assets.json",
+	serverBundleName: "server.bundle.js",
 	output: {},
 	productionOutput: {},
-	alias: {},
+	port: port,
+
+	publicPath: "",
+	basename: "",
+	restapi: "",
+	content: "",
+	context: {},
+	initialState: undefined,
+	appSettings: undefined,
+
+	SSR: true,
+	renderMode: "renderToNodeStream",
+
 	devtool: isDev ? "cheap-module-eval-source-map" : "",
-	bundleAnalyzer: false,
 	webpackDevMiddleware: isDev,
+	hot: false,
+
+	bundleAnalyzer: false,
+	alias: {},
+	logger: isDev ? "dev" : null,
+	notifier: false,
 	webpackPlugins: [],
 	webpackLoaders: [],
 	webpackLogger: {
@@ -38,20 +52,6 @@ const defaultConfig: EntireConfig = {
 		colors: true
 	},
 	babel: Babel,
-	gulp: {
-		// 需要压缩到 static 目录的 css
-		css: [],
-		// 需要压缩到 static 目录的 html
-		html: [],
-		// 需要压缩到 static 目录的 js
-		js: [],
-		// 需要复制到 static 目录的非 html, css, js 文件
-		copy: [],
-		// 需要复制到 publish 目录的额外文件
-		publishCopy: [],
-		// 需要编译到 publish 目录的额外文件
-		publishBabel: []
-	},
 	cookieParser: {},
 	helmet: {
 		frameguard: false,
@@ -74,18 +74,22 @@ const defaultConfig: EntireConfig = {
 			extended: false
 		}
 	},
-	logger: isDev ? "dev" : null,
-	favicon: "",
-	SSR: true,
-	port: port,
-	layout: "",
-	renderMode: "renderToNodeStream",
-	context: {},
-	notifier: false,
-	hot: false,
 	useServerBundle: false,
 	useTypeCheck: false,
-	serverBundleName: "server.bundle.js"
+	gulp: {
+		// 需要压缩到 static 目录的 css
+		css: [],
+		// 需要压缩到 static 目录的 html
+		html: [],
+		// 需要压缩到 static 目录的 js
+		js: [],
+		// 需要复制到 static 目录的非 html, css, js 文件
+		copy: [],
+		// 需要复制到 publish 目录的额外文件
+		publishCopy: [],
+		// 需要编译到 publish 目录的额外文件
+		publishBabel: []
+	},
 }
 
 export default defaultConfig
