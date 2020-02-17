@@ -183,7 +183,7 @@
     }
     ```
 
-    In v3.x, Props of *View* changed from `{ state, actions, handlers }` to `{ state, ctrl }`. The `Ctrl` is the superset of `handlers`, so you can migrate backwards compatibility like this:
+    In v3.x, Props of *View* changed from `{ state, actions, handlers }` to `{ state, actions, ctrl }`. The `ctrl` is the superset of `handlers`, so you can migrate backwards compatibility like this:
 
     ```javascript
     export default function View({ state, actions, handlers }) {
@@ -344,7 +344,7 @@ class Controller {
 
 * The default view file extension is 'js'. If you want to use other extension file, please add in config.(eg.view.tsx)
 
-* Props of `View` have changed from `state, handlers, actions` to `state, ctrl`.
+* Props of `View` have changed from `state, handlers, actions` to `state, actions, ctrl`.
 
 ## Dependence change
 
