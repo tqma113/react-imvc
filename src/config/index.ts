@@ -99,7 +99,6 @@ function createContext(filepath: string): vm.Context {
 		...global,
 		__filename: filepath,
 		__dirname: dir,
-		Function,
 		exports: module.exports,
 		require: virtualRequire,
 		module: module

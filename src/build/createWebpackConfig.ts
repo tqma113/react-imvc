@@ -279,5 +279,21 @@ export default function createWebpackConfig(
 		externals: isServer ? getExternals(config) : undefined
 	})
 
-	return config.webpack ? config.webpack(result, isServer) : result
+	if (!!config.webpack) {
+		const draftConfig = config.webpack(result, isServer)
+		result = curryConfig(draftConfig)
+	}
+
+	return result
+}
+
+function curryConfig(config: any) {
+	if (typeof config === 'function') {
+		config = (...args: any[]) => config(...args)
+	} else if (typeof config === 'object') {
+		for (let key in config) {
+			config[key] = curryConfig(config[key])
+		}
+	}
+	return config
 }
