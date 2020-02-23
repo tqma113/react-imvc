@@ -3,7 +3,12 @@ import "regenerator-runtime/runtime"
 import "../polyfill"
 import React from 'react'
 import ReactDOM from "react-dom"
-import createApp, {
+import createApp from "create-app/client"
+import Controller from '../controller'
+import { getFlatList } from "../util"
+// @ts-ignore
+import $routes from "@routes"
+import {
   LoadController,
   ControllerConstructor,
   HistoryLocation,
@@ -11,11 +16,17 @@ import createApp, {
   ViewEngine,
   Controller as BaseController
 } from "create-app/client"
-import { getFlatList } from "../util"
-// @ts-ignore
-import $routes from "@routes"
-import { AppSettings, Preload, Module } from ".."
-import Controller from '../controller'
+import { BaseState, AppSettings, Preload, Module } from ".."
+
+declare global {
+  interface Window {
+    __INITIAL_STATE__: (BaseState & { [k: string]: any }) | undefined | undefined
+    __PUBLIC_PATH__: string
+    __APP_SETTINGS__: AppSettings
+  }
+}
+
+declare let __webpack_public_path__: string
 
 __webpack_public_path__ = window.__PUBLIC_PATH__ + "/"
 const __APP_SETTINGS__: AppSettings = window.__APP_SETTINGS__

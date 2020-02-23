@@ -16,7 +16,7 @@ function View() {
   const handleScroll = () => {
     setStatus('failure')
   }
-  window.scroll = handleScroll;
+  window.scroll = handleScroll
   useCallback(() => {
     return () => window.scroll = nativeScroll
   }, [])

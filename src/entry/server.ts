@@ -1,18 +1,17 @@
 import fs from "fs"
-import express from "express"
-import compression from "compression"
 import path from "path"
 import logger from "morgan"
-import cookieParser from "cookie-parser"
-import bodyParser from "body-parser"
-import favicon from "serve-favicon"
 import helmet from "helmet"
+import express from "express"
+import favicon from "serve-favicon"
+import bodyParser from "body-parser"
+import compression from "compression"
 import querystring from "query-string"
-
-import shareRoot from "../middleware/shareRoot"
-import { EntireConfig, Req } from ".."
+import cookieParser from "cookie-parser"
 import configBabel from "../config/babel"
+import shareRoot from "../middleware/shareRoot"
 import * as setupDevEnv from "../build/setup-dev-env"
+import { EntireConfig, Req } from ".."
 
 export default function createExpressApp(
 	config: EntireConfig

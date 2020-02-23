@@ -74,9 +74,11 @@ export default class Input extends React.Component<Props> {
 			currentValue = handleInputChange(path, currentValue, oldValue)
 		}
 
-		this.context.actions[this.props.actionType || Input.defaultProps.actionType]({
-			[path]: currentValue
-		})
+		this.context.actions[
+      this.props.actionType || Input.defaultProps.actionType
+    ]({
+      [path]: currentValue
+    })
 
 		onChange && onChange(event)
 	}
@@ -90,9 +92,11 @@ export default class Input extends React.Component<Props> {
 			onFocus && onFocus(event)
 			return
 		}
-		this.context.actions[this.props.actionType || Input.defaultProps.actionType]({
-			[path]: false
-		})
+		this.context.actions[
+      this.props.actionType || Input.defaultProps.actionType
+    ]({
+      [path]: false
+    })
 		onFocus && onFocus(event)
 	}
 	
@@ -100,11 +104,15 @@ export default class Input extends React.Component<Props> {
 		let { name, onBlur, check } = this.props
 		let pathOfValidState: string = `${name}.isValid`
 		let pathOfWarnState: string = `${name}.isWarn`
-		let isValidValue: boolean = (check as { (value: string): boolean })(event.currentTarget.value)
-		this.context.actions[this.props.actionType || Input.defaultProps.actionType]({
-			[pathOfValidState]: isValidValue,
-			[pathOfWarnState]: !isValidValue
-		})
+		let isValidValue: boolean = (check as { (value: string): boolean })(
+      event.currentTarget.value
+    )
+    this.context.actions[
+      this.props.actionType || Input.defaultProps.actionType
+    ]({
+      [pathOfValidState]: isValidValue,
+      [pathOfWarnState]: !isValidValue
+    })
 		onBlur && onBlur(event)
 	}
 }

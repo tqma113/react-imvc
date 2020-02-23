@@ -2,7 +2,8 @@
  * 缓存视图-中间件
  */
 import express from "express"
-import createCache, { Cache } from "./createCache"
+import createCache from "./createCache"
+import { Cache } from "./createCache"
 import { RequestHandler, Req, Res } from ".."
 
 interface Settings {

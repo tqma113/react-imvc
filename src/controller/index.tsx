@@ -1,29 +1,32 @@
-// base controller class
 import 'whatwg-fetch'
 import React from 'react'
 import Cookie from 'js-cookie'
 import querystring from 'query-string'
+import { createStore } from 'relite'
+import { createHistory } from 'create-app/server'
+import { Actions as HistoryActions } from 'create-history'
+import * as _ from '../util'
+import * as shareActions from './actions'
+import ViewManager from '../component/ViewManager'
+import attachDevToolsIfPossible from './attachDevToolsIfPossible'
 import {
-  createStore,
   Store,
   Data,
   Actions,
   Currings
 } from 'relite'
 import {
+  HistoryWithBFOL,
+  ILWithBQ,
+  BLWithBQ,
+} from 'create-history'
+import {
   Controller as AppController,
-  Actions as HistoryActions,
   HistoryLocation,
-  createHistory,
   Matcher,
   Loader,
   CacheStorage
 } from 'create-app/server'
-import {
-  HistoryWithBFOL,
-  ILWithBQ,
-  BLWithBQ
-} from 'create-history'
 import {
   BaseViewFC,
   BaseViewClass,
@@ -37,12 +40,10 @@ import {
   Location,
   FetchOptions
 } from '..'
-import * as shareActions from './actions'
-import attachDevToolsIfPossible from './attachDevToolsIfPossible'
-import ViewManager from '../component/ViewManager'
-import * as _ from '../util'
 
 export type BaseActions = typeof shareActions
+
+declare var __INITIAL_STATE__: (BaseState & { [k: string]: any }) | undefined
 
 const REDIRECT =
   typeof Symbol === 'function'

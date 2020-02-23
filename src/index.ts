@@ -1,60 +1,45 @@
-import express from "express"
-import yargs from "yargs"
-import createApp, {
+///////////////////////////////////////////////////////////////////////////////
+// MODULES
+///////////////////////////////////////////////////////////////////////////////
+export { default as start } from './start'
+export { default as build } from './build'
+export { default as connect} from './hoc/connect'
+export { default as Controller } from './controller'
+export * from "./controller"
+export * from "./hook"
+export * from './component'
+
+///////////////////////////////////////////////////////////////////////////////
+// TYPES
+///////////////////////////////////////////////////////////////////////////////
+import type http from 'http'
+import type yargs from "yargs"
+import type helmet from "helmet"
+import type express from "express"
+import type webpack from "webpack"
+import type bodyParser from 'body-parser'
+import type compression from "compression"
+import type serveStatic from "serve-static"
+import type cookieParser from "cookie-parser"
+import type { TransformOptions } from "@babel/core"
+import type { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import type {
   Settings,
-  Context as BaseContext,
   HistoryLocation,
   HistoryBaseLocation,
-  ViewEngineRender,
+  Context as BaseContext,
   Controller as BaseController
 } from "create-app/client"
-import webpack from "webpack"
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import serveStatic from "serve-static"
-import cookieParser from "cookie-parser"
-import helmet from "helmet"
-import compression from "compression"
-export { Action, Curring, Currings, AnyAction, Actions } from "relite"
-import { TransformOptions } from "@babel/core"
+import type Controller from "./controller"
+import type { BaseActions as BA } from "./controller"
 
-import {
-  useCtrl as _useCtrl,
-  useModel as _useModel,
-  useModelActions as _useModelAction,
-  useModelState as _useModelState
-} from "./hook"
-export { StateFromCtrl, ASFromCtrl } from './hook'
-import Controller, { BaseActions as BA } from "./controller"
-import bodyParser from 'body-parser';
-
-// global
-declare global {
-  var __INITIAL_STATE__: any
-  var __webpack_public_path__: string
-  var __REDUX_DEVTOOLS_EXTENSION__: any
-  var __PUBLIC_PATH__: string
-  var __APP_SETTINGS__: AppSettings
-  var controller: BaseController
-  namespace NodeJS {
-    interface Global {
-      __INITIAL_STATE__?: any
-      __webpack_public_path__?: string
-      [x: string]: any
-    }
-  }
-
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION__?: any
-    __PUBLIC_PATH__?: string
-    __APP_SETTINGS__?: AppSettings
-    [x: string]: any
-  }
-
-  interface Document {
-    attachEvent: typeof document.addEventListener
-    detachEvent: typeof document.removeEventListener
-  }
-}
+export type {
+  Action,
+  Curring,
+  Currings,
+  AnyAction,
+  Actions
+} from "relite"
 
 // Controller
 export type Location = HistoryLocation
@@ -107,7 +92,10 @@ export type FetchOptions = RequestInit & {
   json?: boolean
   timeout?: number
   timeoutErrorFormatter?: ((opstion: any) => string) | string
-  fetch?: (input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>
+  fetch?: (
+    input: RequestInfo,
+    init?: RequestInit | undefined
+  ) => Promise<Response>
 }
 
 export interface Meta {
@@ -127,15 +115,21 @@ export interface BaseViewClass extends React.ComponentClass<ViewPropsType> {
   viewId?: any
 }
 
-export type Forwarder = React.ForwardRefExoticComponent<{}> & { isErrorBoundary?: boolean }
+export type Forwarder
+  = React.ForwardRefExoticComponent<{}> & { isErrorBoundary?: boolean }
 
 // Render view
-
-export interface RenderToNodeStream<E = string, C extends BaseController = BaseController> {
+export interface RenderToNodeStream<
+  E = string,
+  C extends BaseController = BaseController
+> {
   (view: E, controller?: C): Promise<ArrayBuffer>
 }
 
-export interface RenderToString<E = string, C extends BaseController = BaseController> {
+export interface RenderToString<
+  E = string,
+  C extends BaseController = BaseController
+> {
   (view: E, controller?: C): string
 }
 
@@ -153,10 +147,12 @@ export interface RenderProps {
   }
 }
 
-export interface ViewPropsType <C extends Controller<any, any>> {
-  key: string
-  state: any
-  ctrl: C
+export interface ViewPropsType<
+  C extends Controller<any, any> = Controller<any, any>
+> {
+  key?: string
+  state?: any
+  ctrl?: C
 }
 
 // Server
@@ -216,7 +212,7 @@ export interface GulpTaskConfig {
   [propName: string]: GulpConfigItem
 }
 
-interface GulpConfig {
+export interface GulpConfig {
   // 需要压缩到 static 目录的 css
   css?: string[] | false
   // 需要压缩到 static 目录的 html
@@ -233,7 +229,7 @@ interface GulpConfig {
   // 需要编译到 publish 目录的额外文件
   publishBabel?: string[] | false
 
-  [propName: string]: string[] | false
+  [propName: string]: string[] | false | undefined
 }
 
 export interface Views {

@@ -13,7 +13,10 @@ export const UPDATE_STATE: Action<BaseState, BaseState> = (state, newState) => {
   }
 }
 
-export const __PAGE_DID_BACK__: Action<BaseState, Location> = (state, location) => {
+export const __PAGE_DID_BACK__: Action<BaseState, Location> = (
+  state,
+  location
+) => {
   return {
     ...state,
     location
@@ -21,7 +24,10 @@ export const __PAGE_DID_BACK__: Action<BaseState, Location> = (state, location) 
 }
 
 interface USBPPayload { [x: string]: any }
-export const UPDATE_STATE_BY_PATH: Action<BaseState, USBPPayload> = (state, payload) => {
+export const UPDATE_STATE_BY_PATH: Action<BaseState, USBPPayload> = (
+  state,
+  payload
+) => {
   return Object.keys(payload).reduce(
     (state, path) => setValueByPath(state, path, payload[path]),
     state

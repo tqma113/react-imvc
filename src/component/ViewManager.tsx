@@ -1,9 +1,9 @@
 import React from 'react'
-import { Actions } from 'relite'
-import { CacheStorage } from 'create-app/client'
+import Controller from '../controller'
 import GlobalContext from '../context'
 import ControllerProxy from './ControllerProxy'
-import Controller from '../controller'
+import { Actions } from 'relite'
+import { CacheStorage } from 'create-app/client'
 import { BaseState } from '..'
 
 export interface Props<
@@ -34,7 +34,9 @@ export default class ViewManager<
 	clearItemIfNeed() {
 		let { views, scrollMap } = this
 		let { controller } = this.props
-		let cache: CacheStorage<Controller<any, any>> = controller.getAllCache ? controller.getAllCache() : {}
+		let cache: CacheStorage<Controller<any, any>> = controller.getAllCache
+      ? controller.getAllCache()
+      : {}
 
 		for (let key in views) {
 			if (!cache.hasOwnProperty(key)) {

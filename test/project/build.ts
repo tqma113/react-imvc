@@ -1,5 +1,5 @@
 import path from 'path'
-import build from '../../src/build/babel'
+import build from '../../src/build'
 import { Config } from '../../src/'
 
 let PORT = 3333

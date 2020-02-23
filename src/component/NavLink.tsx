@@ -1,8 +1,8 @@
 import React from 'react'
 import classnames from 'classnames'
-import { BaseLocation } from 'create-history'
-import connect from '../hoc/connect'
 import Link from './Link'
+import connect from '../hoc/connect'
+import { BaseLocation } from 'create-history'
 import { Location } from '..'
 
 const withLocation = connect(({ state }) => {

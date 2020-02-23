@@ -1,13 +1,13 @@
 import path from 'path'
-import chalk from 'chalk'
 import gulp from 'gulp'
+import chalk from 'chalk'
 import log from 'fancy-log'
+import babel from 'gulp-babel'
+import uglify from 'gulp-uglify'
+import htmlmin from 'gulp-htmlmin'
 import plumber from 'gulp-plumber'
 // @ts-ignore
 import cleanCSS from 'gulp-clean-css'
-import htmlmin from 'gulp-htmlmin'
-import uglify from 'gulp-uglify'
-import babel from 'gulp-babel'
 import { EntireConfig, GulpTaskConfig } from '..'
 
 function createConfig(options: EntireConfig): GulpTaskConfig {

@@ -10,7 +10,10 @@ export interface Props {
   fallback: object | string | null
 }
 
-export default class ErrorBoundary extends React.Component<Props, Partial<BaseState>> {
+export default class ErrorBoundary extends React.Component<
+  Props,
+  Partial<BaseState>
+> {
   static ignoreErrors = true
   static contextType = GlobalContext
   static getDerivedStateFromError() {
@@ -26,7 +29,7 @@ export default class ErrorBoundary extends React.Component<Props, Partial<BaseSt
   catchError(error: Error) {
     let { ctrl } = this.context
     if (ctrl.errorDidCatch) {
-      ctrl.errorDidCatch(error, 'view')
+      ctrl.errorDidCatch(error, "view")
     }
   }
 
@@ -51,7 +54,9 @@ export default class ErrorBoundary extends React.Component<Props, Partial<BaseSt
   }
 }
 
-export const withFallback = (fallback: object) => (InputComponent: React.ComponentType) => {
+export const withFallback = (fallback: object) => (
+  InputComponent: React.ComponentType
+) => {
   function Component(props: object) {
     return createElement(ErrorBoundary, { fallback }, () =>
       createElement(InputComponent, props)

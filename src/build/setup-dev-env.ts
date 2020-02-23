@@ -1,12 +1,11 @@
-import path from 'path'
 import vm from 'vm'
-import webpack from 'webpack'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import { NextHandleFunction } from 'connect'
+import path from 'path'
 import MFS from 'memory-fs'
+import webpack from 'webpack'
 import notifier from 'node-notifier'
-
+import webpackDevMiddleware from 'webpack-dev-middleware'
 import createWebpackConfig from './createWebpackConfig'
+import { NextHandleFunction } from 'connect'
 import { getExternals, matchExternals } from './util'
 import { EntireConfig } from '..'
 

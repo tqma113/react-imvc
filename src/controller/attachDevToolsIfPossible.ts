@@ -1,5 +1,11 @@
 import { Store, Data, Actions } from "relite"
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__: any
+  }
+}
+
 export default function attachDevToolsIfPossible<
   S extends object,
   AS extends Actions<S>
@@ -19,7 +25,7 @@ export default function attachDevToolsIfPossible<
     name: window.location.pathname + window.location.search,
     actionsWhitelist: Object.keys(store.actions)
   }
-  let reduxStore = __REDUX_DEVTOOLS_EXTENSION__(
+  let reduxStore = window.__REDUX_DEVTOOLS_EXTENSION__(
     store.getState,
     store.getState(),
     options

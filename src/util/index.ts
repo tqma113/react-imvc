@@ -131,12 +131,12 @@ export function ab2str(buf: Uint8Array): string {
 }
 
 export function stringToUnit8Array(str: string): Uint8Array {
-  let arr = [];
+  let arr = []
   for (let i = 0, j = str.length; i < j; ++i) {
-    arr.push(str.charCodeAt(i));
+    arr.push(str.charCodeAt(i))
   }
  
-  let tmpUint8Array = new Uint8Array(arr);
+  let tmpUint8Array = new Uint8Array(arr)
   return tmpUint8Array
 }
 

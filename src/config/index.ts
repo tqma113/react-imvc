@@ -1,20 +1,16 @@
-/**
- * 获取配置
- */
-import path from 'path'
 import fs from 'fs'
 import vm from 'vm'
-import { TransformOptions, transformFileSync } from '@babel/core'
-
-import defaultConfig from './config.defaults'
-import { Options, EntireConfig, Config } from '..'
+import path from 'path'
 import configBabel from './babel'
+import defaultConfig from './config.defaults'
 import {
 	isAbsolutePath,
 	getClearFilePath,
 	compareObject,
 	getKeys
 } from '../util'
+import { TransformOptions, transformFileSync } from "@babel/core"
+import { Options, EntireConfig, Config } from ".."
 
 export { default as defaultConfig } from './config.defaults'
 export const getBabelConfig = configBabel
@@ -43,21 +39,24 @@ export default function getConfig(
 	return configCache = constructConfig(options, shouldCompile)
 }
 
-function constructConfig(options: Options, shouldCompile: boolean): EntireConfig {
-	let config: Config | null = null
-	switch (typeof options.config) {
-		case 'object':
-				config = options.config
-			break
-		case 'string':
-				config = shouldCompile
-					? requireConfig(path.resolve(options.config))
-					: require(path.resolve(options.config))
-			break
-		default:
-			throw new Error(`Config in options is incorrect type(string or object).`)
-	}
-	return Object.assign({}, defaultConfig, config)
+function constructConfig(
+  options: Options,
+  shouldCompile: boolean
+): EntireConfig {
+  let config: Config | null = null
+  switch (typeof options.config) {
+    case "object":
+      config = options.config
+      break
+    case "string":
+      config = shouldCompile
+        ? requireConfig(path.resolve(options.config))
+        : require(path.resolve(options.config))
+      break
+    default:
+      throw new Error(`Config in options is incorrect type(string or object).`)
+  }
+  return Object.assign({}, defaultConfig, config)
 }
 
 function requireConfig(filePath: string): EntireConfig {

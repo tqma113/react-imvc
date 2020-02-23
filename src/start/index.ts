@@ -5,16 +5,23 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
-
 import path from 'path'
 import http from 'http'
-import fetch, * as nodeFetch from 'node-fetch'
-import express from 'express'
 import debug from 'debug'
-import createExpressApp from '../entry/server'
+import express from 'express'
+import fetch, * as nodeFetch from 'node-fetch'
 import getConfig from '../config'
+import createExpressApp from '../entry/server'
 import createPageRouter from '../page/createPageRouter'
 import { Options, RequestHandler, Result } from '..'
+
+declare global {
+  namespace NodeJS {
+    interface Global {
+      fetch: typeof window.fetch 
+    }
+	}
+}
 
 
 export default function start(
@@ -40,8 +47,8 @@ export default function start(
 			url = `http://localhost:${port}${url}`
 		}
 		return fetch(url, options)
-  }
-  global.fetch = fetchNative  
+	}
+  global.fetch = fetchNative as unknown as typeof window.fetch
 
 	/**
 	 * set port from environment and store in Express.

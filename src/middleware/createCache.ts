@@ -5,7 +5,12 @@
  */
 
 export interface Cache {
-  put: (key: string, value: any, time?: number, timeoutCallback?: (...props: any[]) => any) => any
+  put: (
+    key: string,
+    value: any,
+    time?: number,
+    timeoutCallback?: (...props: any[]) => any
+  ) => any
   del: (key: string) => boolean
   clear: () => void
   get: (key: string) => any

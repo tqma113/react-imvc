@@ -1,7 +1,7 @@
-import querystring from 'query-string'
 import spawn from 'cross-spawn'
-import { SpawnSyncReturns } from 'child_process'
+import querystring from 'query-string'
 import { getKeys } from '../util'
+import { SpawnSyncReturns } from 'child_process'
 
 let command = process.argv[2]
 let args = process.argv.slice(3)
@@ -16,9 +16,13 @@ switch (script) {
   case 'build':
   case 'start':
   case 'test':
-    result = spawn.sync('node', params.concat(require.resolve('../scripts/' + script), args), {
-      stdio: 'inherit'
-    })
+    result = spawn.sync(
+      "node",
+      params.concat(require.resolve("../scripts/" + script), args),
+      {
+        stdio: "inherit"
+      }
+    )
     break
   default:
     console.log('Unknown script "' + script + '".')

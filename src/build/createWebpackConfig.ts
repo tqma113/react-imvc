@@ -1,12 +1,12 @@
-import webpack from 'webpack'
 import path from 'path'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import ManifestPlugin from 'webpack-manifest-plugin'
+import resolve from 'resolve'
+import webpack from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
 // @ts-ignore
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
+import ManifestPlugin from 'webpack-manifest-plugin'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-import resolve from 'resolve'
 import { getExternals } from './util'
 import { EntireConfig } from '..'
 
@@ -25,12 +25,14 @@ export default function createWebpackConfig(
 	let isProd = NODE_ENV === 'production'
 	let mode = NODE_ENV === 'test' ? 'development' : NODE_ENV || 'production'
 	let entry = Object.assign({}, config.entry, {
-		index: [!!config.hot && !isServer && 'webpack-hot-middleware/client', indexEntry].filter(
-			Boolean
-		)
-	})
-	let devtoolModuleFilenameTemplate = (info: webpack.DevtoolModuleFilenameTemplateInfo) =>
-		path.relative(root, info.absoluteResourcePath).replace(/\\/g, '/')
+    index: [
+      !!config.hot && !isServer && "webpack-hot-middleware/client",
+      indexEntry
+    ].filter(Boolean)
+  })
+	let devtoolModuleFilenameTemplate = (
+    info: webpack.DevtoolModuleFilenameTemplateInfo
+  ) => path.relative(root, info.absoluteResourcePath).replace(/\\/g, "/")
 
 	let defaultOutput: webpack.Output = {
 		// Add /* filename */ comments to generated require()s in the output.

@@ -1,13 +1,17 @@
 import fs from 'fs'
+import del from 'del'
 import gulp from 'gulp'
 import path from 'path'
 import webpack from 'webpack'
-import del from 'del'
 import start from '../start'
 import getConfig from '../config'
 import createGulpTask from './createGulpTask'
 import createWebpackConfig from './createWebpackConfig'
-import { Options, EntireConfig, AppSettings } from '..'
+import {
+  Options,
+  EntireConfig,
+  AppSettings
+} from '..'
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'

@@ -1,6 +1,13 @@
 import React, { Component, Children } from 'react'
 import { findDOMNode } from 'react-dom'
 
+declare global {
+  interface Document {
+    attachEvent: typeof document.addEventListener
+    detachEvent: typeof document.removeEventListener
+  }
+}
+
 export interface Props {
   onClick?: Function
   children?: React.ReactNode
@@ -43,7 +50,10 @@ export default class OuterClickWrapper extends Component<Props> {
       return
     }
     let root = findDOMNode(this)
-    let isContains = this.contains(root, (event.target || event.srcElement) as Node | null)
+    let isContains = this.contains(
+      root,
+      (event.target || event.srcElement) as Node | null
+    )
     if (!isContains) {
       onClick(event)
     }

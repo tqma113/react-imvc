@@ -1,6 +1,6 @@
 import React from 'react'
-import { BaseLocation } from 'create-history'
 import GlobalContext from '../context'
+import { BaseLocation } from 'create-history'
 
 export type Props = React.PropsWithChildren<{
 	as?: keyof HTMLElementTagNameMap
@@ -47,10 +47,10 @@ export default class Link extends React.Component<Props> {
 				targetPath = href
 			}
 			return (
-				<a {...others} href={targetPath as string} onClick={this.handleClick}>
-					{children}
-				</a>
-			)
+        <a {...others} href={targetPath as string} onClick={this.handleClick}>
+          {children}
+        </a>
+      )
 		}
 
 		return React.createElement(

@@ -1,9 +1,16 @@
-import { Router } from 'express'
-import path from 'path'
 import fs from 'fs'
+import path from 'path'
 import React from 'react'
+import { Router } from 'express'
+import createApp from 'create-app/server'
 import ReactDOMServer from 'react-dom/server'
-import createApp, {
+import Controller from '../controller'
+import {
+  getFlatList,
+  getClearFilePath,
+  stringToUnit8Array
+} from '../util'
+import {
   HistoryLocation,
   Context,
   LoadController,
@@ -11,13 +18,11 @@ import createApp, {
   Route,
   ViewEngineRender
 } from 'create-app/server'
-import { getFlatList, getClearFilePath, stringToUnit8Array } from '../util'
 import {
   EntireConfig,
   AppSettings,
   Req
 } from '..'
-import Controller from '../controller'
 
 function getModule(module: any) {
   return module.default || module

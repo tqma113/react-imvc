@@ -7,6 +7,23 @@ import { Config } from '../src'
 import start from '../src/start'
 import { fetchContent } from './util'
 
+declare global {
+  namespace NodeJS {
+    interface Global {
+      controller: any
+    }
+  }
+
+  interface Window {
+    controller: any
+  }
+
+  interface Document {
+    attachEvent: typeof document.addEventListener
+    detachEvent: typeof document.removeEventListener
+  }
+}
+
 jest.setTimeout(20000)
 
 interface Server extends http.Server {
@@ -32,6 +49,12 @@ const defaultConfig: Config = {
 	layout: 'Layout.tsx', // 自定义 Layout
 	webpackLogger: false, // 关闭 webpack logger
 	webpackDevMiddleware: true  // 在内存里编译
+}
+
+declare global {
+  interface Window {
+    __CUSTOM_LAYOUT__: string
+  }
 }
 
 describe('React-IMVC', () => {
@@ -161,14 +184,14 @@ describe('React-IMVC', () => {
 						'pattern',
 						'search',
 						'raw'
-					]
+					] as const
 					locationKeys.forEach(key => {
 						expect(JSON.stringify(serverController.location[key])).toEqual(
 							JSON.stringify(clientController.location[key])
 						)
 					})
 	
-					let contextKeys = ['basename', 'publicPath', 'restapi']
+					let contextKeys = ['basename', 'publicPath', 'restapi'] as const
 					contextKeys.forEach(key => {
 						expect(JSON.stringify(serverController.context[key])).toEqual(
 							JSON.stringify(clientController.context[key])
@@ -325,7 +348,7 @@ describe('React-IMVC', () => {
 						'pattern',
 						'search',
 						'raw'
-					]
+					] as const
 					locationKeys.forEach(key => {
 						expect(JSON.stringify(serverController.location[key])).toEqual(
 							JSON.stringify(clientController.location[key])
