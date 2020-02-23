@@ -2,8 +2,8 @@
   "name": "react-imvc",
   "version": "3.0.0-beta.41",
   "description": "An Isomorphic MVC Framework",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "bin": {
     "react-imvc": "./bin/scripts.js"
   },
@@ -11,7 +11,6 @@
   "scripts": {
     "build": "tsc",
     "prebuild": "rimraf ./dist",
-    "postbuild": "ts-node cp.ts",
     "pretest": "tsc -p . --sourceMap",
     "test": "jest --forceExit --coverage",
     "publish-imvc": "npm publish",
@@ -146,7 +145,6 @@
     "@types/webpack-manifest-plugin": "^2.0.0",
     "@types/whatwg-fetch": "0.0.33",
     "fetch-mock": "^7.3.9",
-    "fs-extra": "^8.1.0",
     "lodash": "^4.17.15",
     "puppeteer": "1.19.0",
     "react": "^16.12.0",
