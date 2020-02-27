@@ -346,6 +346,8 @@ class Controller {
 
 * Props of `View` have changed from `state, handlers, actions` to `state, actions, ctrl`.
 
+* Not support async actions any more.
+
 ## Dependence change
 
 ### Upgrade
