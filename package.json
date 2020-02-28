@@ -15,7 +15,8 @@
     "test": "jest --forceExit --coverage",
     "publish-imvc": "npm publish",
     "prepublish-imvc": "npm run build",
-    "publish-beta": "npm publish --tag beta"
+    "publish-beta": "npm publish --tag beta",
+    "start:test": "ts-node ./test/project/start.ts"
   },
   "files": [
     "bin",
