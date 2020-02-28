@@ -1,6 +1,6 @@
-import useStore from './useStore'
+import useCtrl from './useCtrl'
 
 export default function<S extends {} = {}, AS extends {} = {}>() {
-  const store = useStore<S, AS>()
+  const { store } = useCtrl<S, AS>()
   return store.actions
 }
