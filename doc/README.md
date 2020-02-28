@@ -60,6 +60,6 @@ export default class extends Controller {
 - 内部自动解决在浏览器端复用服务端渲染的 HTML 和数据，无缝过渡。
 - 好用的同构方法 `fetch`、`redirect` 和 `cookie` 等，贯通前后端的请求、[重定向](https://en.wikipedia.org/wiki/Wikipedia:Redirect) 和 [cookie](https://zh.wikipedia.org/zh-hans/Cookie) 等操作。
 
-::: tip 提示
-下面我们将主要使用 JavaScript 来展示，当提到类型时，会使用 TypeScript 来展示，请注意区分。
-:::
+> <b>TIP</b>
+>
+> 下面我们将主要使用 JavaScript 来展示，当提到类型时，会使用 TypeScript 来展示，请注意区分。

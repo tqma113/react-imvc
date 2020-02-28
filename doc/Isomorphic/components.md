@@ -150,9 +150,9 @@ function View({ state }) {
 <a href="/path/to/tradition">传统风格的链接，直接用 a 标签即可</a>
 ```
 
-::: tip history
-以下提到的 history 皆为：[create-history](https://github.com/tqma113/history)。
-:::
+> <b>TIP history</b>
+>
+> 以下提到的 history 皆为：[create-history](https://github.com/tqma113/history)。
 
 ### Props
 

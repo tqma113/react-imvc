@@ -21,9 +21,9 @@ componentWillUnmount
 windowWillUnload
 ```
 
-::: tip 注意
-关闭 SSR 后，不执行 `componentWillCreate` 和 `shouldComponentCreate`，直接返回 [Loading](./render.md#loading) 界面
-:::
+> <b>TIP</b>
+>
+> 关闭 SSR 后，不执行 `componentWillCreate` 和 `shouldComponentCreate`，直接返回 [Loading](./render.md#loading) 界面
 
 ### getInitialState
 

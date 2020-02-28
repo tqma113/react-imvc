@@ -71,6 +71,6 @@ async function main() {
 main()
 ```
 
-::: tip 提示
-启动文件中也可以引用配置文件 `imvc.config.ts` 中的配置。
-:::
+> <b>TIP</b>
+>
+> 启动文件中也可以引用配置文件 `imvc.config.ts` 中的配置。
