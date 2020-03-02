@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import Link from './Link'
 import connect from '../hoc/connect'
 import { BaseLocation } from 'create-history'
-import { Location } from '..'
+import { Location } from '../type'
 
 const withLocation = connect(({ state }) => {
   return {

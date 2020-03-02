@@ -39,7 +39,7 @@ import {
   Forwarder,
   Location,
   FetchOptions
-} from '..'
+} from '../type'
 
 export type BaseActions = typeof shareActions
 

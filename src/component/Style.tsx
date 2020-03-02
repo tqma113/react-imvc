@@ -1,6 +1,6 @@
 import React from 'react'
 import GlobalContext from '../context'
-import { Preload } from '..'
+import { Preload } from '../type'
 
 export interface Props {
 	name: string

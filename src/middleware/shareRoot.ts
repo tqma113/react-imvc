@@ -2,7 +2,7 @@
  * 对 req.url 进行裁剪，以便适应不同的发布路径
  */
 import express from 'express'
-import { RequestHandler, Res, Req } from '..'
+import { RequestHandler, Res, Req } from '../type'
 
 export default function shareRoot(rootPath: string): express.RequestHandler {
   if (rootPath.charAt(rootPath.length - 1) === '/') {

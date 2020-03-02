@@ -16,7 +16,7 @@ import {
   ViewEngine,
   Controller as BaseController
 } from "create-app/client"
-import { BaseState, AppSettings, Preload, Module } from ".."
+import { BaseState, AppSettings, Preload, Module } from "../type"
 
 declare global {
   interface Window {

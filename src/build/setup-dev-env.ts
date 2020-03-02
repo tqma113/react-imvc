@@ -7,7 +7,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 import createWebpackConfig from './createWebpackConfig'
 import { NextHandleFunction } from 'connect'
 import { getExternals, matchExternals } from './util'
-import { EntireConfig } from '..'
+import { EntireConfig } from '../type'
 
 export function setupClient(config: EntireConfig): {
 	compiler: webpack.Compiler,

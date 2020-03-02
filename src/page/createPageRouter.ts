@@ -22,7 +22,7 @@ import {
   EntireConfig,
   AppSettings,
   Req
-} from '..'
+} from '../type'
 
 function getModule(module: any) {
   return module.default || module

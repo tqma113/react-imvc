@@ -8,7 +8,7 @@ import htmlmin from 'gulp-htmlmin'
 import plumber from 'gulp-plumber'
 // @ts-ignore
 import cleanCSS from 'gulp-clean-css'
-import { EntireConfig, GulpTaskConfig } from '..'
+import { EntireConfig, GulpTaskConfig } from '../type'
 
 function createConfig(options: EntireConfig): GulpTaskConfig {
   let root = options.root

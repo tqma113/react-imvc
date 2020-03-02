@@ -1,7 +1,7 @@
 import React from 'react'
 import Controller from '../controller'
 import { Actions } from 'relite'
-import { BaseState } from '..'
+import { BaseState } from '../type'
 
 export interface Props<
   S extends object,

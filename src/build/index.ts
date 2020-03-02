@@ -11,7 +11,7 @@ import {
   Options,
   EntireConfig,
   AppSettings
-} from '..'
+} from '../type'
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'

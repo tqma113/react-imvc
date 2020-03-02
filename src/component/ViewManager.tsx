@@ -4,7 +4,7 @@ import GlobalContext from '../context'
 import ControllerProxy from './ControllerProxy'
 import { Actions } from 'relite'
 import { CacheStorage } from 'create-app/client'
-import { BaseState } from '..'
+import { BaseState } from '../type'
 
 export interface Props<
 	S extends object,

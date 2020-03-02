@@ -8,7 +8,7 @@ import ManifestPlugin from 'webpack-manifest-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { getExternals } from './util'
-import { EntireConfig } from '..'
+import { EntireConfig } from '../type'
 
 export default function createWebpackConfig(
 	options: EntireConfig,
