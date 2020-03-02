@@ -26,6 +26,7 @@ declare global {
   }
 }
 
+// @ts-ignore
 declare let __webpack_public_path__: string
 
 __webpack_public_path__ = window.__PUBLIC_PATH__ + "/"
