@@ -2,6 +2,17 @@ import { Location, Context } from '../../../../src/'
 import Controller from '../../../../src/controller'
 import React from 'react'
 
+declare global {
+    module NodeJS {
+        interface Global {
+            controller: any
+        }
+    }
+    interface Window {
+        controller: any
+    }
+}
+
 export default class Ctrl extends Controller<{}, {}> {
     View = View
     constructor(location: Location, context: Context) {
