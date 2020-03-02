@@ -27,7 +27,8 @@
     "util",
     "dist",
     "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "tsconfig.json"
   ],
   "repository": {
     "type": "git",
