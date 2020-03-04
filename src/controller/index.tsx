@@ -69,7 +69,7 @@ let createElement = React.originalCreateElement || React.createElement
  */
 export default class Controller<
   S extends object,
-  AS extends Actions<S & BaseState>
+  AS extends Actions<BaseState& S>
 > implements AppController {
   location: Location
   history: HistoryWithBFOL<BLWithBQ, ILWithBQ>
@@ -78,7 +78,7 @@ export default class Controller<
   Model?: any
   initialState?: any
   actions?: any
-  store: Store<S & BaseState, AS & BaseActions>
+  store: Store<S & BaseState, BaseActions & AS>
   SSR?: SSR
   preload: Preload
   KeepAlive?: boolean
@@ -155,7 +155,7 @@ export default class Controller<
     this.deepCloneInitialState = true
 
     // For TypeScript placeholder
-    this.store = undefined as unknown as Store<S & BaseState, AS & BaseActions>
+    this.store = undefined as unknown as Store<S & BaseState, BaseActions & AS>
     this.history = (
       createHistory() as unknown as HistoryWithBFOL<BLWithBQ, ILWithBQ>
     )
@@ -659,7 +659,7 @@ export default class Controller<
     /**
      * 动态获取最终的 actions
      */
-    let finalActions: AS & BaseActions 
+    let finalActions: BaseActions & AS
       = await this.getFinalActions({ ...shareActions, ...actions })
     
     /**
@@ -689,7 +689,7 @@ export default class Controller<
       }, {} as any)
 
       this.store.actions
-        = actions as unknown as Currings<S & BaseState, AS & BaseActions>
+        = actions as unknown as Currings<S & BaseState, BaseActions & AS>
     }
 
     /**
