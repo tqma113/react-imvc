@@ -1,5 +1,7 @@
-import useSelector from './useSelector'
+import useCtrl from './useCtrl'
+import Controller from '../controller/index'
 
-export default function useModelState<S extends {}>() {
-  return useSelector<S, S>()
+export default function<S extends {}>() {
+  let ctrl = useCtrl<Controller<S, any>>()
+  return ctrl.store.getState()
 }
