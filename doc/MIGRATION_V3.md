@@ -16,8 +16,6 @@
 
 * `useModelState` can render exactly. When context changed and state haven't changed it will not dispatch a new render.
 
-* Add new hook `useSelector`. [Detail]()
-
 ## How to upgrade
 
 1. Update `react-imvc` to 3.x
