@@ -2,18 +2,18 @@
  * 共享的 action 函数
  */
 import { setValueByPath } from '../util'
-import { Location, BaseState, Action } from '../type'
+import { Location, Action } from '../type'
 
-export const INDENTITY: Action<BaseState> = (state) => state
+export const INDENTITY: Action<object> = (state) => state
 
-export const UPDATE_STATE: Action<BaseState, BaseState> = (state, newState) => {
+export const UPDATE_STATE: Action<object, object> = (state, newState) => {
   return {
     ...state,
     ...newState
   }
 }
 
-export const __PAGE_DID_BACK__: Action<BaseState, Location> = (
+export const __PAGE_DID_BACK__: Action<object, Location> = (
   state,
   location
 ) => {
@@ -24,7 +24,7 @@ export const __PAGE_DID_BACK__: Action<BaseState, Location> = (
 }
 
 interface USBPPayload { [x: string]: any }
-export const UPDATE_STATE_BY_PATH: Action<BaseState, USBPPayload> = (
+export const UPDATE_STATE_BY_PATH: Action<object, USBPPayload> = (
   state,
   payload
 ) => {
