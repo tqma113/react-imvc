@@ -1,13 +1,13 @@
 import Controller from '../../../../src/controller'
 import React from 'react'
 import { Location, Context } from '../../../../src/'
-import { useModelActions, useSelector } from '../../../../src/hook'
+import { useCtrl, useModelActions, useModelState, useModel } from '../../../../src/hook'
 import * as Model from './Model'
 
 type Actions = Omit<typeof Model, 'initialState'>
 
 class Hook extends Controller<Model.State, Actions> {
-  View = View
+  View = RootView
   Model = Model
 
   constructor(location: Location, context: Context) {
@@ -15,69 +15,32 @@ class Hook extends Controller<Model.State, Actions> {
   }
 
   handleUpdate1Click = () => {
-    this.store.actions.UPDATE_BASE()
+    this.store.actions.UPDATE_FOO(this.store.getState().foo + 1)
   }
 }
 
 export default Hook
 
-const View = React.memo(function View() {
-  // let ctrl = useCtrl<Hook>()
-  // let actions = useModelActions<Model.State, Actions>()
-  // let state = useModelState<Model.State>()
-  // const handleUpdate2Click = () => {
-  //   actions.UPDATE_BASE()
-  // }
+class RootView extends React.Component<{}> {
+  render() {
+    return <View />
+  }
+}
+
+function View() {
+  let ctrl = useCtrl<Hook>()
+  let model = useModel<Model.State, Actions>()
+  let actions = useModelActions<Model.State, Actions>()
+  let state = useModelState<Model.State>()
+  console.log(model)
+  const handleUpdate2Click = () => {
+    actions.UPDATE_FOO(state.foo + 1)
+  }
 	return (
     <div id="hook">
-      <div>
-        {/* <p id="foo">{state.base}</p>
-        <p id="foo">{ctrl.store.getState().foo}</p>
-        <button id="update1" onClick={ctrl.handleUpdate1Click}>Update</button>
-        <button id="update2" onClick={handleUpdate2Click}>Update</button> */}
-      </div>
-      <Foo />
-      <Bar />
-      <Baz />
+      <p id="foo">{ctrl.store.getState().foo}</p>
+      <button id="update1" onClick={ctrl.handleUpdate1Click}>Update</button>
+      <button id="update2" onClick={handleUpdate2Click}>Update</button>
     </div>
   )
-})
-
-const Foo = React.memo(function Foo() {
-  const actions = useModelActions<Model.State, Actions>()
-  const selector = (state: Model.State) => state.foo
-  const foo = useSelector(selector)
-  console.log("Foo update")
-  return (
-    <div>
-      <p>Foo: {foo}</p>
-      <button onClick={() => actions.UPDATE_FOO()}>Update</button>
-    </div>
-  )
-})
-
-const Bar = React.memo(function Bar() {
-  const actions = useModelActions<Model.State, Actions>()
-  const selector = (state: Model.State) => state.bar
-  const bar = useSelector(selector)
-  console.log("Bar update")
-  return (
-    <div>
-      <p>Bar: {bar}</p>
-      <button onClick={() => actions.UPDATE_BAR()}>Update</button>
-    </div>
-  )
-})
-
-const Baz = React.memo(function Baz() {
-  const actions = useModelActions<Model.State, Actions>()
-  const selector = (state: Model.State) => state.baz
-  const baz = useSelector(selector)
-  console.log("Baz update")
-  return (
-    <div>
-      <p>Baz: {baz}</p>
-      <button onClick={() => actions.UPDATE_BAZ()}>Update</button>
-    </div>
-  )
-})
+}
