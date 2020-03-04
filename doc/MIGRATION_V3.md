@@ -274,7 +274,7 @@
     import * as Model from './Model'
     type Actions = Omit<typeof Model, 'initialState'>
 
-    const ctrl = useModelActions<Ctrl>()
+    const actions = useModelActions<Model.State, Actions>()
     ```
 
     (4) `useModelState`
