@@ -5,9 +5,9 @@ import webpack from 'webpack'
 import notifier from 'node-notifier'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import createWebpackConfig from './createWebpackConfig'
-import { NextHandleFunction } from 'connect'
 import { getExternals, matchExternals } from './util'
-import { EntireConfig } from '../type'
+import type { NextHandleFunction } from 'connect'
+import type { EntireConfig } from '..'
 
 export function setupClient(config: EntireConfig): {
 	compiler: webpack.Compiler,

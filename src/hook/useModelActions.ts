@@ -1,5 +1,5 @@
 import useCtrl from './useCtrl'
-import Controller from '../controller/index'
+import type Controller from '../controller'
 
 export default function<S extends {} = {}, AS extends {} = {}>() {
   const { store } = useCtrl<Controller<S, AS>>()

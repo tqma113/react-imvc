@@ -1,5 +1,5 @@
 import path from 'path'
-import { EntireConfig } from '../type'
+import type { EntireConfig } from '..'
 
 export function getExternals(config: EntireConfig): string[] {
   let dependencies: string[] = []

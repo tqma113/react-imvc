@@ -9,25 +9,25 @@ import * as _ from '../util'
 import * as shareActions from './actions'
 import ViewManager from '../component/ViewManager'
 import attachDevToolsIfPossible from './attachDevToolsIfPossible'
-import {
+import type {
   Store,
   Data,
   Actions,
   Currings
 } from 'relite'
-import {
+import type {
   HistoryWithBFOL,
   ILWithBQ,
   BLWithBQ,
 } from 'create-history'
-import {
+import type {
   Controller as AppController,
   HistoryLocation,
   Matcher,
   Loader,
   CacheStorage
 } from 'create-app/server'
-import {
+import type {
   BaseViewFC,
   BaseViewClass,
   Preload,
@@ -39,7 +39,7 @@ import {
   Forwarder,
   Location,
   FetchOptions
-} from '../type'
+} from '..'
 
 export type BaseActions = typeof shareActions
 

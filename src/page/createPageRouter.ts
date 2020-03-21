@@ -10,7 +10,7 @@ import {
   getClearFilePath,
   stringToUnit8Array
 } from '../util'
-import {
+import type {
   HistoryLocation,
   Context,
   LoadController,
@@ -18,11 +18,11 @@ import {
   Route,
   ViewEngineRender
 } from 'create-app/server'
-import {
+import type {
   EntireConfig,
   AppSettings,
   Req
-} from '../type'
+} from '..'
 
 function getModule(module: any) {
   return module.default || module

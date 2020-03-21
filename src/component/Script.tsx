@@ -1,10 +1,10 @@
 import React from 'react'
 
-export interface Props {
+export interface ScriptProps {
 	children: string
 }
 
-export default function Script(props: Props) {
+export default function Script(props: ScriptProps) {
 	let children = props.children || ''
 	return (
 		<script

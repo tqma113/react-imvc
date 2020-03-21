@@ -1,7 +1,7 @@
 import spawn from 'cross-spawn'
 import querystring from 'query-string'
 import { getKeys } from '../util'
-import { SpawnSyncReturns } from 'child_process'
+import type { SpawnSyncReturns } from 'child_process'
 
 let command = process.argv[2]
 let args = process.argv.slice(3)

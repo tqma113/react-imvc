@@ -11,7 +11,7 @@ import cookieParser from "cookie-parser"
 import configBabel from "../config/babel"
 import shareRoot from "../middleware/shareRoot"
 import * as setupDevEnv from "../build/setup-dev-env"
-import { EntireConfig, Req } from "../type"
+import type { EntireConfig, Req } from ".."
 
 export default function createExpressApp(
 	config: EntireConfig

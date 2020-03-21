@@ -1,4 +1,4 @@
-import { TransformOptions, PluginItem } from '@babel/core'
+import type { TransformOptions, PluginItem } from '@babel/core'
 
 export default function Babel(): TransformOptions {
   let presets: PluginItem[] = [

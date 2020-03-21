@@ -13,7 +13,7 @@ import fetch, * as nodeFetch from 'node-fetch'
 import getConfig from '../config'
 import createExpressApp from '../entry/server'
 import createPageRouter from '../page/createPageRouter'
-import { Options, RequestHandler, Result } from '../type'
+import type { Options, RequestHandler, Result } from '..'
 
 declare global {
   namespace NodeJS {

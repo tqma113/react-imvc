@@ -1,12 +1,12 @@
 import React from 'react'
 import GlobalContext from '../context'
-import { Preload } from '../type'
+import type { Preload } from '..'
 
-export interface Props {
+export interface StyleProps {
 	name: string
 }
 
-export default function Style({ name }: Props) {
+export default function Style({ name }: StyleProps) {
 	return (
 		<GlobalContext.Consumer>
 			{({ preload }: { preload?: Preload }) => {

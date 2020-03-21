@@ -1,5 +1,5 @@
 import Babel from "./babel"
-import { EntireConfig } from "../type"
+import type { EntireConfig } from ".."
 
 let cwd = process.cwd()
 let port = process.env.PORT || 3000

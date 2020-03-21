@@ -1,4 +1,4 @@
-import { Store, Data, Actions } from "relite"
+import type { Store, Data, Actions } from "relite"
 
 declare global {
   interface Window {

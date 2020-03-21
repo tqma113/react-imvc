@@ -8,7 +8,7 @@ import Controller from '../controller'
 import { getFlatList } from "../util"
 // @ts-ignore
 import $routes from "@routes"
-import {
+import type {
   LoadController,
   ControllerConstructor,
   HistoryLocation,
@@ -16,7 +16,7 @@ import {
   ViewEngine,
   Controller as BaseController
 } from "create-app/client"
-import { BaseState, AppSettings, Preload, Module } from "../type"
+import type { BaseState, AppSettings, Preload, Module } from ".."
 
 declare global {
   interface Window {

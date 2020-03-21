@@ -2,8 +2,8 @@ import React from 'react'
 import classnames from 'classnames'
 import Link from './Link'
 import connect from '../hoc/connect'
-import { BaseLocation } from 'create-history'
-import { Location } from '../type'
+import type { BaseLocation } from 'create-history'
+import type { Location } from '..'
 
 const withLocation = connect(({ state }) => {
   return {
@@ -13,7 +13,7 @@ const withLocation = connect(({ state }) => {
 
 export default withLocation(NavLink)
 
-export interface Props {
+export interface NavLinkProps {
   isActive?: { (...args: any[]): boolean }
   location: Location
   className?: string
@@ -29,7 +29,7 @@ export interface GetIsActive {
   (path: string | BaseLocation, location: Location,): boolean
 }
 
-function NavLink(props: Props) {
+function NavLink(props: NavLinkProps) {
   let {
     isActive:  getIsActive,
     location,

@@ -7,11 +7,11 @@ import start from '../start'
 import getConfig from '../config'
 import createGulpTask from './createGulpTask'
 import createWebpackConfig from './createWebpackConfig'
-import {
+import type {
   Options,
   EntireConfig,
   AppSettings
-} from '../type'
+} from '..'
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'

@@ -1,5 +1,5 @@
 import useCtrl from './useCtrl'
-import Controller from '../controller/index'
+import type Controller from '../controller'
 
 export default function<S extends {}>() {
   let ctrl = useCtrl<Controller<S, any>>()

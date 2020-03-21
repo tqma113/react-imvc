@@ -10,7 +10,7 @@ import {
 	getKeys
 } from '../util'
 import { TransformOptions, transformFileSync } from "@babel/core"
-import { Options, EntireConfig, Config } from ".."
+import type { Options, EntireConfig, Config } from ".."
 
 export { default as defaultConfig } from './config.defaults'
 export const getBabelConfig = configBabel

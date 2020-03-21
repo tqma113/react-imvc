@@ -2,7 +2,7 @@
  * 共享的 action 函数
  */
 import { setValueByPath } from '../util'
-import { Location, Action } from '../type'
+import type { Location, Action } from '..'
 
 export const INDENTITY: Action<object> = (state) => state
 

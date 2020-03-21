@@ -3,7 +3,6 @@
  * 复制原因是，它只支持一个 cache 单例
  * 我们的需求是，每次调用，产生一个独立的实例
  */
-
 export interface Cache {
   put: (
     key: string,
@@ -21,11 +20,13 @@ export interface Cache {
   misses: () => number
   keys: () => string[]
 }
+
 export interface Record {
   value: any,
   expire: number,
   timeout?: NodeJS.Timeout | number
 }
+
 export default () => {
   let result: Cache
   let cache: { [propName: string]: any } = Object.create(null)

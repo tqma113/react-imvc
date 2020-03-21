@@ -3,14 +3,14 @@ import GlobalContext from '../context'
 
 const isHandler = (key: string) => /^on[A-Z]+/.test(key)
 
-export interface Props {
+export interface EventWrapperProps {
 	as?: keyof HTMLElementTagNameMap
 	[propName: string]: any
 }
 
-export default class EventWrapper extends React.Component<Props> {
+export default class EventWrapper extends React.Component<EventWrapperProps> {
 	static contextType = GlobalContext
-	static defaultProps: Props = {
+	static defaultProps: EventWrapperProps = {
 		as: 'div'
 	}
 

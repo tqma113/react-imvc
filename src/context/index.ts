@@ -1,5 +1,5 @@
 import React from 'react'
-import Controller from '../controller'
+import type Controller from '../controller'
 
 function createContext<Ctrl extends Controller<any, any>>(ctrl: Ctrl) {
   type GlobalContextType = {

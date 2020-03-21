@@ -2,11 +2,11 @@ import React from 'react'
 import Controller from '../controller'
 import GlobalContext from '../context'
 import ControllerProxy from './ControllerProxy'
-import { Actions } from 'relite'
-import { CacheStorage } from 'create-app/client'
-import { BaseState } from '../type'
+import type { Actions } from 'relite'
+import type { CacheStorage } from 'create-app/client'
+import type { BaseState } from '..'
 
-export interface Props<
+export interface ViewManagerProps<
 	S extends object,
 	AS extends Actions<S & BaseState>
 > {
@@ -16,11 +16,11 @@ export interface Props<
 export default class ViewManager<
 	S extends object,
 	AS extends Actions<S & BaseState>
-> extends React.Component<Props<S, AS>> {
+> extends React.Component<ViewManagerProps<S, AS>> {
 	static ignoreErrors = true
 	views: Record<string, any> = {}
 	scrollMap: Record<string, any> = {}
-	constructor(props: Props<S, AS>, context: React.Context<any>) {
+	constructor(props: ViewManagerProps<S, AS>, context: React.Context<any>) {
 		super(props, context)
 		this.addItemIfNeed(props.controller.location.raw)
 	}
@@ -51,7 +51,7 @@ export default class ViewManager<
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps: Props<S, AS>) {
+	UNSAFE_componentWillReceiveProps(nextProps: ViewManagerProps<S, AS>) {
 		let currentPath = this.props.controller.location.raw
 		let nextPath = nextProps.controller.location.raw
 		if (currentPath !== nextPath) {

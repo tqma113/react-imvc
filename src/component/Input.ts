@@ -6,7 +6,7 @@ export interface Transformer {
 	<T>(currentValue?: T, oldValue?: T): T
 }
 
-export interface Props {
+export interface InputProps {
 	as?: keyof HTMLElementTagNameMap
 	type?: string
 	name: string
@@ -17,7 +17,7 @@ export interface Props {
 	[propName: string]: any
 }
 
-export default class Input extends React.Component<Props> {
+export default class Input extends React.Component<InputProps> {
 	static contextType = GlobalContext
 	static defaultProps = {
 		as: 'input',

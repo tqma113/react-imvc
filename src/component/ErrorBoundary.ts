@@ -1,17 +1,17 @@
 import React from 'react'
 import GlobalContext from '../context'
-import { BaseState } from '../type'
+import type { BaseState } from '..'
 
 // fixed: webpack rebuild lost original React.createElement
 // @ts-ignore
 let createElement = React.originalCreateElement || React.createElement
 
-export interface Props {
+export interface ErrorBoundaryProps {
   fallback: object | string | null
 }
 
 export default class ErrorBoundary extends React.Component<
-  Props,
+ErrorBoundaryProps,
   Partial<BaseState>
 > {
   static ignoreErrors = true
@@ -19,7 +19,7 @@ export default class ErrorBoundary extends React.Component<
   static getDerivedStateFromError() {
     return { hasError: true }
   }
-  static defaultProps: Props = {
+  static defaultProps: ErrorBoundaryProps = {
     fallback: null
   }
   state: Readonly<Partial<BaseState>> = {

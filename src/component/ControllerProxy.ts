@@ -1,9 +1,9 @@
 import React from 'react'
 import Controller from '../controller'
-import { Actions } from 'relite'
-import { BaseState } from '../type'
+import type { Actions } from 'relite'
+import type { BaseState } from '..'
 
-export interface Props<
+export interface ControllerProxyProps<
   S extends object,
   AS extends Actions<S & BaseState>
 > {
@@ -17,7 +17,7 @@ export interface Props<
 export default class ControllerProxy<
   S extends object,
   AS extends Actions<S & BaseState>
-> extends React.Component<Props<S, AS>> {
+> extends React.Component<ControllerProxyProps<S, AS>> {
   static ignoreErrors: boolean = true
 
   updateDocumentTitle() {

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import GlobalContext from '../context'
-import Controller from '../controller/index'
+import type Controller from '../controller'
 
 export default function useCtrl<Ctrl extends Controller<any, any>>() {
   let { ctrl } = useContext(GlobalContext)

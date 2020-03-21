@@ -8,12 +8,12 @@ declare global {
   }
 }
 
-export interface Props {
+export interface OuterClickWrapperProps {
   onClick?: Function
   children?: React.ReactNode
 }
 
-export default class OuterClickWrapper extends Component<Props> {
+export default class OuterClickWrapper extends Component<OuterClickWrapperProps> {
   componentDidMount() {
     if (document.addEventListener) {
       document.addEventListener('click', this.handleOutterClick)

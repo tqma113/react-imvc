@@ -1,4 +1,4 @@
-import { Route } from 'create-app/client'
+import type { Route } from 'create-app/client'
 
 export type RouteList = Route[]
 export type inputList = (Route | RouteList)[]

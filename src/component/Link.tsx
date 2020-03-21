@@ -1,8 +1,8 @@
 import React from 'react'
 import GlobalContext from '../context'
-import { BaseLocation } from 'create-history'
+import type { BaseLocation } from 'create-history'
 
-export type Props = React.PropsWithChildren<{
+export type LinkProps = React.PropsWithChildren<{
 	as?: keyof HTMLElementTagNameMap
 	to?: string | BaseLocation
 	href?: string
@@ -14,9 +14,9 @@ export type Props = React.PropsWithChildren<{
 	[propName: string]: any
 }>
 
-export default class Link extends React.Component<Props> {
+export default class Link extends React.Component<LinkProps> {
 	static contextType = GlobalContext
-	static defaultProps: Props = {
+	static defaultProps: LinkProps = {
 		as: 'a'
 	}
 

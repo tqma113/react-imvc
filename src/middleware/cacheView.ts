@@ -3,8 +3,8 @@
  */
 import express from "express"
 import createCache from "./createCache"
-import { Cache } from "./createCache"
-import { RequestHandler, Req, Res } from "../type"
+import type { Cache } from "./createCache"
+import type { RequestHandler, Req, Res } from ".."
 
 interface Settings {
   timeout: number
