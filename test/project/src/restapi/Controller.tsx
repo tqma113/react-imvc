@@ -35,8 +35,13 @@ export default class RestAPI extends Controller<State, typeof actions> {
     super(location, context)
   }
   async componentWillCreate() {
-    let data = await this.fetch('/foo')
-    this.store.actions.UPDATE_DATA(data)
+    await this.fetch('/foo')
+      .then(data => {
+        this.store.actions.UPDATE_DATA(data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 }
 

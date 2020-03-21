@@ -12,7 +12,7 @@ const config: Config = {
 }
 
 async function main() {
-	let { app, server } = await start({ config })
+	await start({ config })
 	console.log('started')
 }
 
