@@ -267,7 +267,7 @@ export interface EntireConfig {
    * 支持传入字符串 如，'/my/basename'
    * 支持传入数组，当传入为数组时，在运行时动态确定所匹配的 basename
    */
-  basename: string
+  basename: string[]
   /**
    * html 文档的 title
    */

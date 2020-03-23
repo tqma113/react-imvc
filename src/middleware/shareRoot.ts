@@ -4,27 +4,43 @@
 import express from 'express'
 import type { RequestHandler, Res, Req } from '..'
 
-export default function shareRoot(rootPath: string): express.RequestHandler {
-  if (rootPath.charAt(rootPath.length - 1) === '/') {
-    rootPath = rootPath.substr(0, rootPath.length - 1)
-  }
+export default function shareRoot(...rootPathList: string[]): express.RequestHandler {
+  const matcherList = rootPathList.map(rootPath => {
+    if (rootPath.charAt(rootPath.length - 1) === "/") {
+      rootPath = rootPath.substr(0, rootPath.length - 1);
+    }
 
-  const ROOT_RE = new RegExp('^' + rootPath, 'i')
+    var ROOT_RE = new RegExp("^" + rootPath, "i");
+
+    return {
+      rootPath,
+      ROOT_RE
+    };
+  })
+
   const handler: RequestHandler = (
     req: Req,
     res: Res,
     next: express.NextFunction
   ) => {
-    if (ROOT_RE.test(req.url)) {
-      req.url = req.url.replace(ROOT_RE, '')
-      req.basename = rootPath
-      if (req.url.charAt(0) !== '/') {
-        req.url = '/' + req.url
-      }
-    } else if (!req.basename) {
-      req.basename = ''
+    if (!req.basename) {
+      req.basename = "";
     }
-    next()
+
+    for (let i = 0; i < matcherList.length; i++) {
+      let { rootPath, ROOT_RE } = matcherList[i];
+
+      if (ROOT_RE.test(req.url)) {
+        req.url = req.url.replace(ROOT_RE, "");
+        req.basename = rootPath;
+        if (req.url.charAt(0) !== "/") {
+          req.url = "/" + req.url;
+        }
+        break;
+      }
+    }
+
+    next();
   }
   return handler as express.RequestHandler
 }

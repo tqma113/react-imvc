@@ -1,49 +1,49 @@
-import Babel from "./babel"
-import type { EntireConfig } from ".."
+import Babel from './babel'
+import type { EntireConfig } from '..'
 
 let cwd = process.cwd()
 let port = process.env.PORT || 3000
-let NODE_ENV = process.env.NODE_ENV || "development"
-let isDev = NODE_ENV === "development"
+let NODE_ENV = process.env.NODE_ENV || 'development'
+let isDev = NODE_ENV === 'development'
 
 const defaultConfig: EntireConfig = {
-	title: "react-imvc",
-	favicon: "",
-	description: "An Isomorphic-MVC Framework",
-	keywords: "react mvc isomorphic server-side-rendering",
+	title: 'react-imvc',
+	favicon: '',
+	description: 'An Isomorphic-MVC Framework',
+	keywords: 'react mvc isomorphic server-side-rendering',
 	root: cwd,
-	src: "src",
-	routes: "routes",
-	layout: "",
-	publish: "publish",
-	static: "static",
-	staticPath: "/static",
-	staticEntry: "", // 'index.html'
+	src: 'src',
+	routes: 'routes',
+	layout: '',
+	publish: 'publish',
+	static: 'static',
+	staticPath: '/static',
+	staticEntry: '', // 'index.html'
 	staticOptions: {},
-	assetsPath: "../assets.json",
-	serverBundleName: "server.bundle.js",
+	assetsPath: '../assets.json',
+	serverBundleName: 'server.bundle.js',
 	output: {},
 	productionOutput: {},
 	port: port,
 
-	publicPath: "",
-	basename: "",
-	restapi: "",
-	content: "",
+	publicPath: '',
+	basename: [''],
+	restapi: '',
+	content: '',
 	context: {},
 	initialState: undefined,
 	appSettings: undefined,
 
 	SSR: true,
-	renderMode: "renderToNodeStream",
+	renderMode: 'renderToNodeStream',
 
-	devtool: isDev ? "cheap-module-eval-source-map" : "",
+	devtool: isDev ? 'cheap-module-eval-source-map' : '',
 	webpackDevMiddleware: isDev,
 	hot: false,
 
 	bundleAnalyzer: false,
 	alias: {},
-	logger: isDev ? "dev" : null,
+	logger: isDev ? 'dev' : null,
 	notifier: false,
 	webpackPlugins: [],
 	webpackLoaders: [],
@@ -68,7 +68,7 @@ const defaultConfig: EntireConfig = {
 	},
 	bodyParser: {
 		json: {
-			limit: "10MB"
+			limit: '10MB'
 		},
 		urlencoded: {
 			extended: false
