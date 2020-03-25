@@ -86,5 +86,9 @@ export default [
 	{
 		path: '/componentWillCreate',
 		controller: () => import('./componentWillCreate/Controller')
+	},
+	{
+		path: '/getInitialState',
+		controller: () => import('./getInitialState/Controller')
 	}
 ]

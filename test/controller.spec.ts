@@ -420,7 +420,38 @@ describe('controller', () => {
   })
   
   describe('getInitialState', () => {
-    it.todo('valid')
+    it('should run at server not run at client when SSR is true', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/getInitialState`
+      await page.goto(url)
+      await page.waitFor('#getInitialState')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).toContain('server:true')
+
+      const clientContent = await page.$eval('#getInitialState', (e) => e.innerHTML)
+      console.log(clientContent)
+      expect(clientContent.includes('client:false')).toBeTruthy()
+
+      fetchMock.reset()
+      await page.close()
+    })
+
+    it('should not run at server run at client when SSR is false', async () => {
+      const page = await browser.newPage()
+      const url = `http://localhost:${config.port}/getInitialState?SSR=0`
+      await page.goto(url)
+      await page.waitFor('#getInitialState')
+      
+      const serverContent = await fetchContent(url)
+      expect(serverContent).not.toContain('server:false')
+
+      const clientContent = await page.$eval('#getInitialState', (e) => e.innerHTML)
+      expect(clientContent.includes('client:true')).toBeTruthy()
+
+      fetchMock.reset()
+      await page.close()
+    })
   })
   
   describe('getFinalActions', () => {

@@ -640,14 +640,18 @@ export default class Controller<
       restapi: this.context.restapi || ''
     }
 
-    /**
-     * 动态获取初始化的 initialState
-     */
-    let finalInitialState: S & BaseState = await this.getInitialState({
+    let finalInitialState: S & BaseState = {
       ...initialState,
       ...(globalInitialState || {}),
       ...baseState
-    })
+    } as S & BaseState
+
+    /**
+     * 动态获取初始化的 initialState
+     */
+    if (!globalInitialState) {
+      finalInitialState = await this.getInitialState(finalInitialState)
+    }
 
     /**
      * 复用了 server side 的 state 数据之后执行
