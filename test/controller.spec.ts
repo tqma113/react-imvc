@@ -427,11 +427,12 @@ describe('controller', () => {
       await page.waitFor('#getInitialState')
       
       const serverContent = await fetchContent(url)
+      expect(serverContent).toContain('client:false')
       expect(serverContent).toContain('server:true')
 
       const clientContent = await page.$eval('#getInitialState', (e) => e.innerHTML)
-      console.log(clientContent)
       expect(clientContent.includes('client:false')).toBeTruthy()
+      expect(clientContent.includes('server:true')).toBeTruthy()
 
       fetchMock.reset()
       await page.close()
@@ -442,12 +443,10 @@ describe('controller', () => {
       const url = `http://localhost:${config.port}/getInitialState?SSR=0`
       await page.goto(url)
       await page.waitFor('#getInitialState')
-      
-      const serverContent = await fetchContent(url)
-      expect(serverContent).not.toContain('server:false')
 
       const clientContent = await page.$eval('#getInitialState', (e) => e.innerHTML)
       expect(clientContent.includes('client:true')).toBeTruthy()
+      expect(clientContent.includes('server:false')).toBeTruthy()
 
       fetchMock.reset()
       await page.close()

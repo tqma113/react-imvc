@@ -228,7 +228,7 @@ export default function createWebpackConfig(
 		// The preset includes JSX, Flow, TypeScript and some ESnext features.
 		{
 			test: /\.(js|mjs|jsx|ts|tsx)$/,
-			exclude: '/node_modules/',
+			exclude: /(node_modules|bower_components)/,
 			loader: 'babel-loader',
 			options: babelOptions
 		}
