@@ -92,7 +92,7 @@
     "gulp-plumber": "^1.2.1",
     "gulp-uglify": "^3.0.2",
     "helmet": "^3.21.3",
-    "jest": "^24.9.0",
+    "jest": "^25.3.0",
     "js-cookie": "^2.2.1",
     "memory-fs": "^0.4.1",
     "morgan": "^1.10.0",
@@ -153,7 +153,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "rimraf": "^3.0.2",
-    "ts-jest": "^25.2.1",
+    "ts-jest": "^25.3.1",
     "ts-node": "^8.7.0",
     "typescript": "^3.8.3",
     "webpack-cli": "^3.3.11"

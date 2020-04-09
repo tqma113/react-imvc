@@ -96,11 +96,14 @@ function createContext(filepath: string): vm.Context {
 	}
 	return vm.createContext({
 		...global,
+		global,
+		console,
+		process,
 		__filename: filepath,
 		__dirname: dir,
 		exports: module.exports,
 		require: virtualRequire,
-		module: module
+		module: module,
 	})
 }
 
