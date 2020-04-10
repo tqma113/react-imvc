@@ -1,13 +1,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
 ///////////////////////////////////////////////////////////////////////////////
-export { default as start } from './start'
-export { default as build } from './build'
-export { default as connect} from './hoc/connect'
+import start from './start'
+import build from './build'
+import connect from './hoc/connect'
 export { default as Controller } from './controller'
 export * from "./controller"
 export * from "./hook"
 export * from './component'
+export {
+  start,
+  build,
+  connect
+}
+export default {
+  start,
+  build,
+  connect
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // TYPES
