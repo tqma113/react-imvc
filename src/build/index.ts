@@ -118,7 +118,8 @@ async function startStaticEntry(
   let staticEntryconfig: EntireConfig = {
     ...config,
     root: path.join(config.root, config.publish),
-    publicPath: config.publicPath || '',
+    // 默认当前文件夹
+    publicPath: config.publicPath || '.',
     appSettings,
     SSR: false
   }
