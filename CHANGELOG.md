@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 3.0.0*beta.34
+## 3.0.0
 
 * **refactor**: support for [Typescript](http://www.typescriptlang.org/docs/home.html)(More details are in [guidance of migration](./doc/MIGRATION.md)).
 
