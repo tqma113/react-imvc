@@ -89,6 +89,6 @@ export default [
 	},
 	{
 		path: '/getInitialState',
-		controller: () => import('./getInitialState/Controller')
+		controller: () => import('./getInitialState1/Controller')
 	}
 ]

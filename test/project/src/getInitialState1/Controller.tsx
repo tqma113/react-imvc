@@ -1,6 +1,6 @@
 import Controller from '../../../../src/controller'
 import React from 'react'
-import { Location, Context } from '../../../../src/'
+import { Location, Context } from '../../../../src'
 
 export type State = {
   isClient: boolean,
