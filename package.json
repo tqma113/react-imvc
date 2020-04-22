@@ -70,7 +70,6 @@
     "@types/webpack-dev-middleware": "^2.0.4",
     "@types/yargs": "^13.0.8",
     "babel-loader": "^8.1.0",
-    "babel-plugin-dynamic-import-node": "^2.3.0",
     "body-parser": "^1.13.3",
     "chalk": "^3.0.0",
     "classnames": "^2.2.6",
@@ -106,6 +105,7 @@
     "resolve": "^1.15.1",
     "serve-favicon": "^2.5.0",
     "terser-webpack-plugin": "^2.3.5",
+    "typescript": "^3.8.3",
     "webpack": "^4.42.0",
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-dev-middleware": "^3.7.2",
@@ -155,7 +155,6 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^25.3.1",
     "ts-node": "^8.7.0",
-    "typescript": "^3.8.3",
     "webpack-cli": "^3.3.11"
   },
   "license": "MIT"
