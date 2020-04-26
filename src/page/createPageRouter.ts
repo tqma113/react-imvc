@@ -56,7 +56,7 @@ function renderToNodeStream(
       resolve(Buffer.from(stringToUnit8Array(view)))
     })
   }
-  if (view === undefined || view === null) {
+  if (view === void 0 || view === null) {
     return new Promise<ArrayBuffer>((resolve, reject) => {
       resolve(Buffer.from(stringToUnit8Array('')))
     })
@@ -98,7 +98,7 @@ function renderToString(
   if (typeof view === 'string') {
     return view
   }
-  if (view === undefined || view === null) {
+  if (view === void 0 || view === null) {
     return ''
   }
 
@@ -231,8 +231,8 @@ export default function createPageRouter(options: EntireConfig) {
 
       let initialState = controller.store
         ? controller.store.getState()
-        : undefined
-      let htmlConfigs = initialState ? initialState.html : undefined
+        : void 0
+      let htmlConfigs = initialState ? initialState.html : void 0
       let data = {
         ...htmlConfigs,
         content,
