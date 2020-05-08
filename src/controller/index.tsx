@@ -161,6 +161,11 @@ export default class Controller<
     )
   }
   
+  // symbol of react-imvc controller
+  static get __SYMBOL() {
+    return 'REACT_IMVC_CONTROLLER'
+  }
+  
   /**
    * 封装 fetch, https://github.github.io/fetch
    * options.json === false 不自动转换为 json

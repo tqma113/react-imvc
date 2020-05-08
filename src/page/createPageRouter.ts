@@ -8,7 +8,9 @@ import Controller from '../controller'
 import {
   getFlatList,
   getClearFilePath,
-  stringToUnit8Array
+  stringToUnit8Array,
+  isThenable,
+  isIMVCController
 } from '../util'
 import type {
   HistoryLocation,
@@ -28,16 +30,27 @@ function getModule(module: any) {
   return module.default || module
 }
 function commonjsLoader(
-  controller: LoadController,
+  controller: LoadController | Controller<any, any>,
   location?: HistoryLocation,
   context?: Context
 ): ControllerConstructor | Promise<ControllerConstructor> {
-  return (
-    controller(
+  let ctrl = null
+  if (isIMVCController(controller) || isThenable(controller)) {
+    ctrl = controller
+  } else {
+    ctrl = controller(
       location,
       context
-    ) as Promise<ControllerConstructor>
-  ).then(getModule)
+    )
+  }
+
+  if (isThenable(ctrl)) {
+    return (
+      ctrl as Promise<ControllerConstructor>
+    ).then(getModule)
+  } else {
+    return getModule(ctrl)
+  }
 }
 
 /**
