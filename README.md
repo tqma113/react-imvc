@@ -7,13 +7,16 @@
 
 [![NPM](https://nodei.co/npm/react-imvc.png?downloads=true)](https://nodei.co/npm/react-imvc/)
 
+## [更新记录](./CHANGELOG.md)
+
 ## [3.0 文档](./doc/README.md)
 
 ## [3.0 升级指南](./doc/MIGRATION_V3.md)
 
+## [2.0 文档](./doc/README.V2.md)
+
 ## [2.0 升级指南](./doc/MIGRATION_V2.md)
 
-## [1.0 文档](./doc/README.OLD.md)
 
 MVC 三者都是 Isomorphic，既是服务端 MVC，也是浏览器端 MVC。
 
