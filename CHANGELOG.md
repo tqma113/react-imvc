@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.4
+
+> 2020/5/28
+
+* **fix**: Cannot find module 'webpack-hot-middleware/client?noInfo=true&reload=true
+
 ## 3.0.3
 
 >2020/5/28
