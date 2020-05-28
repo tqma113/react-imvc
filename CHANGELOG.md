@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.5
+
+> 2020/5/28
+
+* **fix**: controller ErrorBoundary
+
 ## 3.0.4
 
 > 2020/5/28
