@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.3（2020/5/28）
+
+* **feat**: client initialize redirect error catch
+
+* **fix**: 修复 webpack externals 配置错误的问题，引入 webpack-node-externals
+
 ## 3.0.2（2020/5/8）
 
 * **feat**: support four way to import Controller in routes.
