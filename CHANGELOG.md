@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.6
+
+> 2020/5/28
+
+* **fix**: open webpack-hot-middleware when build
+
 ## 3.0.5
 
 > 2020/5/28
