@@ -95,8 +95,8 @@ export default function createExpressApp(
 		let { compiler, middleware } = setupDevEnv.setupClient(config)
 		app.use(middleware)
 
-		// 添加热更新中间件
-		if (config.hot) {
+		// 添加热更新中间件（只在开发环境下开启）
+		if (process.env.NODE_ENV === 'development' && config.hot) {
 			const webpackHotMiddleware = require(`webpack-hot-middleware`)
 			app.use(
 				webpackHotMiddleware(compiler, {
