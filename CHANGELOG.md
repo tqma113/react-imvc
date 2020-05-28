@@ -4,7 +4,7 @@
 
 > 2020/5/28
 
-* **fix**: controller ErrorBoundary
+* **fix**: controller ErrorBoundary hasError field error
 
 ## 3.0.4
 
