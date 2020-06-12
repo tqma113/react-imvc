@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "prebuild": "rimraf ./dist",
-    "pretest": "tsc -p . --sourceMap",
+    "pretest": "tsc",
     "test": "jest --runInBand --forceExit --coverage",
     "test:start": "ts-node ./test/project/start.ts",
     "test:debug": "node -r ts-node/register --inspect-brk ./test/project/start.ts",
