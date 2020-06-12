@@ -19,9 +19,9 @@ describe('scripts', () => {
 
   describe('start', () => {
     it('start with config file written with typescript', async (done) => {
-      const start = path.resolve(__dirname, '../dist/scripts/start.js')
+      const start = path.resolve(__dirname, '../src/bin/scripts.ts')
       const config = path.resolve(__dirname, './project/imvc.config.ts')
-      const cmd = `node ${start} --config ${config}`
+      const cmd = `ts-node ${start} --config ${config}`
       let p = exec(cmd, (err, stdout, stderr) => {
         if (err) {
           console.log(err)
