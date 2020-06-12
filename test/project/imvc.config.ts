@@ -1,7 +1,7 @@
 import path from 'path'
 import { Config } from '../../src'
 
-let PORT = 33336
+let PORT = 3336
 const ROOT = __dirname
 
 const config: Config = {

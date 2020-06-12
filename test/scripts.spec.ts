@@ -31,7 +31,7 @@ describe('scripts', () => {
       })
       await setTimeOutAsync(5000)
       let page = await browser.newPage()
-      let url = `http://localhost:33336/static_view`
+      let url = `http://localhost:3336/static_view`
       await page.goto(url)
       await page.waitFor('#static_view')
   
