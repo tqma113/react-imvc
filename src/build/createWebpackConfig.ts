@@ -7,7 +7,7 @@ import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-import { getExternals } from './util'
+import { getExternals, fixWebpackConfig } from './util'
 import type { EntireConfig } from '..'
 
 export default function createWebpackConfig(
@@ -283,23 +283,5 @@ export default function createWebpackConfig(
 		externals: isServer ? getExternals(config) : void 0
 	})
 
-	if (!!config.webpack) {
-		const draftConfig = config.webpack(result, isServer)
-		result = wrapFunctionInConfig(draftConfig)
-	}
-
-	return result
-}
-
-function wrapFunctionInConfig(config: any) {
-	for (let key in config) {
-		let value = config[key]
-		let type = typeof config[key]
-		if (type === 'function' && !(value instanceof Function)) {
-			config[key] = (...args: any[]) => value(...args)
-		} else if (type === 'object') {
-			config[key] = wrapFunctionInConfig(config[key])
-		}
-	}
-	return config
+	return fixWebpackConfig(result)
 }
