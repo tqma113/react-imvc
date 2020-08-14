@@ -283,5 +283,9 @@ export default function createWebpackConfig(
 		externals: isServer ? getExternals(config) : void 0
 	})
 
+	if (!!config.webpack) {
+		result = config.webpack(result, isServer)	
+	}
+
 	return fixWebpackConfig(result)
 }
