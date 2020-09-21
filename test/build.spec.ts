@@ -1,8 +1,5 @@
 import webpack from 'webpack'
-import {
-  matchExternals,
-  getExternals,
-} from '../src/build/util'
+import { matchExternals, getExternals } from '../src/build/util'
 import createWebpackConfig from '../src/build/createWebpackConfig'
 import defaultConfig from '../src/config/config.defaults'
 const pkg = require('../package.json')
