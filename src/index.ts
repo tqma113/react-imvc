@@ -1,3 +1,5 @@
+/// <reference path="global.d.ts" />
+
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
 ///////////////////////////////////////////////////////////////////////////////
@@ -16,7 +18,7 @@ import type http from 'http'
 import type yargs from 'yargs'
 import type helmet from 'helmet'
 import type express from 'express'
-import type webpack from 'webpack'
+import type { Configuration, RuleSetRule } from 'webpack'
 import type bodyParser from 'body-parser'
 import type compression from 'compression'
 import type serveStatic from 'serve-static'
@@ -353,12 +355,12 @@ export interface EntireConfig {
    * webpack output 自定义配置
    * 默认为空
    */
-  output: webpack.Output
+  output: Configuration['output']
   /**
    * webpack 生产环境构建时的自定义 output 配置
    * 默认为空
    */
-  productionOutput: webpack.Output
+  productionOutput: Configuration['output']
   /**
    * webpack alias 自定义配置
    */
@@ -366,7 +368,7 @@ export interface EntireConfig {
   /**
    * webpack devtool 配置
    */
-  devtool: webpack.Options.Devtool | ''
+  devtool: Configuration['devtool']
 
   /**
    * 是否开启 webpack 的构建产物进行可视化分析
@@ -383,17 +385,17 @@ export interface EntireConfig {
    * webpack plugins 自定义配置
    * 默认为空
    */
-  webpackPlugins: webpack.Plugin[]
+  webpackPlugins: Configuration['plugins']
   /**
    * webpack loaders 自定义配置
    * 默认为空
    */
-  webpackLoaders: webpack.RuleSetRule[]
+  webpackLoaders: RuleSetRule[]
 
   /**
    * 是否输出 webpack log 日志
    */
-  webpackLogger: webpack.Stats.ToStringOptions
+  webpackLogger: any
 
   // babel config
   babel: GetBabelFunc
@@ -493,16 +495,13 @@ export interface EntireConfig {
   /**
    * 性能优化配置
    */
-  performance?: webpack.Options.Performance
+  performance?: Configuration['performance']
   /**
    * webpack配置处理
    */
-  webpack?: (
-    result: webpack.Configuration,
-    isServer: boolean
-  ) => webpack.Configuration
+  webpack?: (result: Configuration, isServer: boolean) => Configuration
   /**
    * 编译入口
    */
-  entry?: string | string[] | webpack.Entry | webpack.EntryFunc
+  entry?: Configuration['entry']
 }

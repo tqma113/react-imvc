@@ -16,13 +16,15 @@ export default function build(options: Options): Promise<EntireConfig | void> {
   const config = getConfig(options, true)
   const delPublicPgs = () => delPublish(path.join(config.root, config.publish))
   const startGulpPgs = () => startGulp(config)
-  const startWebpackPgs = () =>
-    Promise.all(
-      [
-        startWebpackForClient(config),
-        config.useServerBundle && startWebpackForServer(config),
-      ].filter(Boolean)
-    )
+  const startWebpackPgs = () => {
+    let promises = [startWebpackForClient(config)]
+    if (config.useServerBundle) {
+      promises.push(startWebpackForServer(config))
+    }
+
+    return Promise.all(promises)
+  }
+
   const startStaticEntryPgs = () => startStaticEntry(config)
   const errorHandler = (error: Error) => {
     console.error(error)
@@ -47,16 +49,15 @@ function delPublish(folder: string): Promise<string[]> {
   return del(folder)
 }
 
-function startWebpackForClient(
-  config: EntireConfig
-): Promise<EntireConfig | boolean> {
-  let webpackConfig = createWebpackConfig(config, false)
-  return new Promise((resolve, reject) => {
-    webpack(webpackConfig, (error, stats) => {
+function startWebpackForClient(config: EntireConfig): Promise<void> {
+  const webpackConfig = createWebpackConfig(config, false)
+  const compiler = webpack(webpackConfig)
+  return new Promise<void>((resolve, reject) => {
+    compiler.run((error, stats) => {
       if (error) {
         reject(error)
       } else {
-        if (config.webpackLogger) {
+        if (config.webpackLogger && stats) {
           console.log(
             '[webpack:client:build]',
             stats.toString(config.webpackLogger)
@@ -68,14 +69,14 @@ function startWebpackForClient(
   })
 }
 
-function startWebpackForServer(config: EntireConfig): Promise<EntireConfig> {
+function startWebpackForServer(config: EntireConfig): Promise<void> {
   let webpackConfig = createWebpackConfig(config, true)
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
       if (error) {
         reject(error)
       } else {
-        if (config.webpackLogger) {
+        if (config.webpackLogger && stats) {
           console.log(
             '[webpack:server:build]',
             stats.toString(config.webpackLogger)
@@ -87,18 +88,17 @@ function startWebpackForServer(config: EntireConfig): Promise<EntireConfig> {
   })
 }
 
-function startGulp(config: EntireConfig): Promise<EntireConfig> {
-  return new Promise((resolve, reject) => {
+function startGulp(config: EntireConfig): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     gulp.task('default', createGulpTask(config))
 
-    let taskFunction: gulp.TaskFunction = (error) => {
+    gulp.series('default')((error) => {
       if (error) {
         reject(error)
       } else {
         resolve()
       }
-    }
-    gulp.series('default')(taskFunction)
+    })
   })
 }
 
@@ -140,7 +140,7 @@ async function startStaticEntry(
 
   server.close(() => console.log('finish generating static entry file'))
 
-  return new Promise<EntireConfig>((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     type ErrorCallback = (err: NodeJS.ErrnoException | null) => void
 
     let callback: ErrorCallback = (error) => {

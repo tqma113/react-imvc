@@ -18,8 +18,8 @@ export default class ViewManager<
   AS extends Actions<S & BaseState>
 > extends React.Component<ViewManagerProps<S, AS>> {
   static ignoreErrors = true
-  views: Record<string, any> = {}
-  scrollMap: Record<string, any> = {}
+  views: Record<string, JSX.Element | null> = {}
+  scrollMap: Record<string, number> = {}
   constructor(props: ViewManagerProps<S, AS>, context: React.Context<any>) {
     super(props, context)
     this.addItemIfNeed(props.controller.location.raw)
@@ -141,10 +141,10 @@ export default class ViewManager<
 }
 
 type ItemProps = {
-  key?: string
-  path?: string
+  key: string
+  path: string
   isActive: boolean
-  view?: JSX.Element
+  view: JSX.Element | null
   scrollY: number
   resetScrollOnMount?: boolean
 }

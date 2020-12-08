@@ -1,20 +1,24 @@
 import path from 'path'
 import resolve from 'resolve'
-import webpack from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
-// @ts-ignore
-import PnpWebpackPlugin from 'pnp-webpack-plugin'
-import ManifestPlugin from 'webpack-manifest-plugin'
+import { WebpackManifestPlugin, FileDescriptor } from 'webpack-manifest-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { getExternals } from './util'
+import {
+  Configuration,
+  RuleSetRule,
+  IgnorePlugin,
+  DefinePlugin,
+  HotModuleReplacementPlugin,
+} from 'webpack'
 import type { EntireConfig } from '..'
 
 export default function createWebpackConfig(
   options: EntireConfig,
   isServer: boolean = false
-): webpack.Configuration {
-  let result: webpack.Configuration = {}
+): Configuration {
+  let result: Configuration = {}
 
   const config: EntireConfig = Object.assign({}, options)
   const root: string = path.join(config.root, config.src)
@@ -32,11 +36,9 @@ export default function createWebpackConfig(
       indexEntry,
     ].filter(Boolean),
   })
-  const devtoolModuleFilenameTemplate = (
-    info: webpack.DevtoolModuleFilenameTemplateInfo
-  ) => path.relative(root, info.absoluteResourcePath).replace(/\\/g, '/')
-
-  let defaultOutput: webpack.Output = {
+  const devtoolModuleFilenameTemplate = (info: any) =>
+    path.relative(root, info.absoluteResourcePath).replace(/\\/g, '/')
+  let defaultOutput: Configuration['output'] = {
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: !isProd,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -63,56 +65,80 @@ export default function createWebpackConfig(
 
   let output = Object.assign(defaultOutput, config.output)
 
-  function ManifestPluginMap(
-    file: ManifestPlugin.FileDescriptor
-  ): ManifestPlugin.FileDescriptor {
+  function ManifestPluginMap(file: FileDescriptor): FileDescriptor {
     // 删除 .js 后缀，方便直接使用 obj.name 来访问
     if (file.name && /\.js$/.test(file.name)) {
       file.name = file.name.slice(0, -3)
     }
     return file
   }
-  const ManifestPluginOption: ManifestPlugin.Options = {
-    fileName: config.assetsPath,
-    map: ManifestPluginMap,
-  }
-  let plugins = [
-    !isServer && new ManifestPlugin(ManifestPluginOption),
+  let plugins: Configuration['plugins'] = [
+    new DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+    }),
+  ]
+
+  if (!isServer) {
+    plugins.push(
+      new WebpackManifestPlugin({
+        fileName: config.assetsPath,
+        map: ManifestPluginMap,
+      })
+    )
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
-    !isServer && new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-    }),
+    plugins.push(
+      new IgnorePlugin({
+        contextRegExp: /^\.\/locale$/,
+        resourceRegExp: /moment$/,
+      })
+    )
+  }
 
-    // TypeScript type checking
-    config.useTypeCheck &&
+  if (config.useTypeCheck) {
+    plugins.push(
       new ForkTsCheckerWebpackPlugin({
-        typescript: resolve.sync('typescript', {
-          basedir: path.join(config.root, 'node_modules'),
-        }),
-        async: !isProd,
-        useTypescriptIncrementalApi: true,
-        checkSyntacticErrors: true,
-        tsconfig: path.join(config.root, 'tsconfig.json'),
-        reportFiles: [
-          '**',
-          '!**/*.json',
-          '!**/__tests__/**',
-          '!**/?(*.)(spec|test).*',
-          '!**/src/setupProxy.*',
-          '!**/src/setupTests.*',
-        ],
-        watch: config.root,
-      }),
-  ].filter(Boolean)
+        async: isDev,
+        typescript: {
+          typescriptPath: resolve.sync('typescript', {
+            basedir: path.resolve(config.root, 'node_modules'),
+          }),
+          context: config.root,
+          diagnosticOptions: {
+            syntactic: true,
+          },
+          mode: 'write-references',
+          // profile: true,
+        },
+        issue: {
+          // This one is specifically to match during CI tests,
+          // as micromatch doesn't match
+          // '../cra-template-typescript/template/src/App.tsx'
+          // otherwise.
+          include: [
+            '../**/src/**/*.{ts,tsx}',
+            '**/src/**/*.{ts,tsx}',
+          ].map((file) => ({ file })),
+          exclude: [
+            '**/src/**/__tests__/**',
+            '**/src/**/?(*.)(spec|test).*',
+            '**/src/setupProxy.*',
+            '**/src/setupTests.*',
+          ].map((file) => ({ file })),
+        },
+        logger: {
+          infrastructure: 'silent',
+        },
+      })
+    )
+  }
 
   // 添加热更新插件
   if (isDev && !isServer && config.hot) {
-    plugins.push(new webpack.HotModuleReplacementPlugin())
+    plugins.push(new HotModuleReplacementPlugin())
   }
 
   if (Array.isArray(config.webpackPlugins)) {
@@ -120,8 +146,8 @@ export default function createWebpackConfig(
   }
 
   let watch = NODE_ENV !== 'test'
-  const postLoaders: webpack.Rule[] = []
-  let optimization: webpack.Options.Optimization = {
+  const postLoaders: RuleSetRule[] = []
+  let optimization: Configuration['optimization'] = {
     // Automatically split vendor and commons
     // https://twitter.com/wSokra/status/969633336732905474
     // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
@@ -153,12 +179,11 @@ export default function createWebpackConfig(
                 // into invalid ecma 5 code. This is why the 'compress' and 'output'
                 // sections only apply transformations that are ecma 5 safe
                 // https://github.com/facebook/create-react-app/pull/4234
-                ecma: 8,
+                ecma: 2020,
               },
               compress: {
                 // ecma: 5, // 默认为5，但目前ts似乎不支持该参数
                 drop_console: true,
-                warnings: false,
                 // Disabled because of an issue with Uglify breaking seemingly valid code:
                 // https://github.com/facebook/create-react-app/issues/2376
                 // Pending further investigation:
@@ -184,9 +209,6 @@ export default function createWebpackConfig(
             // Use multi-process parallel running to improve the build speed
             // Default number of concurrent runs: os.cpus().length - 1
             parallel: true,
-            // Enable file caching
-            cache: true,
-            sourceMap: false,
           }),
         ],
       })
@@ -213,7 +235,7 @@ export default function createWebpackConfig(
     ])
   }
 
-  const babelOptions: webpack.RuleSetQuery = {
+  const babelOptions: Record<string, any> = {
     // include presets|plugins
     babelrc: false,
     configFile: false,
@@ -223,7 +245,7 @@ export default function createWebpackConfig(
     cacheCompression: isProd,
     compact: isProd,
   }
-  let moduleRulesConfig: webpack.Rule[] = [
+  let moduleRulesConfig: RuleSetRule[] = [
     // Disable require.ensure as it's not a standard language feature.
     { parser: { requireEnsure: false } },
     // Process application JS with Babel.
@@ -239,7 +261,7 @@ export default function createWebpackConfig(
     config.webpackLoaders,
     postLoaders
   )
-  const moduleConfig: webpack.Module = {
+  const moduleConfig: Configuration['module'] = {
     // makes missing exports an error instead of warning
     strictExportPresence: true,
     rules: moduleRulesConfig,
@@ -253,19 +275,8 @@ export default function createWebpackConfig(
     modules: ['node_modules'],
     extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx'],
     alias: alias,
-    plugins: [
-      // Adds support for installing with Plug'n'Play, leading to faster installs and adding
-      // guards against forgotten dependencies and such.
-      PnpWebpackPlugin,
-    ],
   }
-  const resolveLoaderConfig: webpack.ResolveLoader = {
-    plugins: [
-      // Also related to Plug'n'Play, but this time it tells Webpack to load its loaders
-      // from the current package.
-      PnpWebpackPlugin.moduleLoader(module),
-    ],
-  }
+
   result = Object.assign(result, {
     target: isServer ? 'node' : 'web',
     mode: mode,
@@ -281,7 +292,6 @@ export default function createWebpackConfig(
     performance: performanceConfig,
     resolve: resolveConfig,
     context: root,
-    resolveLoader: resolveLoaderConfig,
     externals: isServer ? getExternals(config) : void 0,
   })
 

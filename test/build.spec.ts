@@ -24,6 +24,7 @@ describe('build', () => {
         expect(config.entry).toBeDefined()
         expect(typeof config.entry).toBe('object')
         if (isEntry(config.entry)) {
+          // @ts-ignore
           expect(standardize(config.entry.index as string)).toMatch('/src')
         }
         expect(config.output).toBeDefined()
@@ -50,6 +51,7 @@ describe('build', () => {
         expect(config.entry).toBeDefined()
         expect(typeof config.entry).toBe('object')
         if (isEntry(config.entry)) {
+          // @ts-ignore
           expect(standardize(config.entry.index as string)).toMatch(
             '/src/entry/client'
           )
@@ -62,7 +64,7 @@ describe('build', () => {
             '/publish/static'
           )
         }
-        expect(config.devtool).toBe('')
+        expect(config.devtool).toBe(false)
         expect(config.plugins).toBeDefined()
         expect(config.plugins).toHaveLength(3)
         expect(config.optimization).toStrictEqual({

@@ -23,7 +23,7 @@ const config: Config = {
   root: ROOT, // 项目根目录
   port: PORT, // server 端口号
   logger: null, // 不出 log
-  devtool: '', // 不出 source-map
+  devtool: false, // 不出 source-map
   ReactViews: {
     beautify: false, // 不美化
     transformViews: false, // 已有转换，无须再做
@@ -49,6 +49,8 @@ describe('controller', () => {
       .then((result) => {
         // app = result.app
         server = result.server
+
+        console.log('testttttdfghjdfghjfghjasdfgasdfghjasdghfjk')
         return puppeteer.launch({
           // headless: false,
           // slowMo: 250
@@ -70,6 +72,8 @@ describe('controller', () => {
       const url = `http://localhost:${config.port}/location`
       await page.goto(url)
       await page.waitFor('#location')
+
+      console.log('testttttdfghjdfghjfghjasdfgasdfghjasdghfjk')
 
       const serverContent = await fetchContent(url)
       expect(serverContent).toContain(
