@@ -18,15 +18,15 @@ export function setupClient(
   middleware: webpackDevMiddleware.WebpackDevMiddleware & NextHandleFunction
 } {
   const clientConfig = createWebpackConfig(config)
-  let compiler: Compiler;
+  let compiler: Compiler
   try {
-    compiler = webpack(clientConfig);
+    compiler = webpack(clientConfig)
   } catch (err) {
-    console.log(chalk.red('Failed to compile.'));
-    console.log();
-    console.log(err.message || err);
-    console.log();
-    process.exit(1);
+    console.log(chalk.red('Failed to compile.'))
+    console.log()
+    console.log(err.message || err)
+    console.log()
+    process.exit(1)
   }
   const middleware = webpackDevMiddleware(compiler, {
     publicPath: config.staticPath,

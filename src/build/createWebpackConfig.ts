@@ -84,7 +84,7 @@ export default function createWebpackConfig(
       new WebpackManifestPlugin({
         fileName: config.assetsPath,
         map: ManifestPluginMap,
-        publicPath: ''
+        publicPath: '',
       })
     )
     plugins.push(new SetManifestPlugin())

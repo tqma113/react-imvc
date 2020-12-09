@@ -12,9 +12,6 @@ jest.setTimeout(20000)
 interface Server extends http.Server {
   isTouched?: boolean
 }
-// interface App extends express.Express {
-// 	isTouched?: boolean
-// }
 
 process.env.NODE_ENV = 'test'
 let PORT = 33334
