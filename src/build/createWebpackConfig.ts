@@ -115,7 +115,7 @@ export default function createWebpackConfig(
             syntactic: true,
           },
           mode: 'write-references',
-          // profile: true,
+          profile: true,
         },
         issue: {
           // This one is specifically to match during CI tests,
@@ -123,8 +123,7 @@ export default function createWebpackConfig(
           // '../cra-template-typescript/template/src/App.tsx'
           // otherwise.
           include: [
-            '../**/src/**/*.{ts,tsx}',
-            '**/src/**/*.{ts,tsx}',
+            '**',
           ].map((file) => ({ file })),
           exclude: [
             '**/src/**/__tests__/**',
