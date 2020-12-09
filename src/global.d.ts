@@ -15,6 +15,7 @@ declare module 'webpack-manifest-plugin' {
   export type Options = {
     fileName: string
     map: (file: FileDescriptor) => FileDescriptor
+    publicPath?: string
   }
   export type FileDescriptor = {
     name: string

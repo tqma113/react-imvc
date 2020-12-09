@@ -1,11 +1,13 @@
 import vm from 'vm'
 import path from 'path'
+import chalk from 'chalk'
 import MFS from 'memory-fs'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import nodeExternals from 'webpack-node-externals'
 import createWebpackConfig from './createWebpackConfig'
 import { getExternals, matchExternals } from './util'
+import type { Compiler } from 'webpack'
 import type { NextHandleFunction } from 'connect'
 import type { EntireConfig } from '..'
 
@@ -15,9 +17,18 @@ export function setupClient(
   compiler: webpack.Compiler
   middleware: webpackDevMiddleware.WebpackDevMiddleware & NextHandleFunction
 } {
-  let clientConfig = createWebpackConfig(config)
-  let compiler = webpack(clientConfig)
-  let middleware = webpackDevMiddleware(compiler, {
+  const clientConfig = createWebpackConfig(config)
+  let compiler: Compiler;
+  try {
+    compiler = webpack(clientConfig);
+  } catch (err) {
+    console.log(chalk.red('Failed to compile.'));
+    console.log();
+    console.log(err.message || err);
+    console.log();
+    process.exit(1);
+  }
+  const middleware = webpackDevMiddleware(compiler, {
     publicPath: config.staticPath,
     serverSideRender: true,
   })

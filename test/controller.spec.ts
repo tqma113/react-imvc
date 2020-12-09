@@ -50,7 +50,6 @@ describe('controller', () => {
         // app = result.app
         server = result.server
 
-        console.log('testttttdfghjdfghjfghjasdfgasdfghjasdghfjk')
         return puppeteer.launch({
           // headless: false,
           // slowMo: 250
@@ -72,8 +71,6 @@ describe('controller', () => {
       const url = `http://localhost:${config.port}/location`
       await page.goto(url)
       await page.waitFor('#location')
-
-      console.log('testttttdfghjdfghjfghjasdfgasdfghjasdghfjk')
 
       const serverContent = await fetchContent(url)
       expect(serverContent).toContain(

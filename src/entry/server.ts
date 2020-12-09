@@ -115,9 +115,7 @@ export default function createExpressApp(
 
     // 开发模式用 webpack-dev-middleware 获取 assets
     app.use((req, res, next) => {
-      res.locals.assets = getAssets(
-        res.locals.webpackStats.toJson().assetsByChunkName
-      )
+      res.locals.assets = res.locals.webpack.devMiddleware.stats.assets
       next()
     })
   } else {

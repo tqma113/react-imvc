@@ -4,6 +4,7 @@ import TerserPlugin from 'terser-webpack-plugin'
 import { WebpackManifestPlugin, FileDescriptor } from 'webpack-manifest-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import SetManifestPlugin from './SetManifestPlugin'
 import { getExternals } from './util'
 import {
   Configuration,
@@ -83,8 +84,11 @@ export default function createWebpackConfig(
       new WebpackManifestPlugin({
         fileName: config.assetsPath,
         map: ManifestPluginMap,
+        publicPath: ''
       })
     )
+    plugins.push(new SetManifestPlugin())
+
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.
@@ -145,7 +149,6 @@ export default function createWebpackConfig(
     plugins = plugins.concat(config.webpackPlugins)
   }
 
-  let watch = NODE_ENV !== 'test'
   const postLoaders: RuleSetRule[] = []
   let optimization: Configuration['optimization'] = {
     // Automatically split vendor and commons
@@ -167,7 +170,6 @@ export default function createWebpackConfig(
       },
       config.productionOutput
     )
-    watch = false
     if (!isServer) {
       optimization = Object.assign(optimization, {
         minimizer: [
@@ -282,7 +284,6 @@ export default function createWebpackConfig(
     mode: mode,
     // Don't attempt to continue if there are any errors.
     bail: true,
-    watch: watch,
     devtool: isServer ? 'source-map' : config.devtool,
     entry: entry,
     output: output,

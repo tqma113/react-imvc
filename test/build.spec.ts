@@ -66,7 +66,7 @@ describe('build', () => {
         }
         expect(config.devtool).toBe(false)
         expect(config.plugins).toBeDefined()
-        expect(config.plugins).toHaveLength(3)
+        expect(config.plugins).toHaveLength(4)
         expect(config.optimization).toStrictEqual({
           splitChunks: {
             chunks: 'all',
@@ -84,7 +84,6 @@ describe('build', () => {
           const config = createWebpackConfig(options, true)
 
           expect(config.mode).toBe('production')
-          expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty('filename', 'server.bundle.js')
           expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
@@ -105,7 +104,6 @@ describe('build', () => {
           const config = createWebpackConfig(options)
 
           expect(config.mode).toBe('production')
-          expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty(
             'filename',
@@ -136,7 +134,6 @@ describe('build', () => {
           const config = createWebpackConfig(options, true)
 
           expect(config.mode).toBe('development')
-          expect(config.watch).toBeTruthy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty('filename', 'server.bundle.js')
           expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
@@ -158,7 +155,6 @@ describe('build', () => {
           const config = createWebpackConfig(options)
 
           expect(config.mode).toBe('development')
-          expect(config.watch).toBeTruthy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty('filename', 'js/[name].js')
           expect(config.output).toHaveProperty('chunkFilename', 'js/[name].js')
@@ -182,7 +178,6 @@ describe('build', () => {
           const config = createWebpackConfig(options, true)
 
           expect(config.mode).toBe('development')
-          expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty('filename', 'server.bundle.js')
           expect(config.output).toHaveProperty('libraryTarget', 'commonjs2')
@@ -204,7 +199,6 @@ describe('build', () => {
           const config = createWebpackConfig(options)
 
           expect(config.mode).toBe('development')
-          expect(config.watch).toBeFalsy()
           expect(config.output).toBeDefined()
           expect(config.output).toHaveProperty('filename', 'js/[name].js')
           expect(config.output).toHaveProperty('chunkFilename', 'js/[name].js')
