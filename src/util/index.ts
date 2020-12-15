@@ -159,3 +159,5 @@ export function compareObject(a: object, b: object): boolean {
 export function isIMVCController(fn: any): fn is Controller<any, any> {
   return fn.__SYMBOL === 'REACT_IMVC_CONTROLLER'
 }
+
+export { htmlEscapeJsonStringify } from './htmlescape'
