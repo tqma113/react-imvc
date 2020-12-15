@@ -134,6 +134,7 @@
     "@types/terser-webpack-plugin": "5.0.2",
     "@types/webpack-bundle-analyzer": "^2.13.3",
     "@types/webpack-hot-middleware": "^2.25.0",
+    "@types/webpack-manifest-plugin": "^3.0.1",
     "@types/webpack-node-externals": "^2.5.0",
     "fetch-mock": "^9.2.1",
     "prettier": "^2.1.1",
