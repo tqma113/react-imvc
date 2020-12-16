@@ -91,14 +91,13 @@ function startGulp(config: EntireConfig): Promise<EntireConfig> {
   return new Promise((resolve, reject) => {
     gulp.task('default', createGulpTask(config))
 
-    let taskFunction: gulp.TaskFunction = (error) => {
+    gulp.series('default')((error) => {
       if (error) {
         reject(error)
       } else {
         resolve()
       }
-    }
-    gulp.series('default')(taskFunction)
+    })
   })
 }
 
